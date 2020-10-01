@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		5750B6C02524C4CB00D8AD10 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750B6BF2524C4CB00D8AD10 /* AppDelegate.swift */; };
 		5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */; };
-		5750B6C42524C4CB00D8AD10 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750B6C32524C4CB00D8AD10 /* ViewController.swift */; };
+		5750B6C42524C4CB00D8AD10 /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750B6C32524C4CB00D8AD10 /* MainScreenViewController.swift */; };
 		5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C52524C4CB00D8AD10 /* Main.storyboard */; };
 		5750B6C92524C4CC00D8AD10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C82524C4CC00D8AD10 /* Assets.xcassets */; };
 		5750B6CC2524C4CC00D8AD10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6CA2524C4CC00D8AD10 /* LaunchScreen.storyboard */; };
@@ -19,7 +19,7 @@
 		5750B6BC2524C4CB00D8AD10 /* WeatherFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5750B6BF2524C4CB00D8AD10 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5750B6C32524C4CB00D8AD10 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5750B6C32524C4CB00D8AD10 /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
 		5750B6C62524C4CB00D8AD10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5750B6C82524C4CC00D8AD10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5750B6CB2524C4CC00D8AD10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		5750B6D42524C53900D8AD10 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				5750B6C32524C4CB00D8AD10 /* ViewController.swift */,
+				5750B6C32524C4CB00D8AD10 /* MainScreenViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -142,7 +142,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Viktor Pelivan";
 				TargetAttributes = {
 					5750B6BB2524C4CB00D8AD10 = {
@@ -186,7 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5750B6C42524C4CB00D8AD10 /* ViewController.swift in Sources */,
+				5750B6C42524C4CB00D8AD10 /* MainScreenViewController.swift in Sources */,
 				5750B6C02524C4CB00D8AD10 /* AppDelegate.swift in Sources */,
 				5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */,
 			);
@@ -240,6 +240,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -300,6 +301,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
