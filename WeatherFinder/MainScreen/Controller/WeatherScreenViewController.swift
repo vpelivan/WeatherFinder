@@ -1,18 +1,26 @@
 
 import UIKit
 
-class MainScreenViewController: UIViewController {
+class WeatherScreenViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+    
     var searchController: UISearchController?
     
-    let colors = Colors()
+    private let colors = Colors()
+    private let gradientLayer = Colors().gradientLayer
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
         refresh()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        gradientLayer.frame = view.bounds
     }
     
     private func setupSearchController() {
@@ -25,12 +33,11 @@ class MainScreenViewController: UIViewController {
     
     private func refresh() {
         view.backgroundColor = .clear
-        let backgroundLayer = colors.gradientLayer!
-        backgroundLayer.frame = view.frame
-        view.layer.insertSublayer(backgroundLayer, at: 0)
+        gradientLayer.frame = view.frame
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
-
-    @IBAction func updateLocation(_ sender: UIBarButtonItem) {
+    
+    @IBAction private func updateLocation(_ sender: UIBarButtonItem) {
     }
 }
 
