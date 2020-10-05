@@ -13,8 +13,8 @@
 		5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C52524C4CB00D8AD10 /* Main.storyboard */; };
 		5750B6C92524C4CC00D8AD10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C82524C4CC00D8AD10 /* Assets.xcassets */; };
 		5750B6CC2524C4CC00D8AD10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6CA2524C4CC00D8AD10 /* LaunchScreen.storyboard */; };
-		57B3294C25263C2400901D90 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3294A25263C2400901D90 /* MainTableViewCell.swift */; };
-		57B3294D25263C2400901D90 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57B3294B25263C2400901D90 /* MainTableViewCell.xib */; };
+		57B3294C25263C2400901D90 /* CityWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3294A25263C2400901D90 /* CityWeatherTableViewCell.swift */; };
+		57B3294D25263C2400901D90 /* CityWeatherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57B3294B25263C2400901D90 /* CityWeatherTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,8 +26,8 @@
 		5750B6C82524C4CC00D8AD10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5750B6CB2524C4CC00D8AD10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5750B6CD2524C4CC00D8AD10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		57B3294A25263C2400901D90 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
-		57B3294B25263C2400901D90 /* MainTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
+		57B3294A25263C2400901D90 /* CityWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherTableViewCell.swift; sourceTree = "<group>"; };
+		57B3294B25263C2400901D90 /* CityWeatherTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityWeatherTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,8 +123,8 @@
 		57B3294925263BFC00901D90 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				57B3294A25263C2400901D90 /* MainTableViewCell.swift */,
-				57B3294B25263C2400901D90 /* MainTableViewCell.xib */,
+				57B3294A25263C2400901D90 /* CityWeatherTableViewCell.swift */,
+				57B3294B25263C2400901D90 /* CityWeatherTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -189,7 +189,7 @@
 			files = (
 				5750B6CC2524C4CC00D8AD10 /* LaunchScreen.storyboard in Resources */,
 				5750B6C92524C4CC00D8AD10 /* Assets.xcassets in Resources */,
-				57B3294D25263C2400901D90 /* MainTableViewCell.xib in Resources */,
+				57B3294D25263C2400901D90 /* CityWeatherTableViewCell.xib in Resources */,
 				5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,7 +203,7 @@
 			files = (
 				5750B6C42524C4CB00D8AD10 /* ViewController.swift in Sources */,
 				5750B6C02524C4CB00D8AD10 /* AppDelegate.swift in Sources */,
-				57B3294C25263C2400901D90 /* MainTableViewCell.swift in Sources */,
+				57B3294C25263C2400901D90 /* CityWeatherTableViewCell.swift in Sources */,
 				5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
