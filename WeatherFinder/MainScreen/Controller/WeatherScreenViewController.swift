@@ -6,10 +6,10 @@ class WeatherScreenViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
-    var searchController: UISearchController?
+    // TODO: resolve variable searchController initialization issue
+    private var searchController: UISearchController?
     
-    private let colors = Colors()
-    private let gradientLayer = Colors().gradientLayer
+    private let gradientLayer = Colors.gradientLayer
     
     override func viewDidLoad() {
         super.viewDidLoad()
