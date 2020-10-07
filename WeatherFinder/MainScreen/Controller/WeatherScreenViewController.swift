@@ -17,8 +17,8 @@ class WeatherScreenViewController: UIViewController {
         refresh()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override public func traitCollectionDidChange(_ previouseTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previouseTraitCollection)
         
         gradientLayer.frame = view.bounds
     }
