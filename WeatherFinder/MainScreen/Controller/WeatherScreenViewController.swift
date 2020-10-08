@@ -28,7 +28,7 @@ class WeatherScreenViewController: UIViewController {
         searchController?.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        searchController?.searchBar.placeholder = "Search for city"
+        searchController?.searchBar.placeholder = NSLocalizedString("Search for city", comment: "placeholder for search controller")
     }
     
     private func refresh() {
