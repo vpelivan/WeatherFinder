@@ -13,9 +13,10 @@
 		5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C52524C4CB00D8AD10 /* Main.storyboard */; };
 		5750B6C92524C4CC00D8AD10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C82524C4CC00D8AD10 /* Assets.xcassets */; };
 		5750B6CC2524C4CC00D8AD10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6CA2524C4CC00D8AD10 /* LaunchScreen.storyboard */; };
-		7A50B34C2526101F00304AB9 /* GradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A50B34B2526101F00304AB9 /* GradientColor.swift */; };
 		57B3294C25263C2400901D90 /* CityWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3294A25263C2400901D90 /* CityWeatherTableViewCell.swift */; };
 		57B3294D25263C2400901D90 /* CityWeatherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57B3294B25263C2400901D90 /* CityWeatherTableViewCell.xib */; };
+		57EA7D7F252F5254006D7E82 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EA7D7E252F5254006D7E82 /* NetworkService.swift */; };
+		7A50B34C2526101F00304AB9 /* GradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A50B34B2526101F00304AB9 /* GradientColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,9 +28,10 @@
 		5750B6C82524C4CC00D8AD10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5750B6CB2524C4CC00D8AD10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5750B6CD2524C4CC00D8AD10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7A50B34B2526101F00304AB9 /* GradientColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColor.swift; sourceTree = "<group>"; };
 		57B3294A25263C2400901D90 /* CityWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherTableViewCell.swift; sourceTree = "<group>"; };
 		57B3294B25263C2400901D90 /* CityWeatherTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CityWeatherTableViewCell.xib; sourceTree = "<group>"; };
+		57EA7D7E252F5254006D7E82 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		7A50B34B2526101F00304AB9 /* GradientColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +76,7 @@
 				5750B6D62524C53E00D8AD10 /* Model */,
 				5750B6D52524C53C00D8AD10 /* View */,
 				5750B6D42524C53900D8AD10 /* Controller */,
-				5750B6D72524C54700D8AD10 /* Network Layer */,
+				57EA7D7D252F5238006D7E82 /* NetworkLayer */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -104,13 +106,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		5750B6D72524C54700D8AD10 /* Network Layer */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Network Layer";
-			sourceTree = "<group>";
-		};
 		5750B6D82524C56E00D8AD10 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +125,14 @@
 				57B3294B25263C2400901D90 /* CityWeatherTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		57EA7D7D252F5238006D7E82 /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				57EA7D7E252F5254006D7E82 /* NetworkService.swift */,
+			);
+			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +211,7 @@
 				5750B6C02524C4CB00D8AD10 /* AppDelegate.swift in Sources */,
 				57B3294C25263C2400901D90 /* CityWeatherTableViewCell.swift in Sources */,
 				5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */,
+				57EA7D7F252F5254006D7E82 /* NetworkService.swift in Sources */,
 				7A50B34C2526101F00304AB9 /* GradientColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
