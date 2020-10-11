@@ -11,13 +11,31 @@ import Foundation
 struct WeaterDataModel: Decodable{
     let nameOFCity: String
     let temperatureCelcium: Int
-    var feelsLike: Int
-    var description: String?
-    let weather:[Weather]?
+    var feelsLike: Int?
+    let weather: Array<Weather>?
+    var description: [Weather]
+    //
+    init(){
+         description = weather!}
+//    var description: String {
+//        get{}
+//        set(newValue){
+//             let w = weather!
+//             description = w.description
+//        }
+//
+//    }
+//    if let x = weather
+//    var description = { () -> String  in
+//        let x = weather?
+//
+//        return ""}
     
+   // var descript:Int?
+       
     struct Weather: Decodable {
         let description: String
-        let ico: String
+        let icon: String
         //let id:Int
         //let main: String
     }
@@ -29,10 +47,11 @@ struct WeaterDataModel: Decodable{
         case description
         case weather
     }
+
     
-    mutating func setdes() -> String {
-        let weather1 = weather!
-        description = weather1[0].description
-        return description!
-    }
+// }   mutating func setdes() -> String {
+//        let weather1 = weather!
+//        description = weather1[0].description
+//        return description!
+//    }
 }
