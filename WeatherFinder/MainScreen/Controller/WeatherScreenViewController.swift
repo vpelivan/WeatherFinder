@@ -28,7 +28,7 @@ class WeatherScreenViewController: UIViewController {
         searchController?.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
-        searchController?.searchBar.placeholder = NSLocalizedString("Search for city", comment: "placeholder for search controller")
+        searchController?.searchBar.placeholder = "Search for city".localized
     }
     
     private func refresh() {
@@ -40,4 +40,3 @@ class WeatherScreenViewController: UIViewController {
     @IBAction private func updateLocation(_ sender: UIBarButtonItem) {
     }
 }
-
