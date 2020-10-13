@@ -25,7 +25,7 @@ struct WeaterDataModel: Decodable{
         case nameOFCity = "name"
         case temperatureCelcium = "temp"
         case feelsLike = "feels_like"
-        case description
+        //case description
         case weather
     }
 }
