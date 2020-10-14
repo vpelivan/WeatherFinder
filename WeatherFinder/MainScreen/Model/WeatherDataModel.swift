@@ -8,24 +8,23 @@
 
 import Foundation
 
-struct WeaterDataModel: Decodable{
-    let nameOFCity: String
-    let temperatureCelcium: Int
-    var feelsLike: Int?
-    let weather: Array<Weather>?
+struct WeatherDataModel: Decodable{
+    var nameOfCity: String
+    let temperatureCelcium: Int?
+    let feelsLike: Int?
+    let weather: Array<Weather?>
            
     struct Weather: Decodable {
         let description: String
         let icon: String
-        //let id:Int
-        //let main: String
     }
     
     enum CodingKeys: String, CodingKey {
-        case nameOFCity = "name"
+        case nameOfCity = "name"
         case temperatureCelcium = "temp"
         case feelsLike = "feels_like"
-        //case description
         case weather
     }
 }
+
+
