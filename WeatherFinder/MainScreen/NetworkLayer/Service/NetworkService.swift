@@ -40,9 +40,10 @@ class NetworkService: NetworkServiceProtocol {
         var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: 10)
         
         request.httpMethod = endPoint.httpMethod.rawValue
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         do {
             switch endPoint.task {
+            case .request:
+                break
             case .requestWithParameters(let bodyParameters, let urlParameters):
                 try self.configureParameters(bodyParameters, urlParameters, &request)
             case .requestWithParametersAndHeaders(let bodyParameters,

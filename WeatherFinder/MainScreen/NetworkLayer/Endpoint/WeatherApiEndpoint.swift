@@ -1,5 +1,5 @@
 //
-//  CityWeatherEndpoint.swift
+//  WeatherApiEndpoint.swift
 //  WeatherFinder
 //
 //  Created by Victor Pelivan on 14.10.2020.

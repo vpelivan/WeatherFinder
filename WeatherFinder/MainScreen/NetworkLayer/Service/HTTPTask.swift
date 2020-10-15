@@ -16,6 +16,8 @@ typealias Parameters = [String : Any]
 
 // this enum can be extended with download cases, upload cases etc
 enum HTTPTask {
+    // Simple Request (can be used to get images, or any other kind of data)
+    case request
     /* Request with parameters. Body is used for POST request to encode serialized JSON data
     and post it on server (must be nil, if you perform GET requests), urlParameters composes
     url using URLComponents class) */

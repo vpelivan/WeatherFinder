@@ -17,8 +17,7 @@ struct URLParameterEncoder: ParameterEncoder {
         
         guard let url = urlRequest.url else { throw NetworkError.urlMissing }
         
-        if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-            guard !parameters.isEmpty else { throw NetworkError.parametersMissing }
+        if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
             urlComponents.queryItems = [URLQueryItem]()
             for (key, value) in parameters {
                 let queryItemValue = "\(value)".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
