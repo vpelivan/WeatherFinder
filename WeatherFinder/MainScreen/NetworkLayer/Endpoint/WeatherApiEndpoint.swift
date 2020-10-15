@@ -11,8 +11,8 @@ import Foundation
 // can be extended with various API requests
 enum WeatherApiEndpoint {
     case findCityByName(name: String)
-    case findCityByCoordinates(lattitude: Double, longtitute: Double)
-    case oneCallByCoordinates(lattitude: Double, longtitute: Double, exclude: String)
+    case findCityByCoordinates(lattitude: String, longtitute: String)
+    case oneCallByCoordinates(lattitude: String, longtitute: String, exclude: String)
 }
 
 extension WeatherApiEndpoint: EndPointType {

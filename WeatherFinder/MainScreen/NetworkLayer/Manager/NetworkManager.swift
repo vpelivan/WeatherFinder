@@ -20,7 +20,7 @@ class NetworkManager {
     // variables
     let apiKey = "bca99eeb8ff098c732b8104e606a8190"
     
-    // weather units might be computed
+    // weather units might be computed property or observable
     let weatherUnits = "metric"
     
     //One of Singleton conditions
@@ -35,4 +35,6 @@ class NetworkManager {
     //TODO: perform internet connection check
     
     //TODO: handle various errors
+    
+    //TODO: handle caching images (NSCache)
 }

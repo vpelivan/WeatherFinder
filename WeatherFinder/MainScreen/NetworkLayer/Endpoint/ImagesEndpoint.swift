@@ -9,24 +9,25 @@
 import Foundation
 
 enum ImagesEndpoint: String {
-    case clearSkyDay = "01d"
-    case clearSkyNight = "01n"
-    case fewCloudsDay = "02d"
-    case fewCloudsNight = "02n"
-    case scatteredCloudsDay = "03d"
-    case scatteredCloudsNight = "03n"
-    case brokenClouds = "04d"
-    case brokenCloudsNight = "04n"
-    case showerRainDay = "09d"
-    case showerRainNight = "09n"
-    case rainDay = "10d"
-    case rainNight = "10n"
-    case thunderstormDay = "11d"
-    case thunderstormNight = "11n"
-    case snowDay = "13d"
-    case snowNight = "13n"
-    case mist = "50d"
-    case mistNight = "50n"
+    case clearSkyDay
+    case clearSkyNight
+    case fewCloudsDay
+    case fewCloudsNight
+    case scatteredCloudsDay
+    case scatteredCloudsNight
+    case brokenClouds
+    case brokenCloudsNight
+    case showerRainDay
+    case showerRainNight
+    case rainDay
+    case rainNight
+    case thunderstormDay
+    case thunderstormNight
+    case snowDay
+    case snowNight
+    case mist
+    case mistNight
+    case noImage
 }
 
 extension ImagesEndpoint: EndPointType {
@@ -36,6 +37,8 @@ extension ImagesEndpoint: EndPointType {
         switch self {
         case .mist:
             baseURLString = "https://icons.iconarchive.com/icons/icons-land/weather/256"
+        case .noImage:
+            baseURLString = "https://www.samsung.com/etc/designs/smg/global/imgs/support/cont/"
         default:
             baseURLString = "https://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/256/"
         }
@@ -61,6 +64,7 @@ extension ImagesEndpoint: EndPointType {
         case .snowDay: return "Status-weather-snow-scattered-day-icon.png"
         case .snowNight: return "Status-weather-snow-scattered-night-icon.png"
         case .mist, .mistNight: return "Fog-icon.png"
+        case .noImage: return "NO_IMG_600x600.png"
         }
     }
     
