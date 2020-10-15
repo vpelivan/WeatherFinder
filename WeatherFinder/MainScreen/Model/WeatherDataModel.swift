@@ -11,7 +11,7 @@ import Foundation
 struct WeatherDataModel: Decodable{
     var nameOfCity: String
     let weatherCondition: [Weather?]
-    let mainWeatherInfo: Main?
+    let mainWeatherInfo: Main?adfg
     let windSpeed: windSpeed?
     
     
