@@ -12,7 +12,7 @@ struct WeatherDataModel: Decodable{
     var nameOfCity: String
     let weatherCondition: [Weather?]
     let mainWeatherInfo: Main?
-    let windSpeed: windSpeed?
+    let windSpeed: WindSpeed?
     
     
     struct Main: Decodable {
@@ -38,7 +38,7 @@ struct WeatherDataModel: Decodable{
         let icon: String
     }
     
-    struct windSpeed: Decodable {
+    struct WindSpeed: Decodable {
         let speed: Float
     }
     
