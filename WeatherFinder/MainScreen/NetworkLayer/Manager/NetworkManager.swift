@@ -37,4 +37,5 @@ class NetworkManager {
     //TODO: handle various errors
     
     //TODO: handle caching images (NSCache)
+    
 }
