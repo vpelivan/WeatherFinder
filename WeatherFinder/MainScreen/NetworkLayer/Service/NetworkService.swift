@@ -24,7 +24,6 @@ class NetworkService: NetworkServiceProtocol {
         do {
             let request = try buildURLRequest(with: endPoint, cachePolicy: cachePolicy)
             session.dataTask(with: request) { (data, response, error) in
-                //In next project task we need to create NetworkManager, to process this data, responce and errors
                 completion(data, response, error)
             }.resume()
         }
@@ -40,17 +39,15 @@ class NetworkService: NetworkServiceProtocol {
         var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: 10)
         
         request.httpMethod = endPoint.httpMethod.rawValue
+        addHeaders(endPoint.headers, &request)
         do {
             switch endPoint.task {
-            case .request:
+            case .getRequest:
                 break
-            case .requestWithParameters(let bodyParameters, let urlParameters):
-                try self.configureParameters(bodyParameters, urlParameters, &request)
-            case .requestWithParametersAndHeaders(let bodyParameters,
-                                                  let urlParameters,
-                                                  let additionalHeaders):
-                self.addAdditionalHeaders(additionalHeaders, &request)
-                try self.configureParameters(bodyParameters, urlParameters, &request)
+            case .getRequestWithParameters(let urlParameters):
+                try self.setURLParameters(urlParameters, &request)
+            case .postRequest(let bodyParameters, let urlParameters):
+                try self.configurePOSTParameters(urlParameters, bodyParameters, &request)
             }
             return request
         } catch {
@@ -58,29 +55,47 @@ class NetworkService: NetworkServiceProtocol {
         }
     }
     
-    private func configureParameters(_ bodyParameters: Parameters?,
-                                     _ urlParameters: Parameters?,
-                                     _ request: inout URLRequest) throws {
+    private func addHeaders(_ headers: HTTPHeaders?,
+                            _ request: inout URLRequest) {
         
+        guard let headers = headers else { return }
+        
+        for (key, value) in headers {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+    }
+    
+    private func setURLParameters(_ urlParameters: Parameters,
+                                  _ request: inout URLRequest) throws {
         do {
-            if let urlParameters = urlParameters {
-                try URLParameterEncoder.encode(urlRequest: &request, with: urlParameters)
-            }
-            if let bodyParameters = bodyParameters {
-                try JSONParameterEncoder.encode(urlRequest: &request, with: bodyParameters)
-            }
+            try URLParameterEncoder.encode(urlRequest: &request, with: urlParameters)
         } catch {
             throw error
         }
     }
     
-    private func addAdditionalHeaders(_ additionalHeaders: HTTPHeaders?,
-                                      _ request: inout URLRequest) {
+    private func setBodyParameters(_ bodyParameters: Parameters,
+                                   _ request: inout URLRequest) throws {
         
-        guard let headers = additionalHeaders else { return }
+        do {
+            try JSONParameterEncoder.encode(urlRequest: &request, with: bodyParameters)
+        } catch {
+            throw error
+        }
+    }
+    
+    private func configurePOSTParameters(_ urlParameters: Parameters?,
+                                         _ bodyParameters: Parameters?,
+                                         _ request: inout URLRequest) throws {
         
-        for (key, value) in headers {
-            request.setValue(value, forHTTPHeaderField: key)
+        guard !(bodyParameters == nil && urlParameters == nil) else {
+            throw NetworkError.nilParameters
+        }
+        if let urlParameters = urlParameters {
+            try self.setURLParameters(urlParameters, &request)
+        }
+        if let bodyParameters = bodyParameters {
+            try self.setBodyParameters(bodyParameters, &request)
         }
     }
 }

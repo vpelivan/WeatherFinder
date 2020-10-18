@@ -21,15 +21,14 @@ struct WeatherDataModel: Decodable{
         let pressure: Int
         let humidity: Int
         let temperatureMinimal: Double
-        let temperatureMaximum: Double
+        let temperatureMaximal: Double
         
-        enum CodingKeysMain: String, CodingKey {
+        enum CodingKeys: String, CodingKey {
+            case pressure, humidity
             case temperature = "temp"
             case feelsLike = "feels_like"
-            case pressure
-            case humidity
             case temperatureMinimal = "temp_min"
-            case temperarureMaximum = "temp_max"
+            case temperatureMaximal = "temp_max"
         }
     }
     

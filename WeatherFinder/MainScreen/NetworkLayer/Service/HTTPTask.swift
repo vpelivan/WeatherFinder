@@ -16,15 +16,16 @@ typealias Parameters = [String : Any]
 
 // this enum can be extended with download cases, upload cases etc
 enum HTTPTask {
-    // Simple Request (can be used to get images, or any other kind of data)
-    case request
-    /* Request with parameters. Body is used for POST request to encode serialized JSON data
-    and post it on server (must be nil, if you perform GET requests), urlParameters composes
-    url using URLComponents class) */
-    case requestWithParameters(bodyParameters: Parameters?, urlParameters: Parameters?)
-    /* Request with parameters and additional headers (to set http headers like encoding
-    or "application/json" in "Content-Type" header field) */
-    case requestWithParametersAndHeaders(bodyParameters: Parameters?,
-                                         urlParameters: Parameters?,
-                                         additionalHeaders: HTTPHeaders?)
+    // Simple GET Request (can be used to get images, or any other kind of data)
+    case getRequest
+    // GET request with URL parameters (urlParameters are being composed in url using URLComponents class)
+    case getRequestWithParameters(urlParameters: Parameters)
+    /* POST Request with URL parameters or body parameters.
+    
+     - urlParameters are being composed in url using URLComponents class (You need to use
+    "application/x-www-form-urlencoded" value of "Content-Type" header if you pass parameters in head of http)
+
+     - bodyParameters are being encoded into JSON data (You must use "application/json" value of "Content-Type"
+    header if you pass parameters in a body of http) */
+    case postRequest(bodyParameters: Parameters?, urlParameters: Parameters?)
 }

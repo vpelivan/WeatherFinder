@@ -17,12 +17,16 @@ class NetworkManager {
     // external dependencies
     private let networkSevice = NetworkService()
     
-    // variables
-    let apiKey = "bca99eeb8ff098c732b8104e606a8190"
-    
-    // weather units might be computed property or observable
-    let weatherUnits = "metric"
-    
+    /* weather units should be updated in UserDefaults from somewhere else (for example,
+    application settings menu controller class). Probably, a new Trello task with UserDefaults
+    setup should be created */
+    var weatherUnits: String {
+        guard let weatherUnits = UserDefaults.standard.string(forKey: "units") else {
+            return "metric"
+        }
+        return weatherUnits
+    }
+
     //One of Singleton conditions
     private init() {}
     

@@ -139,8 +139,8 @@
 		5750B6D82524C56E00D8AD10 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				57EFBCF72539E39900B81A2D /* AppDelegate.swift */,
 				7A36F66A2535C069004121C2 /* Extensions */,
+				57EFBCF72539E39900B81A2D /* AppDelegate.swift */,
 				5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */,
 				5750B6CA2524C4CC00D8AD10 /* LaunchScreen.storyboard */,
 				5750B6CD2524C4CC00D8AD10 /* Info.plist */,
@@ -189,13 +189,13 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		57B36BBD25379B7700C2BCE8 /* Endpoint */ = {
+		57B36BBD25379B7700C2BCE8 /* Endpoints */ = {
 			isa = PBXGroup;
 			children = (
 				57B36BBE25379BC400C2BCE8 /* WeatherApiEndpoint.swift */,
 				572D85082537C29B00CC54D2 /* ImagesEndpoint.swift */,
 			);
-			path = Endpoint;
+			path = Endpoints;
 			sourceTree = "<group>";
 		};
 		57B36BC42537A3E100C2BCE8 /* Manager */ = {
@@ -210,7 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				579E79BE25339132002A67A6 /* Protocols */,
-				57B36BBD25379B7700C2BCE8 /* Endpoint */,
+				57B36BBD25379B7700C2BCE8 /* Endpoints */,
 				5780B327253764F000F87463 /* Encoders */,
 				579E79D02533CE59002A67A6 /* Service */,
 				57B36BC42537A3E100C2BCE8 /* Manager */,

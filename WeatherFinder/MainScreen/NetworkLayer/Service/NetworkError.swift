@@ -12,4 +12,5 @@ import Foundation
 enum NetworkError: String, Error {
     case urlMissing = "URL is nil"
     case encodingFailed = "Parameter encoding failed"
+    case nilParameters = "Paremeters in request cannot be nil"
 }

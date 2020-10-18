@@ -21,16 +21,15 @@ final class CityWeatherTableViewCell: UITableViewCell {
     @IBOutlet private weak var maximumCurrentTemperatureLabel: UILabel!
     @IBOutlet private weak var minimumCurrentTemperatureLabel: UILabel!
     
-    //TODO: declare NetworkManager class example, to reach "getWeatherImage(iconId: String, completion: @escaping (UIImage) -> ())" method (task: https://trello.com/c/fKkoSAWB)
-    
     //TODO: current method must be implemented in task: https://trello.com/c/4Wjbg7Ph
-    func updateWeatherData(/* model: CityWeather */) {
+    func updateWeatherData(model: WeatherDataModel) {
         /* inside this method, depending on current model data, all
          appropriate model values must be assigned in UI Elemets values;
          current method should call
-         "getWeatherImage(iconId: String, completion: @escaping (UIImage) -> ())"
+         "getWeatherImage(iconId: String, completion: @escaping (UIImage?) -> ())"
          from NetworkManager, and assign an image to weatherStatusImageView
-         via escaping closure
+         via escaping closure. If the image loading failed, "NoImage" placeholder image
+         should be assigned from Assets
         */
     }
 }

@@ -10,6 +10,8 @@ import Foundation
 
 // this enum can be extended with various http method cases, I took the one that our API supports
 enum HTTPMethod: String {
-    case get  = "GET"
-    case post = "POST"
+    case get    = "GET"
+    case post   = "POST"
+    case put    = "PUT"
+    case delete = "DELETE"
 }

@@ -27,7 +27,6 @@ enum ImagesEndpoint: String {
     case snowNight
     case mist
     case mistNight
-    case noImage
 }
 
 extension ImagesEndpoint: EndPointType {
@@ -37,8 +36,6 @@ extension ImagesEndpoint: EndPointType {
         switch self {
         case .mist:
             baseURLString = "https://icons.iconarchive.com/icons/icons-land/weather/256"
-        case .noImage:
-            baseURLString = "https://www.samsung.com/etc/designs/smg/global/imgs/support/cont/"
         default:
             baseURLString = "https://icons.iconarchive.com/icons/oxygen-icons.org/oxygen/256/"
         }
@@ -64,7 +61,6 @@ extension ImagesEndpoint: EndPointType {
         case .snowDay: return "Status-weather-snow-scattered-day-icon.png"
         case .snowNight: return "Status-weather-snow-scattered-night-icon.png"
         case .mist, .mistNight: return "Fog-icon.png"
-        case .noImage: return "NO_IMG_600x600.png"
         }
     }
     
@@ -73,7 +69,7 @@ extension ImagesEndpoint: EndPointType {
     }
     
     var task: HTTPTask {
-        return .request
+        return .getRequest
     }
     
     var headers: HTTPHeaders? {
