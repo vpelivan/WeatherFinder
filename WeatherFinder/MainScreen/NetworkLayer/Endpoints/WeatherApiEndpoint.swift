@@ -18,7 +18,7 @@ enum WeatherApiEndpoint {
 extension WeatherApiEndpoint: EndPointType {
     
     var baseURL: URL {
-        let baseURLString = "baseURL".valueFromInfoPlist
+        let baseURLString = Bundle.main.object(forInfoDictionaryKey: "baseURL") as? String
         guard let baseURLStringNonNil = baseURLString,
               let url = URL(string: baseURLStringNonNil) else {
             fatalError("baseURL could not be configured")
@@ -64,7 +64,7 @@ extension WeatherApiEndpoint: EndPointType {
     }
     
     private var apiKey: String {
-        let apiKey = "apiKey".valueFromInfoPlist
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "apiKey") as? String
         guard let apiKeyNonNil = apiKey else {
             fatalError("apiKey could not be found in info.plist")
         }

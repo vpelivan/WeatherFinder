@@ -21,10 +21,7 @@ class NetworkManager {
     application settings menu controller class). Probably, a new Trello task with UserDefaults
     setup should be created */
     var weatherUnits: String {
-        guard let weatherUnits = UserDefaults.standard.string(forKey: "units") else {
-            return "metric"
-        }
-        return weatherUnits
+        return UserDefaults.standard.string(forKey: "units") ?? "metric"
     }
 
     //One of Singleton conditions
