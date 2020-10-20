@@ -20,16 +20,63 @@ final class CityWeatherTableViewCell: UITableViewCell {
     @IBOutlet private weak var windSpeedLabel: UILabel!
     @IBOutlet private weak var maximumCurrentTemperatureLabel: UILabel!
     @IBOutlet private weak var minimumCurrentTemperatureLabel: UILabel!
+    @IBOutlet private weak var imageActivityIndicator: UIActivityIndicatorView!
     
-    //TODO: current method must be implemented in task: https://trello.com/c/4Wjbg7Ph
+    override func awakeFromNib() {
+//        imageActivityIndicator.isHidden = true
+    }
+    
     func updateWeatherData(model: WeatherDataModel) {
-        /* inside this method, depending on current model data, all
-         appropriate model values must be assigned in UI Elemets values;
-         current method should call
-         "getWeatherImage(iconId: String, completion: @escaping (UIImage?) -> ())"
-         from NetworkManager, and assign an image to weatherStatusImageView
-         via escaping closure. If the image loading failed, "NoImage" placeholder image
-         should be assigned from Assets
-        */
+        
+        let currentTemperature = model.mainWeatherInfo?.temperature
+        let feelsLikeTemperature = model.mainWeatherInfo?.feelsLike
+        let pressure = model.mainWeatherInfo?.pressure
+        let humidity = model.mainWeatherInfo?.humidity
+        let windSpeed = model.windSpeed?.speed
+        let maximumCurrentTemperature = model.mainWeatherInfo?.temperatureMaximum
+        let minimumCurrentTemperature = model.mainWeatherInfo?.temperatureMinimum
+        
+        cityLabel.text = model.nameOfCity
+        temperatureLabel.text = getInterpolatedStringLoalized("%.f˚C", currentTemperature)
+        feelsLikeLabel.text = getInterpolatedStringLoalized("Feels Like: %.f˚C", feelsLikeTemperature)
+        pressureLabel.text = getInterpolatedStringLoalized("Pressure: %d mm", pressure)
+        humidityLabel.text = getInterpolatedStringLoalized("Humidity: %d %%", humidity)
+        windSpeedLabel.text = getInterpolatedStringLoalized("Wind Speed: %.f m/s", windSpeed)
+        maximumCurrentTemperatureLabel.text = getInterpolatedStringLoalized("Maximum Current Temperature: %.f˚C",
+                                                                    maximumCurrentTemperature)
+        minimumCurrentTemperatureLabel.text = getInterpolatedStringLoalized("Minimum Current Temperature: %.f˚C",
+                                                                    minimumCurrentTemperature)
+        if model.weatherCondition.isEmpty == false {
+            let weatherCondition = model.weatherCondition[0]?.description
+            let iconId = model.weatherCondition[0]?.icon
+            weatherConditionLabel.text = weatherCondition?.capitalized ?? "No Value".localized
+            updateWeatherImage(iconId: iconId)
+        }
+    }
+    
+    private func getInterpolatedStringLoalized<T>(_ format: String, _ interpolationValue: T?) -> String {
+        if let interpolationValue = interpolationValue {
+            return String.localizedStringWithFormat(format, interpolationValue as! CVarArg)
+        } else {
+            return "No value".localized
+        }
+    }
+    
+    private func updateWeatherImage(iconId: String?) {
+        guard let iconId = iconId else {
+            weatherStatusImageView.image = UIImage(named: "NoImage")
+            return
+        }
+//        imageActivityIndicator.isHidden = false
+//        imageActivityIndicator.startAnimating()
+        NetworkManager.shared.getWeatherImage(iconId: iconId) { (weatherImage) in
+            if let weatherImage = weatherImage {
+//                self.imageActivityIndicator.isHidden = true
+//                self.imageActivityIndicator.stopAnimating()
+                self.weatherStatusImageView.image = weatherImage
+            } else {
+                self.weatherStatusImageView.image = UIImage(named: "NoImage")
+            }
+        }
     }
 }

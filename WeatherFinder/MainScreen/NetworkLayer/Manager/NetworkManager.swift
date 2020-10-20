@@ -39,4 +39,6 @@ class NetworkManager {
     
     //TODO: handle caching images (NSCache)
     
+    func getWeatherImage(iconId: String, completion: @escaping (UIImage?) -> ()) {
+    }
 }
