@@ -1,5 +1,11 @@
 /* placeholder for search controller */
 "Search for city" = "Поиск города";
 
+/* CityWeatherTableViewCell labels text */
 "No Value" = "Нет Данных";
-
+"Feels Like: %.f˚C" = "Ощущается Как: %.f˚C";
+"Pressure: %d mm" = "Давление: %d мм";
+"Humidity: %d %%" = "Влажность: %d %%";
+"Wind Speed: %.f m/s" = "Скорость ветра: %.f м/с";
+"Maximum Current Temperature: %.f˚C" = "Максимальная температура: %.f˚C";
+"Minimum Current Temperature: %.f˚C" = "Минимальная температура: %.f˚C";

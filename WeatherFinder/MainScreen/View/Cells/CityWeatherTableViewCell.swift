@@ -9,7 +9,7 @@
 import UIKit
 
 final class CityWeatherTableViewCell: UITableViewCell {
-
+    
     @IBOutlet private weak var cityLabel: UILabel!
     @IBOutlet private weak var temperatureLabel: UILabel!
     @IBOutlet private weak var feelsLikeLabel: UILabel!
@@ -23,7 +23,7 @@ final class CityWeatherTableViewCell: UITableViewCell {
     @IBOutlet private weak var imageActivityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
-//        imageActivityIndicator.isHidden = true
+        toggleActivityIndicator(visible: true)
     }
     
     func updateWeatherData(model: WeatherDataModel) {
@@ -43,12 +43,13 @@ final class CityWeatherTableViewCell: UITableViewCell {
         humidityLabel.text = getInterpolatedStringLoalized("Humidity: %d %%", humidity)
         windSpeedLabel.text = getInterpolatedStringLoalized("Wind Speed: %.f m/s", windSpeed)
         maximumCurrentTemperatureLabel.text = getInterpolatedStringLoalized("Maximum Current Temperature: %.f˚C",
-                                                                    maximumCurrentTemperature)
+                                                                            maximumCurrentTemperature)
         minimumCurrentTemperatureLabel.text = getInterpolatedStringLoalized("Minimum Current Temperature: %.f˚C",
-                                                                    minimumCurrentTemperature)
+                                                                            minimumCurrentTemperature)
         if model.weatherCondition.isEmpty == false {
             let weatherCondition = model.weatherCondition[0]?.description
             let iconId = model.weatherCondition[0]?.icon
+            
             weatherConditionLabel.text = weatherCondition?.capitalized ?? "No Value".localized
             updateWeatherImage(iconId: iconId)
         }
@@ -56,10 +57,9 @@ final class CityWeatherTableViewCell: UITableViewCell {
     
     private func getInterpolatedStringLoalized<T>(_ format: String, _ interpolationValue: T?) -> String {
         if let interpolationValue = interpolationValue {
-            return String.localizedStringWithFormat(format, interpolationValue as! CVarArg)
-        } else {
-            return "No value".localized
+            return String(format: format.localized, interpolationValue as! CVarArg)
         }
+        return "No value".localized
     }
     
     private func updateWeatherImage(iconId: String?) {
@@ -67,16 +67,20 @@ final class CityWeatherTableViewCell: UITableViewCell {
             weatherStatusImageView.image = UIImage(named: "NoImage")
             return
         }
-//        imageActivityIndicator.isHidden = false
-//        imageActivityIndicator.startAnimating()
+        
         NetworkManager.shared.getWeatherImage(iconId: iconId) { (weatherImage) in
-            if let weatherImage = weatherImage {
-//                self.imageActivityIndicator.isHidden = true
-//                self.imageActivityIndicator.stopAnimating()
-                self.weatherStatusImageView.image = weatherImage
-            } else {
+            guard let weatherImage = weatherImage else {
                 self.weatherStatusImageView.image = UIImage(named: "NoImage")
+                return
             }
+            self.toggleActivityIndicator(visible: false)
+            self.weatherStatusImageView.image = weatherImage
         }
+    }
+    
+    private func toggleActivityIndicator(visible: Bool) {
+        imageActivityIndicator.isHidden = visible
+        imageActivityIndicator.isHidden ?
+            imageActivityIndicator.stopAnimating() : imageActivityIndicator.startAnimating()
     }
 }
