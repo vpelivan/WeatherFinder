@@ -2,19 +2,24 @@
 //  NetworkManager.swift
 //  WeatherFinder
 //
-//  Created by Victor Pelivan on 15.10.2020.
-//  Copyright © 2020 Viktor Pelivan. All rights reserved.
+//  Created by Romanovskiy Volodymyr on 15.10.2020.
+//  Copyright © 2020 Romanovskiy Volodymyr. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class NetworkManager {
+protocol NetManagerProtocol {
+    func getWeatherDataByCityName(name: String, expression: @escaping (WeatherDataModel?, Error?) -> ())
+    func getWeatherImage()
+    func getWeatherByCoordinates(longitude: Double, latitude: Double)
+}
+
+class NetworkManager: NetManagerProtocol {
     
     // Singleton
     static let shared = NetworkManager()
     
-    // external dependencies
     private let networkSevice = NetworkService()
     
     /* weather units should be updated in UserDefaults from somewhere else (for example,
@@ -26,6 +31,45 @@ class NetworkManager {
 
     //One of Singleton conditions
     private init() {}
+    
+    func getWeatherDataByCityName(name: String, expression: @escaping (WeatherDataModel?, Error?) -> ()) {
+        let decoder = JSONDecoder()
+        networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name), completion: {  (data, response, error) -> Void in
+            do {
+                let httpResponse = response as? HTTPURLResponse
+                switch httpResponse?.statusCode {
+                    case 200 :
+                        if let dataInner = data {
+                            let weather = try? decoder.decode(WeatherDataModel.self, from: dataInner)//TODO handle posible exception of decoding
+                            expression(weather, nil)
+                        }
+                        else {
+                            //maybe some logic that handling exception when data is nil
+                        }
+                    case 404: throw NetworkError.notFound
+                        
+                    case .none: expression(nil, error)
+                        
+                    case .some(_): expression(nil, nil) //TODO make logic for other status codes
+                }
+            }
+            catch let error
+            {
+                expression(nil, error)
+            }
+        })
+    }
+    
+    
+    func getWeatherImage()
+    {
+        //TODO
+    }
+    
+    
+    func getWeatherByCoordinates(longitude: Double, latitude: Double) {
+        <#code#>//TODO
+    }
     
     /* TODO: add different kinds of methods performing requests like getWeatherByCityName(name:completion:),
     getWeatherImage(iconId:completion:) etc, parse all JSON data inside a model, and return this model inside
