@@ -51,13 +51,18 @@ class WeatherScreenViewController: UIViewController {
     }
 }
 
+// MARK: Extension realization
+
 extension WeatherScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as! CityWeatherTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? CityWeatherTableViewCell else {
+            return tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath)
+        }
+        
         if let weatherData = cityWeatherData{
             cell.updateWeatherData(model: weatherData)
         }
