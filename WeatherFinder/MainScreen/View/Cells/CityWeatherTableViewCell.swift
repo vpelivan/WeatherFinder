@@ -21,7 +21,7 @@ final class CityWeatherTableViewCell: UITableViewCell, ActivityIndicatorProtocol
     @IBOutlet private weak var windSpeedLabel: UILabel!
     @IBOutlet private weak var maximumCurrentTemperatureLabel: UILabel!
     @IBOutlet private weak var minimumCurrentTemperatureLabel: UILabel!
-    @IBOutlet private weak var imageActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         toggleActivityIndicator(visible: true)
@@ -54,12 +54,6 @@ final class CityWeatherTableViewCell: UITableViewCell, ActivityIndicatorProtocol
             weatherConditionLabel.text = weatherCondition?.capitalized ?? "No Value".localized
             updateWeatherImage(iconId: iconId)
         }
-    }
-    
-    func toggleActivityIndicator(visible: Bool) {
-        imageActivityIndicator.isHidden = visible
-        imageActivityIndicator.isHidden ?
-            imageActivityIndicator.stopAnimating() : imageActivityIndicator.startAnimating()
     }
     
     private func updateWeatherImage(iconId: String?) {

@@ -7,7 +7,16 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ActivityIndicatorProtocol {
-    func toggleActivityIndicator(visible: Bool)
+    var activityIndicator: UIActivityIndicatorView! { get }
+}
+
+extension ActivityIndicatorProtocol {
+    func toggleActivityIndicator(visible: Bool) {
+        activityIndicator.isHidden = visible
+        activityIndicator.isHidden ?
+            activityIndicator.stopAnimating() : activityIndicator.startAnimating()
+    }
 }
