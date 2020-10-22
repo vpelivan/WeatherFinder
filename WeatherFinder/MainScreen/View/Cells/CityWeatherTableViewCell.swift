@@ -8,7 +8,8 @@
 
 import UIKit
 
-final class CityWeatherTableViewCell: UITableViewCell {
+
+final class CityWeatherTableViewCell: UITableViewCell, ActivityIndicatorProtocol {
     
     @IBOutlet private weak var cityLabel: UILabel!
     @IBOutlet private weak var temperatureLabel: UILabel!
@@ -37,15 +38,15 @@ final class CityWeatherTableViewCell: UITableViewCell {
         let minimumCurrentTemperature = model.mainWeatherInfo?.temperatureMinimum
         
         cityLabel.text = model.nameOfCity
-        temperatureLabel.text = getInterpolatedStringLoalized("%.f˚C", currentTemperature)
-        feelsLikeLabel.text = getInterpolatedStringLoalized("Feels Like: %.f˚C", feelsLikeTemperature)
-        pressureLabel.text = getInterpolatedStringLoalized("Pressure: %d mm", pressure)
-        humidityLabel.text = getInterpolatedStringLoalized("Humidity: %d %%", humidity)
-        windSpeedLabel.text = getInterpolatedStringLoalized("Wind Speed: %.f m/s", windSpeed)
-        maximumCurrentTemperatureLabel.text = getInterpolatedStringLoalized("Maximum Current Temperature: %.f˚C",
-                                                                            maximumCurrentTemperature)
-        minimumCurrentTemperatureLabel.text = getInterpolatedStringLoalized("Minimum Current Temperature: %.f˚C",
-                                                                            minimumCurrentTemperature)
+        temperatureLabel.text = "%.f˚C".getLocalizedStringFromFormat(currentTemperature)
+        feelsLikeLabel.text = "Feels Like: %.f˚C".getLocalizedStringFromFormat(feelsLikeTemperature)
+        pressureLabel.text = "Pressure: %d mm".getLocalizedStringFromFormat(pressure)
+        humidityLabel.text = "Humidity: %d %%".getLocalizedStringFromFormat(humidity)
+        windSpeedLabel.text = "Wind Speed: %.f m/s".getLocalizedStringFromFormat(windSpeed)
+        maximumCurrentTemperatureLabel.text =
+            "Maximum Current Temperature: %.f˚C".getLocalizedStringFromFormat(maximumCurrentTemperature)
+        minimumCurrentTemperatureLabel.text =
+            "Minimum Current Temperature: %.f˚C".getLocalizedStringFromFormat(minimumCurrentTemperature)
         if model.weatherCondition.isEmpty == false {
             let weatherCondition = model.weatherCondition[0]?.description
             let iconId = model.weatherCondition[0]?.icon
@@ -55,11 +56,10 @@ final class CityWeatherTableViewCell: UITableViewCell {
         }
     }
     
-    private func getInterpolatedStringLoalized<T>(_ format: String, _ interpolationValue: T?) -> String {
-        if let interpolationValue = interpolationValue {
-            return String(format: format.localized, interpolationValue as! CVarArg)
-        }
-        return "No value".localized
+    func toggleActivityIndicator(visible: Bool) {
+        imageActivityIndicator.isHidden = visible
+        imageActivityIndicator.isHidden ?
+            imageActivityIndicator.stopAnimating() : imageActivityIndicator.startAnimating()
     }
     
     private func updateWeatherImage(iconId: String?) {
@@ -76,11 +76,5 @@ final class CityWeatherTableViewCell: UITableViewCell {
             self.toggleActivityIndicator(visible: false)
             self.weatherStatusImageView.image = weatherImage
         }
-    }
-    
-    private func toggleActivityIndicator(visible: Bool) {
-        imageActivityIndicator.isHidden = visible
-        imageActivityIndicator.isHidden ?
-            imageActivityIndicator.stopAnimating() : imageActivityIndicator.startAnimating()
     }
 }
