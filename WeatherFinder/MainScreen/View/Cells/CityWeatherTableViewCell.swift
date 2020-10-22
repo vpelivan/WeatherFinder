@@ -20,6 +20,7 @@ final class CityWeatherTableViewCell: UITableViewCell {
     @IBOutlet private weak var windSpeedLabel: UILabel!
     @IBOutlet private weak var maximumCurrentTemperatureLabel: UILabel!
     @IBOutlet private weak var minimumCurrentTemperatureLabel: UILabel!
+    @IBOutlet private weak var imageActivityIndicator: UIActivityIndicatorView!
     
     //TODO: current method must be implemented in task: https://trello.com/c/4Wjbg7Ph
     func updateWeatherData(model: WeatherDataModel) {
