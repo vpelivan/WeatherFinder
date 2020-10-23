@@ -126,10 +126,10 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="activityIndicator" destination="ms2-gJ-KNn" id="Fgn-Cc-rx1"/>
                 <outlet property="cityLabel" destination="iZc-c7-91r" id="Qpu-an-A9g"/>
                 <outlet property="feelsLikeLabel" destination="8A4-DY-zd2" id="dr8-O7-MgU"/>
                 <outlet property="humidityLabel" destination="9sf-Up-ucn" id="fT0-SE-Hmq"/>
-                <outlet property="imageActivityIndicator" destination="ms2-gJ-KNn" id="4Gu-bU-wzB"/>
                 <outlet property="maximumCurrentTemperatureLabel" destination="Kmb-KD-dyk" id="cO5-Vf-7Hk"/>
                 <outlet property="minimumCurrentTemperatureLabel" destination="O6t-2x-bvb" id="XxK-pF-MZ9"/>
                 <outlet property="pressureLabel" destination="1vw-tO-iko" id="6rS-jx-yLZ"/>

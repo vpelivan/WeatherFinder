@@ -58,18 +58,17 @@ final class CityWeatherTableViewCell: UITableViewCell, ActivityIndicatorProtocol
     
     private func updateWeatherImage(iconId: String?) {
         guard let iconId = iconId else {
-            toggleActivityIndicator(visible: false)
             weatherStatusImageView.image = UIImage(named: "NoImage")
             return
         }
         
         NetworkManager.shared.getWeatherImage(iconId: iconId) { (weatherImage) in
-            self.toggleActivityIndicator(visible: false)
-            if let weatherImage = weatherImage {
-                self.weatherStatusImageView.image = weatherImage
-            } else {
+            guard let weatherImage = weatherImage else {
                 self.weatherStatusImageView.image = UIImage(named: "NoImage")
+                return
             }
+            self.toggleActivityIndicator(visible: false)
+            self.weatherStatusImageView.image = weatherImage
         }
     }
 }

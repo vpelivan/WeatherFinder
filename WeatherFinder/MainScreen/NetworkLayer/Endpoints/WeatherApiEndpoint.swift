@@ -43,24 +43,27 @@ extension WeatherApiEndpoint: EndPointType {
         switch self {
         case .findCityByName(let name):
             return .getRequestWithParameters(urlParameters: ["q": name,
+                                                             "lang": languageCode,
                                                              "units": weatherUnits,
                                                              "appid": apiKey])
         case .findCityByCoordinates(let lattitude, let longtitute):
             return .getRequestWithParameters(urlParameters: ["lat": lattitude,
                                                              "lon": longtitute,
+                                                             "lang": languageCode,
                                                              "units": weatherUnits,
                                                              "appid": apiKey])
         case .oneCallByCoordinates(let lattitude, let longtitute, let exclude):
             return .getRequestWithParameters(urlParameters: ["lat": lattitude,
                                                              "lon": longtitute,
                                                              "exclude": exclude,
+                                                             "lang": languageCode,
                                                              "units": weatherUnits,
                                                              "appid": apiKey])
         }
     }
     
     var headers: HTTPHeaders? {
-        return ["Content-Type" : "application/json"]
+        return ["Content-Type" : "application/json; charset=utf-8"]
     }
     
     private var apiKey: String {
@@ -73,5 +76,9 @@ extension WeatherApiEndpoint: EndPointType {
     
     private var weatherUnits: String {
         return NetworkManager.shared.weatherUnits
+    }
+    
+    private var languageCode: String {
+        return Locale.current.languageCode ?? "en"
     }
 }
