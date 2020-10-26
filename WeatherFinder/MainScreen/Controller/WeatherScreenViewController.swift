@@ -10,11 +10,13 @@ class WeatherScreenViewController: UIViewController {
     private var searchController: UISearchController?
     
     private let gradientLayer = Colors.gradientLayer
+    private let geolocation = Geolocation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
         refresh()
+        geolocation.startLocationManager()
     }
     
     override public func traitCollectionDidChange(_ previouseTraitCollection: UITraitCollection?) {
