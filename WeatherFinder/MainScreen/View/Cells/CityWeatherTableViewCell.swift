@@ -24,7 +24,23 @@ final class CityWeatherTableViewCell: UITableViewCell, ActivityIndicatorProtocol
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func awakeFromNib() {
+        super.awakeFromNib()
         toggleActivityIndicator(visible: true)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cityLabel.text?.removeAll()
+        temperatureLabel.text?.removeAll()
+        feelsLikeLabel.text?.removeAll()
+        weatherConditionLabel.text?.removeAll()
+        weatherStatusImageView.image = nil
+        pressureLabel.text?.removeAll()
+        humidityLabel.text?.removeAll()
+        windSpeedLabel.text?.removeAll()
+        maximumCurrentTemperatureLabel.text?.removeAll()
+        minimumCurrentTemperatureLabel.text?.removeAll()
+        toggleActivityIndicator(visible: false)
     }
     
     func updateWeatherData(model: WeatherDataModel) {
@@ -63,12 +79,12 @@ final class CityWeatherTableViewCell: UITableViewCell, ActivityIndicatorProtocol
             return
         }
         
-        NetworkManager.shared.getWeatherImage(iconId: iconId) { (weatherImage) in
-            self.toggleActivityIndicator(visible: false)
+        NetworkManager.shared.getWeatherImage(iconId: iconId) { [weak self] (weatherImage) in
+            self?.toggleActivityIndicator(visible: false)
             if let weatherImage = weatherImage {
-                self.weatherStatusImageView.image = weatherImage
+                self?.weatherStatusImageView.image = weatherImage
             } else {
-                self.weatherStatusImageView.image = UIImage(named: "NoImage")
+                self?.weatherStatusImageView.image = UIImage(named: "NoImage")
             }
         }
     }
