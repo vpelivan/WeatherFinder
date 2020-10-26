@@ -37,36 +37,59 @@ class NetworkManager: NetManagerProtocol {
     //One of Singleton conditions
     private init() {}
     
-    func getWeatherDataByCityName(name: String, completionHandler: @escaping (WeatherDataModel?, Error?) -> ()) {
+    func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ()) {
         let decoder = JSONDecoder()
         networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name), completion: {  (data, response, error) -> Void in
             do {
                 let httpResponse = response as? HTTPURLResponse
                 switch httpResponse?.statusCode {
                     case 200 :
-                        if let dataInner = data {
-                            let weather = try? decoder.decode(WeatherDataModel.self, from: dataInner)//TODO handle posible exception of decoding
-                            completionHandler(weather, nil)
-                        }
+                        guard let dataInner = data
                         else {
+                            return
                             //maybe some logic that handling exception when data is nil
                         }
-                    case 404: throw NetworkError.notFound
-                    case .none: completionHandler(nil, error)
-                    case .some(_): completionHandler(nil, nil) //TODO make logic for other status codes
+                        let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
+                            //TODO handle posible exception of decoding
+                        completionHandler(.success(weather))
+                    case 404: completionHandler(.failure(.notFound))
+                    case .none: completionHandler(.failure(error as! NetworkError))
+                    case .some(_): completionHandler(.failure(error as! NetworkError))
                 }
             }
             catch let error
             {
-                completionHandler(nil, error)
+                print(error)
+                completionHandler(.failure(error as! NetworkError))
             }
         })
     }
     
     func getWeatherImage(iconID: String, completionHandler: @escaping (UIImage?) -> Void) //data.hashValue method
     {
-        switch iconID {
-            case "01d": imageRequest(type: ImagesEndpoint.clearSkyDay, completionHandler: {(image, error) -> Void in
+        let imageCodes: [String: ImagesEndpoint] = [
+            "01d": ImagesEndpoint.clearSkyDay,
+            "01n": ImagesEndpoint.clearSkyNight,
+            "02d": ImagesEndpoint.fewCloudsDay,
+            "02n": ImagesEndpoint.fewCloudsNight,
+            "03d": ImagesEndpoint.scatteredCloudsDay,
+            "03n": ImagesEndpoint.scatteredCloudsNight,
+            "04d": ImagesEndpoint.brokenClouds,
+            "04n": ImagesEndpoint.brokenCloudsNight,
+            "09d": ImagesEndpoint.showerRainDay,
+            "09n": ImagesEndpoint.showerRainNight,
+            "10d": ImagesEndpoint.rainDay,
+            "10n": ImagesEndpoint.rainNight,
+            "11d": ImagesEndpoint.thunderstormDay,
+            "11n": ImagesEndpoint.thunderstormNight,
+            "13d": ImagesEndpoint.snowDay,
+            "13n": ImagesEndpoint.snowNight,
+            "50d": ImagesEndpoint.mist,
+            "50n": ImagesEndpoint.mistNight
+        ]
+        
+        if imageCodes.keys.contains(iconID) {
+            imageRequest(type: imageCodes[iconID]!, completionHandler: {(image, error) -> Void in
                 do {
                         try completionHandler(image)
                 }
@@ -75,89 +98,36 @@ class NetworkManager: NetManagerProtocol {
                     completionHandler(nil)
                 }
             })
-            case "01n": imageRequest(type: ImagesEndpoint.clearSkyNight, completionHandler: {(image, error) -> Void in
-                do {
-                        try completionHandler(image)
-                }
-                catch let error{
-                    print(error)
-                    completionHandler(nil)
-                }
-            })
-            case "02d":  imageRequest(type: ImagesEndpoint.fewCloudsDay, completionHandler: {(image, error) -> Void in
-                do {
-                        try completionHandler(image)
-                }
-                catch let error{
-                    print(error)
-                    completionHandler(nil)
-                }
-            })
-            case "02n": imageRequest(type: ImagesEndpoint.fewCloudsNight, completionHandler: {(image, error) -> Void in
-                do {
-                        try completionHandler(image)
-                }
-                catch let error{
-                    print(error)
-                    completionHandler(nil)
-                }
-            })
-            case "03d": imageRequest(type:  ImagesEndpoint.scatteredCloudsDay, completionHandler: {(image, error) -> Void in
-                do {
-                        try completionHandler(image)
-                }
-                catch let error{
-                    print(error)
-                    completionHandler(nil)
-                }
-            })
-            case "03n": imageRequest(type:  ImagesEndpoint.scatteredCloudsNight, completionHandler: {(image, error) -> Void in
-                do {
-                        try completionHandler(image)
-                }
-                catch let error{
-                    print(error)
-                    completionHandler(nil)
-                }
-            })
-            case "04d": ImagesEndpoint.brokenClouds
-            case "04n": ImagesEndpoint.brokenCloudsNight
-            case "09d": ImagesEndpoint.showerRainDay
-            case "09n": ImagesEndpoint.showerRainNight
-            case "10d": ImagesEndpoint.rainDay
-            case "10n": ImagesEndpoint.rainNight
-            case "11d": ImagesEndpoint.thunderstormDay
-            case "11n": ImagesEndpoint.thunderstormNight
-            case "13d": ImagesEndpoint.snowDay
-            case "13n": ImagesEndpoint.snowNight
-            case "50d": ImagesEndpoint.mist
-            case "50n": ImagesEndpoint.mistNight
-//        TODO other cases of image
+        }
+        else {
+            print("!!!ERROR!!! -> wrong iconID(icon code)")// TODo maybe other error handling
         }
     }
     
-    func getWeatherByCoordinates(coords: Coordinates, completionHandler: @escaping (WeatherDataModel?, Error?) -> ()) {
+    func getWeatherByCoordinates(coords: Coordinates, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ()) {
         let decoder = JSONDecoder()
-        networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByCoordinates(lattitude: coords.latitude, longtitute: coords.latitude), completion: {  (data, response, error) -> Void in
+        networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByCoordinates(lattitude: coords.latitude, longtitute: coords.longitude), completion: {  (data, response, error) -> Void in
             do {
                 let httpResponse = response as? HTTPURLResponse
                 switch httpResponse?.statusCode {
                     case 200 :
-                        if let dataInner = data {
-                            let weather = try? decoder.decode(WeatherDataModel.self, from: dataInner)//TODO handle posible exception of decoding
-                            complitionHandler(weather, nil)
-                        }
+                        guard let dataInner = data
                         else {
+                            return
                             //maybe some logic that handling exception when data is nil
                         }
-                    case 404: throw NetworkError.notFound
-                    case .none: complitionHandler(nil, error)
-                    case .some(_): complitionHandler(nil, nil) //TODO make logic for other status codes
+                        let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
+                            //TODO handle posible exception of decoding
+                        completionHandler(.success(weather))
+                    case 404: completionHandler(.failure(.notFound))
+                    case .none: completionHandler(.failure(error as! NetworkError))
+                    case .some(_): completionHandler(.failure(error as! NetworkError))
                 }
             }
             catch let error
             {
-                complitionHandler(nil, error)
+                print(error)
+                completionHandler(.failure(error as! NetworkError))
             }
         })
     }
