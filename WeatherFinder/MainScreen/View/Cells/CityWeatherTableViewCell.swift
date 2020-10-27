@@ -79,13 +79,10 @@ final class CityWeatherTableViewCell: UITableViewCell, ActivityIndicatorProtocol
             return
         }
         
-        NetworkManager.shared.getWeatherImage(iconId: iconId) { [weak self] (weatherImage) in
+        NetworkManager.shared.getWeatherImage(iconId: iconId) { [weak self] weatherImage in
             self?.toggleActivityIndicator(visible: false)
-            if let weatherImage = weatherImage {
-                self?.weatherStatusImageView.image = weatherImage
-            } else {
-                self?.weatherStatusImageView.image = UIImage(named: "NoImage")
-            }
+            self?.weatherStatusImageView.image =
+                (weatherImage != nil ? weatherImage : UIImage(named: "NoImage"))
         }
     }
 }
