@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5724110D2547F68A003CEBD5 /* PlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5724110C2547F68A003CEBD5 /* PlaceholderView.xib */; };
+		572411102547F69F003CEBD5 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5724110F2547F69F003CEBD5 /* PlaceholderView.swift */; };
+		572411132547F8A9003CEBD5 /* TableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572411122547F8A9003CEBD5 /* TableViewExtension.swift */; };
 		572D85092537C29B00CC54D2 /* ImagesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572D85082537C29B00CC54D2 /* ImagesEndpoint.swift */; };
 		5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */; };
 		5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C52524C4CB00D8AD10 /* Main.storyboard */; };
@@ -35,6 +38,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5724110C2547F68A003CEBD5 /* PlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderView.xib; sourceTree = "<group>"; };
+		5724110F2547F69F003CEBD5 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
+		572411122547F8A9003CEBD5 /* TableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExtension.swift; sourceTree = "<group>"; };
 		572D85082537C29B00CC54D2 /* ImagesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesEndpoint.swift; sourceTree = "<group>"; };
 		5750B6BC2524C4CB00D8AD10 /* WeatherFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +82,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5724110B2547F60D003CEBD5 /* Placeholder */ = {
+			isa = PBXGroup;
+			children = (
+				5724110C2547F68A003CEBD5 /* PlaceholderView.xib */,
+				5724110F2547F69F003CEBD5 /* PlaceholderView.swift */,
+			);
+			path = Placeholder;
+			sourceTree = "<group>";
+		};
 		5750B6B32524C4CB00D8AD10 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +138,7 @@
 		5750B6D52524C53C00D8AD10 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5724110B2547F60D003CEBD5 /* Placeholder */,
 				57C33FAB254195E00026AF08 /* Protocols */,
 				57B3294925263BFC00901D90 /* Cells */,
 				5750B6C52524C4CB00D8AD10 /* Main.storyboard */,
@@ -233,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				7A36F66B2535C0AD004121C2 /* StringExtensions.swift */,
+				572411122547F8A9003CEBD5 /* TableViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -302,6 +319,7 @@
 				57B3294D25263C2400901D90 /* CityWeatherTableViewCell.xib in Resources */,
 				5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */,
 				7A795737252F486B00C78974 /* InfoPlist.strings in Resources */,
+				5724110D2547F68A003CEBD5 /* PlaceholderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +333,7 @@
 				57C33FAD2541963F0026AF08 /* ActivityIndicatorProtocol.swift in Sources */,
 				579E79C025339263002A67A6 /* RequestConfigurationProtocol.swift in Sources */,
 				5780B3292537651300F87463 /* URLParameterEncoder.swift in Sources */,
+				572411132547F8A9003CEBD5 /* TableViewExtension.swift in Sources */,
 				57B36BBF25379BC400C2BCE8 /* WeatherApiEndpoint.swift in Sources */,
 				57EFBCF32539E37400B81A2D /* WeatherDataModel.swift in Sources */,
 				5780B33125378EE400F87463 /* JSONParameterEncoder.swift in Sources */,
@@ -330,6 +349,7 @@
 				57B36BC22537A3DB00C2BCE8 /* NetworkManager.swift in Sources */,
 				57EFBCEF2539E32E00B81A2D /* WeatherScreenViewController.swift in Sources */,
 				7A50B34C2526101F00304AB9 /* GradientColor.swift in Sources */,
+				572411102547F69F003CEBD5 /* PlaceholderView.swift in Sources */,
 				5780B3252535CAE300F87463 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

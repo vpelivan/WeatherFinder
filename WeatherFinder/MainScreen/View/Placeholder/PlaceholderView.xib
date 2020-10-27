@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlaceholderView" customModule="WeatherFinder" customModuleProvider="target">
+            <connections>
+                <outlet property="decsriptionLabel" destination="FVh-Kk-f4e" id="yoJ-Uh-cIY"/>
+                <outlet property="headerLabel" destination="1so-eC-KQe" id="Lpa-rV-9cz"/>
+                <outlet property="placeholderImageView" destination="Syl-tg-ifO" id="qhf-5c-QNX"/>
+                <outlet property="retryButton" destination="dMf-Vr-a9e" id="2Nv-Ju-PRn"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hub-4w-ssn" userLabel="Container View">
+                    <rect key="frame" x="82" y="298" width="250" height="300"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CloudNoInternet" translatesAutoresizingMaskIntoConstraints="NO" id="Syl-tg-ifO">
+                            <rect key="frame" x="25" y="10" width="200" height="150"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="C0E-ql-3NC"/>
+                                <constraint firstAttribute="height" constant="150" id="jyc-DZ-bhd"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Header Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1so-eC-KQe">
+                            <rect key="frame" x="10" y="168" width="230" height="21"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVh-Kk-f4e">
+                            <rect key="frame" x="10" y="197" width="230" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dMf-Vr-a9e">
+                            <rect key="frame" x="75" y="225" width="100" height="30"/>
+                            <color key="backgroundColor" red="1" green="0.50833055390000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="WbB-V1-U1a"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="mzw-ig-ck7"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                            <state key="normal" title="Retry Button">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="dMf-Vr-a9e" firstAttribute="centerX" secondItem="hub-4w-ssn" secondAttribute="centerX" id="32e-rS-tPp"/>
+                        <constraint firstItem="Syl-tg-ifO" firstAttribute="top" secondItem="hub-4w-ssn" secondAttribute="top" constant="10" id="6D8-Fy-2Xy"/>
+                        <constraint firstItem="1so-eC-KQe" firstAttribute="leading" secondItem="hub-4w-ssn" secondAttribute="leading" constant="10" id="7Vh-fZ-fHh"/>
+                        <constraint firstItem="1so-eC-KQe" firstAttribute="centerX" secondItem="hub-4w-ssn" secondAttribute="centerX" id="CCe-Vc-pVg"/>
+                        <constraint firstAttribute="height" constant="300" id="D31-Vn-YKT"/>
+                        <constraint firstItem="dMf-Vr-a9e" firstAttribute="top" secondItem="FVh-Kk-f4e" secondAttribute="bottom" constant="10" id="Gdt-jI-SA2"/>
+                        <constraint firstAttribute="trailing" secondItem="FVh-Kk-f4e" secondAttribute="trailing" constant="10" id="L0K-Z4-7Zg"/>
+                        <constraint firstItem="FVh-Kk-f4e" firstAttribute="top" secondItem="1so-eC-KQe" secondAttribute="bottom" constant="8" symbolic="YES" id="ZoX-NU-cF3"/>
+                        <constraint firstAttribute="width" constant="250" id="adm-1c-Jxq"/>
+                        <constraint firstItem="Syl-tg-ifO" firstAttribute="centerX" secondItem="hub-4w-ssn" secondAttribute="centerX" id="gB3-hN-d5V"/>
+                        <constraint firstItem="1so-eC-KQe" firstAttribute="top" secondItem="Syl-tg-ifO" secondAttribute="bottom" constant="8" symbolic="YES" id="gyj-wn-uWO"/>
+                        <constraint firstItem="FVh-Kk-f4e" firstAttribute="leading" secondItem="hub-4w-ssn" secondAttribute="leading" constant="10" id="qXH-4n-XWR"/>
+                        <constraint firstAttribute="trailing" secondItem="1so-eC-KQe" secondAttribute="trailing" constant="10" id="wAh-Qv-K0q"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="hub-4w-ssn" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="nJM-Z2-uhk"/>
+                <constraint firstItem="hub-4w-ssn" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="nut-lS-0et"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="96"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="CloudNoInternet" width="1020" height="1012"/>
+    </resources>
+</document>
