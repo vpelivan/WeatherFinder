@@ -15,7 +15,7 @@ protocol ActivityIndicatorProtocol {
 
 extension ActivityIndicatorProtocol {
     func toggleActivityIndicator(visible: Bool) {
-        activityIndicator.isHidden = visible
+        activityIndicator.isHidden = !visible
         activityIndicator.isHidden ?
             activityIndicator.stopAnimating() : activityIndicator.startAnimating()
     }
