@@ -2,10 +2,16 @@
 import Foundation
 import CoreLocation
 
-class Geolocation: NSObject {
+protocol GeolocationDelegate {
+    func authorizationDidChange(granted: Bool)
+    //TODO: - указать метод, который будет возвразщать нам структуру данных с координатами.
+    //    func getCoordinates() -> vovinaStructura
     
+    func locationServicesDisabled()
+}
+class Geolocation: NSObject {
+    var delegate: GeolocationDelegate?
     let locationManager = CLLocationManager()
-    var geolocationDenied = false
     
     override init() {
         super.init()
@@ -14,13 +20,13 @@ class Geolocation: NSObject {
     
     func startLocationManager() {
         
-        locationManager.requestWhenInUseAuthorization()
-        
         if CLLocationManager.locationServicesEnabled() == true {
-            locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
             locationManager.pausesLocationUpdatesAutomatically = false
             locationManager.startUpdatingLocation()
+            locationManager.requestWhenInUseAuthorization()
+        }else {
+            delegate?.locationServicesDisabled()
         }
     }
 }
@@ -29,6 +35,8 @@ class Geolocation: NSObject {
 extension Geolocation: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
+            //TODO: -здесь будет вызываться метод делегата возвращающий структуру с координатами
+            
             // после реализации сетевого слоя эти строчки с выводом координат в консоль будут удалены.
             print(lastLocation.coordinate.latitude)
             print(lastLocation.coordinate.longitude)
@@ -40,9 +48,7 @@ extension Geolocation: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if (status == CLAuthorizationStatus.denied) {
-            geolocationDenied = true
-            //тут будет метод, который будет вызывать плэйсхолдер, если пользователь не разрешил доступ к данным геопозиции
-        print("Placeholder")
-        } 
+            delegate?.authorizationDidChange(granted: status != CLAuthorizationStatus.denied)
+        }
     }
 }

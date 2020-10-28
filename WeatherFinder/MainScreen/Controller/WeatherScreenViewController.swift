@@ -11,12 +11,19 @@ class WeatherScreenViewController: UIViewController {
     
     private let gradientLayer = Colors.gradientLayer
     private let geolocation = Geolocation()
+    private var locationDenied = false{
+        willSet{
+            if newValue == true {
+                print("set placeholder")
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
         refresh()
-        geolocation.startLocationManager()
+        setupGeolocation()
     }
     
     override public func traitCollectionDidChange(_ previouseTraitCollection: UITraitCollection?) {
@@ -39,6 +46,22 @@ class WeatherScreenViewController: UIViewController {
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    private func setupGeolocation() {
+        geolocation.delegate = self
+        geolocation.startLocationManager()
+    }
+    
     @IBAction private func updateLocation(_ sender: UIBarButtonItem) {
+    }
+}
+
+extension WeatherScreenViewController: GeolocationDelegate {
+    func locationServicesDisabled() {
+        print("placeholder vse dela")
+    }
+    
+    func authorizationDidChange(granted: Bool) {
+        locationDenied = !granted
+        print("autorization ignored")
     }
 }
