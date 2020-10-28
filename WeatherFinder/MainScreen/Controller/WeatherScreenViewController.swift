@@ -15,7 +15,6 @@ class WeatherScreenViewController: UIViewController {
         super.viewDidLoad()
         setupSearchController()
         refresh()
-        tableView.setPlaceholder(ofKind: .noResults)
     }
     
     override public func traitCollectionDidChange(_ previouseTraitCollection: UITraitCollection?) {

@@ -10,6 +10,7 @@
 		5724110D2547F68A003CEBD5 /* PlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5724110C2547F68A003CEBD5 /* PlaceholderView.xib */; };
 		572411102547F69F003CEBD5 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5724110F2547F69F003CEBD5 /* PlaceholderView.swift */; };
 		572411132547F8A9003CEBD5 /* TableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572411122547F8A9003CEBD5 /* TableViewExtension.swift */; };
+		572411192548B98D003CEBD5 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572411182548B98D003CEBD5 /* Animations.swift */; };
 		572D85092537C29B00CC54D2 /* ImagesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572D85082537C29B00CC54D2 /* ImagesEndpoint.swift */; };
 		5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */; };
 		5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C52524C4CB00D8AD10 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		5724110C2547F68A003CEBD5 /* PlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderView.xib; sourceTree = "<group>"; };
 		5724110F2547F69F003CEBD5 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		572411122547F8A9003CEBD5 /* TableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewExtension.swift; sourceTree = "<group>"; };
+		572411182548B98D003CEBD5 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		572D85082537C29B00CC54D2 /* ImagesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesEndpoint.swift; sourceTree = "<group>"; };
 		5750B6BC2524C4CB00D8AD10 /* WeatherFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				57B3294925263BFC00901D90 /* Cells */,
 				5750B6C52524C4CB00D8AD10 /* Main.storyboard */,
 				7A50B34B2526101F00304AB9 /* GradientColor.swift */,
+				572411182548B98D003CEBD5 /* Animations.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				57EFBCEF2539E32E00B81A2D /* WeatherScreenViewController.swift in Sources */,
 				7A50B34C2526101F00304AB9 /* GradientColor.swift in Sources */,
 				572411102547F69F003CEBD5 /* PlaceholderView.swift in Sources */,
+				572411192548B98D003CEBD5 /* Animations.swift in Sources */,
 				5780B3252535CAE300F87463 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,7 +529,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vpelivan.WeatherFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -543,7 +547,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vpelivan.WeatherFinder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
