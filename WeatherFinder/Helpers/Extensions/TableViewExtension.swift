@@ -1,35 +1,15 @@
 import UIKit
 
-enum PlaceholderKind: String {
-    case loadingData
-    case noResults = "Unable to find city"
-    case noInternet = "You can switch on internet by pressing Internet Settings button"
-    case geolocationRestricted, geolocationOff = "You can switch on geolocation manually by pressing Geolocation Settings button"
-}
-
-enum PlaceholderButton: String {
-    case noInternet = "Internet Settings"
-    case geolocationRestricted, geolocationOff = "Geolocation Settings"
-}
 
 extension UITableView {
     
-    func setPlaceholder(ofKind: PlaceholderKind,
-                        title: String?,
-                        description: String? = nil,
-                        buttonLabelText: PlaceholderButton? = nil,
-                        image: UIImage? = nil) {
+    func setPlaceholder(ofKind: PlaceholderKind) {
         
-        let placeholderViewFrame = CGRect(x: self.center.x,
-                                          y: self.center.y,
-                                          width: self.bounds.size.width,
-                                          height: self.bounds.size.height)
-        
-        let placeholderView = PlaceholderView(frame: placeholderViewFrame)
-        placeholderView.delegate = self
-        placeholderView.setupPlaceholderKind(ofKind)
-        placeholderView.updatePlaceholderViewData(title, ofKind.rawValue, buttonLabelText?.rawValue, image)
+        let placeholderView = PlaceholderView()
+
         self.backgroundView = placeholderView
+        placeholderView.delegate = self
+        setupPlaceholderKind(kind: ofKind, view: placeholderView)
         self.separatorStyle = .none
     }
     
@@ -37,11 +17,52 @@ extension UITableView {
         self.backgroundView = nil
         self.separatorStyle = separatorStyle
     }
+    
+    private func setupPlaceholderKind(kind: PlaceholderKind, view: PlaceholderView) {
+        switch kind {
+        case .loadingData:
+            let image = UIImage(named: "SunSpinner")
+            view.descriptionLabel.isHidden = true
+            view.updatePlaceholderViewData(PlaceholderTitle.loadingData.rawValue,
+                                           PlaceholderKind.loadingData.rawValue,
+                                           nil,
+                                           image)
+        case .noResults:
+            let image = UIImage(named: "RainbowNoResults")
+            view.updatePlaceholderViewData(PlaceholderTitle.noResults.rawValue,
+                                           PlaceholderKind.noResults.rawValue,
+                                           nil,
+                                           image)
+        case .noInternet:
+            let image = UIImage(named: "CloudNoInternet")
+            view.updatePlaceholderViewData(PlaceholderTitle.noInternet.rawValue,
+                                           PlaceholderKind.noInternet.rawValue,
+                                           nil,
+                                           image)
+        case .geolocationOff:
+            let image = UIImage(named: "LightningNoGeolocation")
+            view.updatePlaceholderViewData(PlaceholderTitle.geolocationOff.rawValue,
+                                           PlaceholderKind.geolocationOff.rawValue,
+                                           nil,
+                                           image)
+        case .geolocationRestricted:
+            let image = UIImage(named: "LightningNoGeolocation")
+            view.goToSettingsButton.isHidden = false
+            view.updatePlaceholderViewData(PlaceholderTitle.geolocationRestricted.rawValue,
+                                           PlaceholderKind.geolocationRestricted.rawValue,
+                                           PlaceholderButton.geolocationRestricted.rawValue,
+                                           image)
+        }
+    }
 }
 
 extension UITableView: PlaceholderViewDelegate {
+    
     func onButtonTapped() {
-        //TODO: Perform opening settings
-        print("go to settings")
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        }
     }
 }

@@ -20,7 +20,6 @@ class PlaceholderView: UIView {
     @IBOutlet weak var goToSettingsButton: UIButton!
     
     var delegate: PlaceholderViewDelegate?
-    let animations = Animations()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,26 +38,7 @@ class PlaceholderView: UIView {
         headerLabel.text = headerText?.localized ?? "No Value".localized
         descriptionLabel.text = descriptionText?.localized ?? "No Value".localized
         goToSettingsButton.setTitle(settingsButtonLabel?.localized ?? "No Value".localized, for: .normal)
-        if image != nil {
-            placeholderImageView.image = image
-        }
-    }
-    
-    func setupPlaceholderKind(_ kind: PlaceholderKind) {
-        switch kind {
-        case .loadingData:
-            placeholderImageView.image = UIImage(named: "SunSpinner")
-            descriptionLabel.isHidden = true
-            animations.startRotateAnimation(imageView: placeholderImageView, circleTime: 0.8)
-        case .noResults:
-            placeholderImageView.image = UIImage(named: "RainbowNoResults")
-        case .noInternet:
-            placeholderImageView.image = UIImage(named: "CloudNoInternet")
-            goToSettingsButton.isHidden = false
-        case .geolocationRestricted, .geolocationOff:
-            placeholderImageView.image = UIImage(named: "LightningNoLocation")
-            goToSettingsButton.isHidden = false
-        }
+        placeholderImageView.image = (image != nil ? image : UIImage(named: "NoImage"))
     }
     
     private func commonInit() {
@@ -74,7 +54,6 @@ class PlaceholderView: UIView {
         goToSettingsButton.isHidden = true
         setupButton()
     }
-    
     
     private func setupButton() {
         goToSettingsButton.layer.borderWidth = 1
