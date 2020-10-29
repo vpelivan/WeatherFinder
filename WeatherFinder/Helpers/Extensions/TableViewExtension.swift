@@ -19,6 +19,8 @@ extension UITableView {
     }
     
     private func setupPlaceholderKind(kind: PlaceholderKind, view: PlaceholderView) {
+        let animations = Animations()
+        
         switch kind {
         case .loadingData:
             let image = UIImage(named: "SunSpinner")
@@ -27,31 +29,37 @@ extension UITableView {
                                            PlaceholderKind.loadingData.rawValue,
                                            nil,
                                            image)
+            animations.startRotateAnimation(imageView: view.placeholderImageView)
         case .noResults:
             let image = UIImage(named: "RainbowNoResults")
             view.updatePlaceholderViewData(PlaceholderTitle.noResults.rawValue,
                                            PlaceholderKind.noResults.rawValue,
                                            nil,
                                            image)
+            animations.startUnfadeAnimation(imageView: view.placeholderImageView)
+            
         case .noInternet:
             let image = UIImage(named: "CloudNoInternet")
             view.updatePlaceholderViewData(PlaceholderTitle.noInternet.rawValue,
                                            PlaceholderKind.noInternet.rawValue,
                                            nil,
                                            image)
+            animations.startBouncingAnimation(imageView: view.placeholderImageView)
         case .geolocationOff:
             let image = UIImage(named: "LightningNoGeolocation")
             view.updatePlaceholderViewData(PlaceholderTitle.geolocationOff.rawValue,
                                            PlaceholderKind.geolocationOff.rawValue,
                                            nil,
                                            image)
-        case .geolocationRestricted:
+            animations.startBouncingAnimation(imageView: view.placeholderImageView)
+        case .geolocationDenied:
             let image = UIImage(named: "LightningNoGeolocation")
             view.goToSettingsButton.isHidden = false
-            view.updatePlaceholderViewData(PlaceholderTitle.geolocationRestricted.rawValue,
-                                           PlaceholderKind.geolocationRestricted.rawValue,
-                                           PlaceholderButton.geolocationRestricted.rawValue,
+            view.updatePlaceholderViewData(PlaceholderTitle.geolocationDenied.rawValue,
+                                           PlaceholderKind.geolocationDenied.rawValue,
+                                           PlaceholderButton.geolocationDenied.rawValue,
                                            image)
+            animations.startBouncingAnimation(imageView: view.placeholderImageView)
         }
     }
 }
@@ -61,7 +69,9 @@ extension UITableView: PlaceholderViewDelegate {
     func onButtonTapped() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
+                UIApplication.shared.open(url) { _ in
+                    // after turning back from settings the following block should execute
+                }
             }
         }
     }

@@ -15,8 +15,12 @@ class WeatherScreenViewController: UIViewController {
         super.viewDidLoad()
         setupSearchController()
         refresh()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         // testing placeholder
-        tableView.setPlaceholder(ofKind: .geolocationOff)
+        tableView.setPlaceholder(ofKind: .geolocationDenied)
     }
     
     override public func traitCollectionDidChange(_ previouseTraitCollection: UITraitCollection?) {

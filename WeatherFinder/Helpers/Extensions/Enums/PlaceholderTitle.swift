@@ -11,5 +11,5 @@ enum PlaceholderTitle: String {
     case noResults = "No Results Found"
     case noInternet = "No Internet Connection"
     case geolocationOff = "Geolocation Services Are Off"
-    case geolocationRestricted = "Geolocation Is Restricted"
+    case geolocationDenied = "Geolocation Is Denied"
 }

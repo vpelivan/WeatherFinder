@@ -11,25 +11,51 @@ import UIKit
 class Animations {
     
     func startRotateAnimation(imageView: UIImageView,
-                              circleTime: Double,
-                              repeatCount: Float = .infinity) {
+                              circleTime: Double = 0.8,
+                              repeatCount: Float = .infinity,
+                              duration: Double = 0.7) {
         let rotation = CABasicAnimation(keyPath: "transform.rotation")
         rotation.fromValue = 0.0
         rotation.toValue = Double.pi * 2 // Minus or plus is a direction of rotation
-        rotation.duration = 0.7
+        rotation.duration = duration
         rotation.repeatCount = repeatCount
         imageView.layer.add(rotation, forKey: nil)
     }
     
+    func startUnfadeAnimation(imageView: UIImageView,
+                              alpha: Double = 0.0,
+                              duration: Double = 3.0,
+                              delay: Double = 0.5) {
+        imageView.alpha = CGFloat(alpha)
+        UIView.animate(withDuration: duration,
+                       delay: delay,
+                       options: .curveEaseOut,
+                       animations: {
+                            imageView.alpha = 1
+                       },
+                       completion: nil)
+    }
     
-//Work in progress
-    
-    //        placeholderView.placeholderImageView.transform = CGAffineTransform(translationX: 500, y: 0)
-    //        placeholderView.placeholderImageView.alpha = 0
-    //        UIView.animate(withDuration: 3, delay: 0.5, usingSpringWithDamping: 0.8, initialSpringVelocity: 2, options: .curveEaseInOut, animations: {
-    //            placeholderView.placeholderImageView.transform = .identity
-    //            placeholderView.placeholderImageView.alpha = 1
-    //        })
-            
-    
+    func startBouncingAnimation(imageView: UIImageView,
+                                duration: Double = 1.0,
+                                delay: Double = 0.5,
+                                springWithDamping: CGFloat = 0.2,
+                                springVelocity: CGFloat = 10) {
+        let bounds = imageView.bounds
+        let changedBounds = CGRect(x: bounds.origin.x - 20,
+                                   y: bounds.origin.y - 20,
+                                   width: bounds.size.width + 40,
+                                   height: bounds.size.height + 40)
+        
+        UIView.animate(withDuration: duration,
+                       delay: delay,
+                       usingSpringWithDamping: springWithDamping,
+                       initialSpringVelocity: springVelocity,
+                       options: .curveEaseInOut,
+                       animations: {
+                            imageView.bounds = changedBounds
+        }) { (sucess: Bool) in
+            imageView.bounds = bounds
+        }
+    }
 }

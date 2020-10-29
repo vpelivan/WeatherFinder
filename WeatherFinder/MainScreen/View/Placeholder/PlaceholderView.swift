@@ -31,14 +31,15 @@ class PlaceholderView: UIView {
         commonInit()
     }
     
-    func updatePlaceholderViewData(_ headerText: String?,
-                                   _ descriptionText: String? = nil,
-                                   _ settingsButtonLabel: String? = nil,
-                                   _ image: UIImage? = nil) {
-        headerLabel.text = headerText?.localized ?? "No Value".localized
-        descriptionLabel.text = descriptionText?.localized ?? "No Value".localized
-        goToSettingsButton.setTitle(settingsButtonLabel?.localized ?? "No Value".localized, for: .normal)
-        placeholderImageView.image = (image != nil ? image : UIImage(named: "NoImage"))
+    func updatePlaceholderViewData(_ headerLabelText: String?,
+                                   _ descriptionLabelText: String? = nil,
+                                   _ goToSettingsButtonLabelText: String? = nil,
+                                   _ placeholderImage: UIImage? = nil) {
+        headerLabel.text = headerLabelText?.localized ?? "No Value".localized
+        descriptionLabel.text = descriptionLabelText?.localized ?? "No Value".localized
+        goToSettingsButton.setTitle(goToSettingsButtonLabelText?.localized ?? "No Value".localized, for: .normal)
+        placeholderImageView.image =
+            (placeholderImage != nil ? placeholderImage : UIImage(named: "NoImage"))
     }
     
     private func commonInit() {

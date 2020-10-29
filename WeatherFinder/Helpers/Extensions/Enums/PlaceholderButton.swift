@@ -7,5 +7,5 @@
 //
 
 enum PlaceholderButton: String {
-    case geolocationRestricted = "Application Settings"
+    case geolocationDenied = "Application Settings"
 }

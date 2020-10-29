@@ -14,7 +14,7 @@
 /* Placeholder description text */
 "City Not Found" = "Город не найден";
 "Please check the ability to connect to the internet and try again" =
-    "Пожалуйста проверьте возможность соединения к интернету и попробуйте снова";
+    "Пожалуйста проверьте возможность соединения c интернетом и попробуйте снова";
 "You can enable Location Services in settings of Your device. Otherwise the app won't be able to show Your current location weather automatically" =
     "Вы можете включить сервис геолокации в настройках Вашего устройства. Иначе приложение не сможет определять погоду по Вашему местоположению автоматически";
 "Press Appliction Settings button to allow geolocation for this application manually. Otherwise the app won't be able to show Your current location weather automatically" =
