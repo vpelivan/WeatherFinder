@@ -20,7 +20,7 @@ class Geolocation: NSObject {
     
     func startLocationManager() {
         
-        if CLLocationManager.locationServicesEnabled() == true {
+        if CLLocationManager.locationServicesEnabled() {
             locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
             locationManager.pausesLocationUpdatesAutomatically = false
             locationManager.startUpdatingLocation()

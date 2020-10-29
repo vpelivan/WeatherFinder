@@ -144,6 +144,7 @@
 		5750B6D82524C56E00D8AD10 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				7A7076D025457D3400BF2E9D /* Geolocation */,
 				7A36F66A2535C069004121C2 /* Extensions */,
 				57EFBCF72539E39900B81A2D /* AppDelegate.swift */,
 				5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */,
@@ -222,7 +223,6 @@
 		57EA7D7D252F5238006D7E82 /* NetworkLayer */ = {
 			isa = PBXGroup;
 			children = (
-				7A7076D025457D3400BF2E9D /* Geolocation */,
 				579E79BE25339132002A67A6 /* Protocols */,
 				57B36BBD25379B7700C2BCE8 /* Endpoints */,
 				5780B327253764F000F87463 /* Encoders */,

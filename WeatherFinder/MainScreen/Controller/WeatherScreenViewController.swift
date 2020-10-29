@@ -8,7 +8,6 @@ class WeatherScreenViewController: UIViewController {
     
     // TODO: resolve variable searchController initialization issue
     private var searchController: UISearchController?
-    
     private let gradientLayer = Colors.gradientLayer
     private let geolocation = Geolocation()
     private var locationDenied = false{
@@ -18,18 +17,21 @@ class WeatherScreenViewController: UIViewController {
             }
         }
     }
+    private var cityWeatherData: WeatherDataModel? {
+        // TODO: cityWeatherData must be computable and should call networkManager corresponding methods or geolocation methods.
+        return nil
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
         refresh()
         setupGeolocation()
+        setupTableView()
     }
     
-    override public func traitCollectionDidChange(_ previouseTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previouseTraitCollection)
-        
-        gradientLayer.frame = view.bounds
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        gradientLayer.frame = CGRect(origin: gradientLayer.frame.origin, size: size)
     }
     
     private func setupSearchController() {
@@ -51,17 +53,42 @@ class WeatherScreenViewController: UIViewController {
         geolocation.startLocationManager()
     }
     
+    private func setupTableView() {
+        let nib = UINib(nibName: "CityWeatherTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "weatherCell")
+        tableView.dataSource = self
+    }
+    
     @IBAction private func updateLocation(_ sender: UIBarButtonItem) {
     }
 }
 
+// MARK: - Extension realization
 extension WeatherScreenViewController: GeolocationDelegate {
+    //Здесь будут методы, которые будут вызывать плэйсхолдер, в зависимости от кейса.
     func locationServicesDisabled() {
-        print("placeholder vse dela")
+        print("Placeholder for a request to enable a geolocation sensor.")
     }
     
     func authorizationDidChange(granted: Bool) {
         locationDenied = !granted
-        print("autorization ignored")
+        print("Placeholder for requesting application access to geolocation data.")
+    }
+}
+
+extension WeatherScreenViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? CityWeatherTableViewCell else {
+            return UITableViewCell.init()
+        }
+        
+        if let weatherData = cityWeatherData{
+            cell.updateWeatherData(model: weatherData)
+        }
+        return cell
     }
 }
