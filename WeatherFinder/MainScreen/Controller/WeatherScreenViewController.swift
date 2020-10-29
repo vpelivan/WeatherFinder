@@ -26,10 +26,8 @@ class WeatherScreenViewController: UIViewController {
         setupGeolocation()
     }
     
-    override public func traitCollectionDidChange(_ previouseTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previouseTraitCollection)
-        
-        gradientLayer.frame = view.bounds
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        gradientLayer.frame = CGRect(origin: gradientLayer.frame.origin, size: size)
     }
     
     private func setupSearchController() {
