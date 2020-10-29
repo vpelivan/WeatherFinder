@@ -8,7 +8,6 @@ class WeatherScreenViewController: UIViewController {
     
     // TODO: resolve variable searchController initialization issue
     private var searchController: UISearchController?
-    
     private let gradientLayer = Colors.gradientLayer
     private let geolocation = Geolocation()
     private var locationDenied = false{
@@ -17,10 +16,14 @@ class WeatherScreenViewController: UIViewController {
                 print("set placeholder")
             }
         }
+    private var cityWeatherData: WeatherDataModel? {
+        // TODO: cityWeatherData must be computable and should call networkManager corresponding methods or geolocation methods.
+        return nil
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isTranslucent = false
         setupSearchController()
         refresh()
         setupGeolocation()
@@ -28,6 +31,12 @@ class WeatherScreenViewController: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         gradientLayer.frame = CGRect(origin: gradientLayer.frame.origin, size: size)
+        setupTableView()
+    }
+    
+    override public func traitCollectionDidChange(_ previouseTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previouseTraitCollection)
+        gradientLayer.frame = view.bounds
     }
     
     private func setupSearchController() {
@@ -47,6 +56,10 @@ class WeatherScreenViewController: UIViewController {
     private func setupGeolocation() {
         geolocation.delegate = self
         geolocation.startLocationManager()
+    private func setupTableView() {
+        let nib = UINib(nibName: "CityWeatherTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "weatherCell")
+        tableView.dataSource = self
     }
     
     @IBAction private func updateLocation(_ sender: UIBarButtonItem) {
@@ -61,5 +74,21 @@ extension WeatherScreenViewController: GeolocationDelegate {
     func authorizationDidChange(granted: Bool) {
         locationDenied = !granted
         print("autorization ignored")
+// MARK: - Extension realization
+
+extension WeatherScreenViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? CityWeatherTableViewCell else {
+            return UITableViewCell.init()
+        }
+        
+        if let weatherData = cityWeatherData{
+            cell.updateWeatherData(model: weatherData)
+        }
+        return cell
     }
 }
