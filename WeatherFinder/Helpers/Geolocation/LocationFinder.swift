@@ -3,11 +3,13 @@ import Foundation
 import CoreLocation
 
 protocol GeolocationDelegate {
-    func authorizationDidChange(granted: Bool)
+//    func authorizationDidChange(granted: Bool)
     //TODO: - указать метод, который будет возвразщать нам структуру данных с координатами.
     //    func getCoordinates() -> vovinaStructura
-    
+    func switchOffPlaceholder()
     func locationServicesDisabled()
+    func authorizationDenied()
+    func authorizationAllowed()
 }
 class Geolocation: NSObject {
     var delegate: GeolocationDelegate?
@@ -20,12 +22,27 @@ class Geolocation: NSObject {
     
     func startLocationManager() {
         
+        switch locationManager.authorizationStatus {
+        case .restricted:
+            delegate?.locationServicesDisabled()
+        case .denied:
+//            delegate?.authorizationDidChange(granted: locationManager.authorizationStatus != CLAuthorizationStatus.denied)
+            delegate?.authorizationDenied()
+            return
+        case .authorizedAlways:
+            delegate?.switchOffPlaceholder()
+        case .authorizedWhenInUse:
+            delegate?.switchOffPlaceholder()
+        default:
+            break
+        }
+        
         if CLLocationManager.locationServicesEnabled() {
             locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
             locationManager.pausesLocationUpdatesAutomatically = false
             locationManager.startUpdatingLocation()
             locationManager.requestWhenInUseAuthorization()
-        }else {
+        } else {
             delegate?.locationServicesDisabled()
         }
     }
@@ -33,6 +50,9 @@ class Geolocation: NSObject {
 
 // MARK: - Extension
 extension Geolocation: CLLocationManagerDelegate {
+    
+    
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
             //TODO: -здесь будет вызываться метод делегата возвращающий структуру с координатами
@@ -48,7 +68,11 @@ extension Geolocation: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if (status == CLAuthorizationStatus.denied) {
-            delegate?.authorizationDidChange(granted: status != CLAuthorizationStatus.denied)
+//            delegate?.authorizationDidChange(granted: status != CLAuthorizationStatus.denied)
+            delegate?.authorizationDenied()
+        } else if (status == CLAuthorizationStatus.authorizedWhenInUse) {
+            delegate?.switchOffPlaceholder()
+            delegate?.authorizationAllowed()
         }
     }
 }

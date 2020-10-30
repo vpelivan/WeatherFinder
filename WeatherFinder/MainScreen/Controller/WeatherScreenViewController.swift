@@ -10,11 +10,9 @@ class WeatherScreenViewController: UIViewController {
     private var searchController: UISearchController?
     private let gradientLayer = Colors.gradientLayer
     private let geolocation = Geolocation()
-    private var locationDenied = false{
+    private var locationDenied = false {
         willSet{
-            if newValue == true {
-                print("set placeholder")
-            }
+            print("set locationDenied to \(newValue)")
         }
     }
     private var cityWeatherData: WeatherDataModel? {
@@ -26,8 +24,12 @@ class WeatherScreenViewController: UIViewController {
         super.viewDidLoad()
         setupSearchController()
         refresh()
-        setupGeolocation()
         setupTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupGeolocation()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -65,20 +67,39 @@ class WeatherScreenViewController: UIViewController {
 
 // MARK: - Extension realization
 extension WeatherScreenViewController: GeolocationDelegate {
+    
     //Здесь будут методы, которые будут вызывать плэйсхолдер, в зависимости от кейса.
+    func authorizationAllowed() {
+        geolocation.startLocationManager()
+    }
+    
+    func authorizationDenied() {
+//        tableView.setPlaceholder(ofKind: .geolocationDenied)
+        print("Placeholder Geolocation Denied by User")
+    }
+    
+    func switchOffPlaceholder() {
+//        tableView.restoreTableView(separatorStyle: .none)
+        print("Turn OFF Placeholder")
+    }
+    
     func locationServicesDisabled() {
-        print("Placeholder for a request to enable a geolocation sensor.")
+//        tableView.setPlaceholder(ofKind: .geolocationOff)
+        print("Placeholder Geolocation OFF")
     }
     
     func authorizationDidChange(granted: Bool) {
         locationDenied = !granted
-        print("Placeholder for requesting application access to geolocation data.")
+//        tableView.setPlaceholder(ofKind: .geolocationDenied)
+        print("Placeholder Geolocation Denied by User")
     }
+    
+    
 }
 
 extension WeatherScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -86,7 +107,7 @@ extension WeatherScreenViewController: UITableViewDataSource {
             return UITableViewCell.init()
         }
         
-        if let weatherData = cityWeatherData{
+        if let weatherData = cityWeatherData {
             cell.updateWeatherData(model: weatherData)
         }
         return cell
