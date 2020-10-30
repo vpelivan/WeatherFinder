@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 protocol NetManagerProtocol {
-    func getWeatherDataByCityName(name: String, completionHandler: @escaping (WeatherDataModel?, Error?) -> ())
+    func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ())
     func getWeatherImage(iconID: String, completionHandler: @escaping (UIImage?) -> Void)
-    func getWeatherByCoordinates(coords: Coordinates, completionHandler: @escaping (WeatherDataModel?, Error?) -> ())
+    func getWeatherByCoordinates(coords: Coordinates, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ())
 }
 
 struct Coordinates {
@@ -39,29 +39,31 @@ class NetworkManager: NetManagerProtocol {
     
     func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ()) {
         let decoder = JSONDecoder()
-        networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name), completion: {  (data, response, error) -> Void in
-            do {
-                let httpResponse = response as? HTTPURLResponse
-                switch httpResponse?.statusCode {
-                    case 200 :
-                        guard let dataInner = data
-                        else {
-                            return
-                            //maybe some logic that handling exception when data is nil
-                        }
-                        let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
-                            //TODO handle posible exception of decoding
-                        completionHandler(.success(weather))
-                    case 404: completionHandler(.failure(.notFound))
-                    case .none: completionHandler(.failure(error as! NetworkError))
-                    case .some(_): completionHandler(.failure(error as! NetworkError))
+        DispatchQueue.main.async(execute:  { [weak self] in
+            self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name), completion: {  (data, response, error) -> Void in
+                do {
+                    let httpResponse = response as? HTTPURLResponse
+                    switch httpResponse?.statusCode {
+                        case 200 :
+                            guard let dataInner = data
+                            else {
+                                return
+                                //maybe some logic that handling exception when data is nil
+                            }
+                            let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
+                                //TODO handle posible exception of decoding
+                            completionHandler(.success(weather))
+                        case 404: completionHandler(.failure(.notFound))
+                        case .none: completionHandler(.failure(error as! NetworkError))
+                        case .some(_): completionHandler(.failure(error as! NetworkError))
+                    }
                 }
-            }
-            catch let error
-            {
-                print(error)
-                completionHandler(.failure(error as! NetworkError))
-            }
+                catch let error
+                {
+                    print(error)
+                    completionHandler(.failure(error as! NetworkError))
+                }
+            })
         })
     }
     
@@ -89,85 +91,82 @@ class NetworkManager: NetManagerProtocol {
         ]
         
         if imageCodes.keys.contains(iconID) {
-            imageRequest(type: imageCodes[iconID]!, completionHandler: {(image, error) -> Void in
-                do {
-                        try completionHandler(image)
-                }
-                catch let error{
-                    print(error)
+            imageRequest(type: imageCodes[iconID]!) { result in
+                switch result {
+                case .success(let image): completionHandler(image)
+                case .failure(let error):
+                    print( error)
                     completionHandler(nil)
                 }
-            })
+            }
         }
         else {
-            print("!!!ERROR!!! -> wrong iconID(icon code)")// TODo maybe other error handling
+            print("!!!ERROR!!! -> wrong iconID (icon code)")// TODo maybe other error handling
         }
     }
     
     func getWeatherByCoordinates(coords: Coordinates, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ()) {
         let decoder = JSONDecoder()
-        networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByCoordinates(lattitude: coords.latitude, longtitute: coords.longitude), completion: {  (data, response, error) -> Void in
-            do {
-                let httpResponse = response as? HTTPURLResponse
-                switch httpResponse?.statusCode {
-                    case 200 :
-                        guard let dataInner = data
-                        else {
-                            return
-                            //maybe some logic that handling exception when data is nil
-                        }
-                        let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
-                            //TODO handle posible exception of decoding
-                        completionHandler(.success(weather))
-                    case 404: completionHandler(.failure(.notFound))
-                    case .none: completionHandler(.failure(error as! NetworkError))
-                    case .some(_): completionHandler(.failure(error as! NetworkError))
+        DispatchQueue.main.async(execute:  { [weak self] in // maybe reference cycle
+            self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByCoordinates(lattitude: coords.latitude, longtitute: coords.longitude), completion: {  (data, response, error) -> Void in
+                do {
+                    let httpResponse = response as? HTTPURLResponse
+                    switch httpResponse?.statusCode {
+                        case 200 :
+                            guard let dataInner = data
+                            else {
+                                return
+                                //maybe some logic that handling exception when data is nil
+                            }
+                            let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
+                                //TODO handle posible exception of decoding
+                            completionHandler(.success(weather))
+                        case 404: completionHandler(.failure(.notFound))
+                        case .none: completionHandler(.failure(error as! NetworkError))
+                        case .some(_): completionHandler(.failure(error as! NetworkError))
+                    }
                 }
-            }
-            catch let error
-            {
-                print(error)
-                completionHandler(.failure(error as! NetworkError))
-            }
+                catch let error
+                {
+                    print(error)
+                    completionHandler(.failure(error as! NetworkError))
+                }
+            })
         })
     }
     
-    private func imageRequest(type: EndPointType, completionHandler: @escaping (UIImage?, Error?) -> Void) {
-        networkSevice.makeRequest(with: type, cachePolicy: .useProtocolCachePolicy, completion: {(dataImage, response, error) -> Void in
-            do {
-                let httpResponse = response as? HTTPURLResponse
-                switch httpResponse?.statusCode {
-                    case 200 :
-                        guard let imgData = dataImage else {
-                            throw NetworkError.notFound
-                        }
-                        let image = UIImage(data: imgData)
-                        completionHandler(image, nil)
-                        
-                    case 404: throw NetworkError.notFound
-                        
-                    case .none: completionHandler(nil, error)
-                        
-                    case .some(_): completionHandler(nil, nil) //TODO make logic for other status codes
+    private func imageRequest(type: ImagesEndpoint, completionHandler: @escaping (Result<UIImage, Error>) -> Void) {
+        let imageCache = NSCache<NSString, UIImage>();
+        if let image = imageCache.object(forKey: NSString(string: type.rawValue)) {
+            completionHandler(.success(image))
+            return
+        }
+        
+        DispatchQueue.main.async(execute:  {
+            self.networkSevice.makeRequest(with: type, cachePolicy: .useProtocolCachePolicy, completion: {(dataImage, response, error) -> Void in
+                do {
+                    if let errorInner = error {
+                        throw errorInner
+                    }
+                    let httpResponse = response as? HTTPURLResponse
+                    switch httpResponse?.statusCode {
+                        case 200 :
+                            guard let imgData = dataImage else {
+                                throw NetworkError.notFound
+                            }
+                            let image = UIImage(data: imgData)  // downloaded Image
+                                imageCache.setObject(image!, forKey: NSString(string: type.rawValue))
+                            completionHandler(.success(image!))
+                        case 404: throw NetworkError.notFound
+                        case .none: completionHandler(.failure(error as! Error))
+                        case .some(_): completionHandler(.failure(NetworkError.notFound)) //TODO make logic for other status codes
+                    }
                 }
-            }
-            catch let error
-            {
-                completionHandler(nil, error)
-            }
+                catch let error
+                {
+                    completionHandler(.failure(error))
+                }
+            })
         })
     }
-    
-    /* TODO: add different kinds of methods performing requests like getWeatherByCityName(name:completion:),
-    getWeatherImage(iconId:completion:) etc, parse all JSON data inside a model, and return this model inside
-    Result enum (which contains success and failure cases) using escaping closure */
-    
-    //TODO: handle responses
-    
-    //TODO: perform internet connection check
-    
-    //TODO: handle various errors
-    
-    //TODO: handle caching images (NSCache)
-    
 }
