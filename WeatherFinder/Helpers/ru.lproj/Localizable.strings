@@ -28,4 +28,4 @@
 "No Results Found" = "Нет Результатов Поиска";
 "No Internet Connection" = "Нет Соединения C Интернетом";
 "Geolocation Services Are Off" = "Сервис Геолокации Отключен";
-"Geolocation Is Restricted" = "Геолокация Запрещена";
+"Geolocation Is Denied" = "Геолокация Запрещена";

@@ -15,7 +15,7 @@ protocol PlaceholderViewDelegate {
 class PlaceholderView: UIView {
     
     @IBOutlet weak var placeholderImageView: UIImageView!
-    @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var goToSettingsButton: UIButton!
     
@@ -31,11 +31,11 @@ class PlaceholderView: UIView {
         commonInit()
     }
     
-    func updatePlaceholderViewData(_ headerLabelText: String?,
+    func updatePlaceholderViewData(_ titleLabelText: String?,
                                    _ descriptionLabelText: String? = nil,
                                    _ goToSettingsButtonLabelText: String? = nil,
                                    _ placeholderImage: UIImage? = nil) {
-        headerLabel.text = headerLabelText?.localized ?? "No Value".localized
+        titleLabel.text = titleLabelText?.localized ?? "No Value".localized
         descriptionLabel.text = descriptionLabelText?.localized ?? "No Value".localized
         goToSettingsButton.setTitle(goToSettingsButtonLabelText?.localized ?? "No Value".localized, for: .normal)
         placeholderImageView.image =
@@ -50,7 +50,7 @@ class PlaceholderView: UIView {
         
         viewFromXib.frame = self.bounds
         addSubview(viewFromXib)
-        headerLabel.isHidden = false
+        titleLabel.isHidden = false
         descriptionLabel.isHidden = false
         goToSettingsButton.isHidden = true
         setupButton()
@@ -63,10 +63,10 @@ class PlaceholderView: UIView {
         goToSettingsButton.layer.shadowColor = #colorLiteral(red: 0.1968304687, green: 0.3024655521, blue: 0.5, alpha: 1)
         goToSettingsButton.layer.shadowOpacity = 1
         goToSettingsButton.layer.shadowOffset = CGSize(width: 1, height: 1)
-        goToSettingsButton.addTarget(self, action: #selector(tapRetryButton(_:)), for: .touchUpInside)
+        goToSettingsButton.addTarget(self, action: #selector(tapGoToSettingsButton(_:)), for: .touchUpInside)
     }
     
-    @objc private func tapRetryButton(_ sender: UIButton) {
+    @objc private func tapGoToSettingsButton(_ sender: UIButton) {
         delegate?.onButtonTapped()
     }
 }
