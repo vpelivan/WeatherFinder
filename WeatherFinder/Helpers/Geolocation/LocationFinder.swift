@@ -38,6 +38,7 @@ class Geolocation: NSObject {
         case .restricted, .denied:
             delegate?.authorizationStatusSetup(state: .geolocationDenied)
         case .authorizedAlways, .authorizedWhenInUse, .notDetermined:
+            delegate?.authorizationStatusSetup(state: .geolocationAllowed)
             startLocationManager()
         default:
             break
