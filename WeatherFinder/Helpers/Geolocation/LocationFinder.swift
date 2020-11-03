@@ -1,8 +1,7 @@
-
 import Foundation
 import CoreLocation
 
-protocol GeolocationDelegate {
+protocol GeolocationDelegate: class {
     func authorizationStatusSetup(state: CurrentAutorizationStatus)
     //TODO: - В этом методе делегата нужно реализовать сетевой запрос по координатам
     func locationRecieved()
@@ -15,25 +14,25 @@ enum CurrentAutorizationStatus {
 }
 
 class Geolocation: NSObject {
-    var delegate: GeolocationDelegate?
+    weak var delegate: GeolocationDelegate?
     let locationManager = CLLocationManager()
     var location: CLLocation? = nil {
         didSet {
             delegate?.locationRecieved()
         }
     }
-    
+
     override init() {
         super.init()
         locationManager.delegate = self
     }
-    
+
     func checkAuthorizationStatus() {
         guard CLLocationManager.locationServicesEnabled() else {
             delegate?.authorizationStatusSetup(state: .geolocationOff)
             return
         }
-        
+
         switch locationManager.authorizationStatus {
         case .restricted, .denied:
             delegate?.authorizationStatusSetup(state: .geolocationDenied)
@@ -44,7 +43,7 @@ class Geolocation: NSObject {
             break
         }
     }
-    
+
     private func startLocationManager() {
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         locationManager.pausesLocationUpdatesAutomatically = true
@@ -55,7 +54,7 @@ class Geolocation: NSObject {
 
 // MARK: - Extension
 extension Geolocation: CLLocationManagerDelegate {
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             self.location = location
@@ -64,7 +63,7 @@ extension Geolocation: CLLocationManagerDelegate {
             locationManager.stopUpdatingLocation()
         }
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error.localizedDescription)
     }

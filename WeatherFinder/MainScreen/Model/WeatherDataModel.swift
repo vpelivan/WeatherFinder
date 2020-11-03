@@ -8,13 +8,12 @@
 
 import Foundation
 
-struct WeatherDataModel: Decodable{
+struct WeatherDataModel: Decodable {
     var nameOfCity: String
     let weatherCondition: [Weather?]
     let mainWeatherInfo: Main?
     let windSpeed: WindSpeed?
-    
-    
+
     struct Main: Decodable {
         let temperature: Double
         let feelsLike: Double
@@ -22,7 +21,7 @@ struct WeatherDataModel: Decodable{
         let humidity: Int
         let temperatureMinimum: Double
         let temperatureMaximum: Double
-        
+
         enum CodingKeys: String, CodingKey {
             case pressure, humidity
             case temperature = "temp"
@@ -31,16 +30,16 @@ struct WeatherDataModel: Decodable{
             case temperatureMaximum = "temp_max"
         }
     }
-    
+
     struct Weather: Decodable {
         let description: String
         let icon: String
     }
-    
+
     struct WindSpeed: Decodable {
         let speed: Float
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case nameOfCity = "name"
         case mainWeatherInfo = "main"
