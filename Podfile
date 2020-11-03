@@ -6,6 +6,5 @@ target 'WeatherFinder' do
   use_frameworks!
 
   # Pods for WeatherFinder
-pod 'SwiftLint'
-
+  pod 'SwiftLint'
 end
