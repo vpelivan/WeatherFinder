@@ -2,8 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MEZ-zS-3co">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,6 +23,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="FSe-u4-IJh"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -31,7 +33,6 @@
                         <constraints>
                             <constraint firstItem="fN1-8G-PZC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="RBX-oC-gs6"/>
                             <constraint firstItem="fN1-8G-PZC" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dl3-Uq-2hT"/>
-                            <constraint firstItem="fN1-8G-PZC" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="34" id="hU6-68-KOq"/>
                             <constraint firstItem="fN1-8G-PZC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="kAj-pw-7Ef"/>
                             <constraint firstAttribute="bottom" secondItem="fN1-8G-PZC" secondAttribute="bottom" id="p1e-7s-9ui"/>
                         </constraints>
