@@ -49,7 +49,7 @@ class WeatherScreenViewController: UIViewController {
         let nib = UINib(nibName: "CityWeatherTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "weatherCell")
     }
-    
+
     @objc private func setupGeolocation() {
         geolocation.delegate = self
         cityWeatherData = nil
@@ -59,15 +59,11 @@ class WeatherScreenViewController: UIViewController {
     @IBAction private func updateLocation(_ sender: UIBarButtonItem) {
         setupGeolocation()
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 }
 
 // MARK: - Extension Geolocation Delegate
 extension WeatherScreenViewController: GeolocationDelegate {
-    
+
     func authorizationStatusSetup(state: CurrentAutorizationStatus) {
         cityWeatherData = nil
         switch state {
@@ -82,14 +78,14 @@ extension WeatherScreenViewController: GeolocationDelegate {
             print("Placeholder Geolocation OFF")
         }
     }
-    
+
     func locationRecieved() {
 //        tableView.setPlaceholder(ofKind: .loadingData)
-        if let location = geolocation.location {
-        /* Need to call NetworkManager method getWeatherByCoordinates(lat:, long:),
+        /* TODO: - need to call NetworkManager method getWeatherByCoordinates(lat:, long:),
         pass longitude and latitude from location property, switch of placeholder
         after we get our cityWeather Data, and reload tableview */
-        }
+//        if let location = geolocation.location {
+//        }
     }
 }
 
