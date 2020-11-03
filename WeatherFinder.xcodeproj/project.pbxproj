@@ -279,8 +279,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5750B6D02524C4CC00D8AD10 /* Build configuration list for PBXNativeTarget "WeatherFinder" */;
 			buildPhases = (
-				7AAE40EF255171D500F3D3BB /* ShellScript */,
 				E165CA5F92C769AEC9FCBAE2 /* [CP] Check Pods Manifest.lock */,
+				7AAE40EF255171D500F3D3BB /* ShellScript */,
 				5750B6B82524C4CB00D8AD10 /* Sources */,
 				5750B6B92524C4CB00D8AD10 /* Frameworks */,
 				5750B6BA2524C4CB00D8AD10 /* Resources */,
