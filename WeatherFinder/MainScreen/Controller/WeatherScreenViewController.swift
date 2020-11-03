@@ -1,11 +1,10 @@
-
 import UIKit
 
 class WeatherScreenViewController: UIViewController {
-    
+
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    
+
     // TODO: resolve variable searchController initialization issue
     private var searchController: UISearchController?
     private let gradientLayer = Colors.gradientLayer
@@ -17,7 +16,7 @@ class WeatherScreenViewController: UIViewController {
             }
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
@@ -27,11 +26,11 @@ class WeatherScreenViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(setupGeolocation),
                                                name: UIScene.didActivateNotification, object: nil)
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         gradientLayer.frame = CGRect(origin: gradientLayer.frame.origin, size: size)
     }
-    
+
     private func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
         searchController?.obscuresBackgroundDuringPresentation = false
@@ -39,7 +38,7 @@ class WeatherScreenViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController?.searchBar.placeholder = "Search for city".localized
     }
-    
+
     private func refresh() {
         view.backgroundColor = .clear
         gradientLayer.frame = view.frame
@@ -56,7 +55,7 @@ class WeatherScreenViewController: UIViewController {
         cityWeatherData = nil
         geolocation.checkAuthorizationStatus()
     }
-    
+
     @IBAction private func updateLocation(_ sender: UIBarButtonItem) {
         setupGeolocation()
     }
@@ -100,12 +99,12 @@ extension WeatherScreenViewController: UITableViewDataSource {
         guard cityWeatherData != nil else { return 0 }
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? CityWeatherTableViewCell else {
             return UITableViewCell.init()
         }
-        
+
         if let weatherData = cityWeatherData {
             cell.updateWeatherData(model: weatherData)
         }

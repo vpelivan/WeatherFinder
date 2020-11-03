@@ -16,7 +16,7 @@ enum WeatherApiEndpoint {
 }
 
 extension WeatherApiEndpoint: EndPointType {
-    
+
     var baseURL: URL {
         let baseURLString = Bundle.main.object(forInfoDictionaryKey: "baseURL") as? String
         guard let baseURLStringNonNil = baseURLString,
@@ -25,7 +25,7 @@ extension WeatherApiEndpoint: EndPointType {
         }
         return url
     }
-    
+
     var path: String {
         switch self {
         case .findCityByName, .findCityByCoordinates:
@@ -34,11 +34,11 @@ extension WeatherApiEndpoint: EndPointType {
             return "onecall"
         }
     }
-    
+
     var httpMethod: HTTPMethod {
         return .get
     }
-    
+
     var task: HTTPTask {
         switch self {
         case .findCityByName(let name):
@@ -61,11 +61,11 @@ extension WeatherApiEndpoint: EndPointType {
                                                              "appid": apiKey])
         }
     }
-    
+
     var headers: HTTPHeaders? {
-        return ["Content-Type" : "application/json; charset=utf-8"]
+        return ["Content-Type": "application/json; charset=utf-8"]
     }
-    
+
     private var apiKey: String {
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "apiKey") as? String
         guard let apiKeyNonNil = apiKey else {
@@ -73,11 +73,11 @@ extension WeatherApiEndpoint: EndPointType {
         }
         return apiKeyNonNil
     }
-    
+
     private var weatherUnits: String {
         return NetworkManager.shared.weatherUnits
     }
-    
+
     private var languageCode: String {
         return Locale.current.languageCode ?? "en"
     }

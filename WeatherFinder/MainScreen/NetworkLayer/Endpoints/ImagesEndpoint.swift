@@ -30,7 +30,7 @@ enum ImagesEndpoint: String {
 }
 
 extension ImagesEndpoint: EndPointType {
-    
+
     var baseURL: URL {
         let baseURLString: String
         switch self {
@@ -42,7 +42,7 @@ extension ImagesEndpoint: EndPointType {
         guard let url = URL(string: baseURLString) else { fatalError("baseURL could not be configured") }
         return url
     }
-    
+
     var path: String {
         switch self {
         case .clearSkyDay: return "Status-weather-clear-icon.png"
@@ -63,15 +63,15 @@ extension ImagesEndpoint: EndPointType {
         case .mist, .mistNight: return "Fog-icon.png"
         }
     }
-    
+
     var httpMethod: HTTPMethod {
         return .get
     }
-    
+
     var task: HTTPTask {
         return .getRequest
     }
-    
+
     var headers: HTTPHeaders? {
         return nil
     }
