@@ -12,11 +12,11 @@ import Foundation
    That is one of the reasons, why this structure is subscribed under ParameterEncoder protocol
 */
 struct URLParameterEncoder: ParameterEncoder {
-    
+
     static func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws {
-        
+
         guard let url = urlRequest.url else { throw NetworkError.urlMissing }
-        
+
         if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
             urlComponents.queryItems = [URLQueryItem]()
             for (key, value) in parameters {

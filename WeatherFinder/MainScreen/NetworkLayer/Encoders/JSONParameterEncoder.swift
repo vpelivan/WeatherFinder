@@ -9,7 +9,7 @@
 import Foundation
 
 struct JSONParameterEncoder: ParameterEncoder {
-    
+
     static func encode(urlRequest: inout URLRequest, with parameters: Parameters) throws {
         do {
             let serializedJson = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
