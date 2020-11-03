@@ -30,6 +30,7 @@
 		57EFBCF82539E39900B81A2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFBCF72539E39900B81A2D /* AppDelegate.swift */; };
 		7A36F66C2535C0AD004121C2 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A36F66B2535C0AD004121C2 /* StringExtensions.swift */; };
 		7A50B34C2526101F00304AB9 /* GradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A50B34B2526101F00304AB9 /* GradientColor.swift */; };
+		7A7076D225457D5400BF2E9D /* LocationFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7076D125457D5400BF2E9D /* LocationFinder.swift */; };
 		7A795737252F486B00C78974 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A795735252F486B00C78974 /* InfoPlist.strings */; };
 		7A79573A252F486B00C78974 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A795738252F486B00C78974 /* Localizable.strings */; };
 		F1573A5C6261A8EEA51AA59B /* Pods_WeatherFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33218269BAC55EB90BD0D12D /* Pods_WeatherFinder.framework */; };
@@ -63,6 +64,7 @@
 		72B4BDB2C8F447B10DF2764C /* Pods-WeatherFinder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherFinder.debug.xcconfig"; path = "Target Support Files/Pods-WeatherFinder/Pods-WeatherFinder.debug.xcconfig"; sourceTree = "<group>"; };
 		7A36F66B2535C0AD004121C2 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		7A50B34B2526101F00304AB9 /* GradientColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientColor.swift; sourceTree = "<group>"; };
+		7A7076D125457D5400BF2E9D /* LocationFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFinder.swift; sourceTree = "<group>"; };
 		7A795733252F470500C78974 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		7A795736252F486B00C78974 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7A795739252F486B00C78974 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 		5750B6D82524C56E00D8AD10 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				7A7076D025457D3400BF2E9D /* Geolocation */,
 				7A36F66A2535C069004121C2 /* Extensions */,
 				57EFBCF72539E39900B81A2D /* AppDelegate.swift */,
 				5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */,
@@ -259,6 +262,12 @@
 				7EA6CBB38ABAFD5957DDF9C2 /* Pods-WeatherFinder.release.xcconfig */,
 			);
 			path = Pods;
+		7A7076D025457D3400BF2E9D /* Geolocation */ = {
+			isa = PBXGroup;
+			children = (
+				7A7076D125457D5400BF2E9D /* LocationFinder.swift */,
+			);
+			path = Geolocation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,6 +393,7 @@
 				579E79C025339263002A67A6 /* RequestConfigurationProtocol.swift in Sources */,
 				5780B3292537651300F87463 /* URLParameterEncoder.swift in Sources */,
 				57B36BBF25379BC400C2BCE8 /* WeatherApiEndpoint.swift in Sources */,
+				7A7076D225457D5400BF2E9D /* LocationFinder.swift in Sources */,
 				57EFBCF32539E37400B81A2D /* WeatherDataModel.swift in Sources */,
 				5780B33125378EE400F87463 /* JSONParameterEncoder.swift in Sources */,
 				572D85092537C29B00CC54D2 /* ImagesEndpoint.swift in Sources */,
@@ -567,6 +577,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 378HZ25P52;
 				INFOPLIST_FILE = "$(SRCROOT)/WeatherFinder/Helpers/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -586,6 +597,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 378HZ25P52;
 				INFOPLIST_FILE = "$(SRCROOT)/WeatherFinder/Helpers/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
