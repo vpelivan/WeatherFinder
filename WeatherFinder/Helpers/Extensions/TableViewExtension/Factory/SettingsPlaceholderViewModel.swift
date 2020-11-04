@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SettingsPlaceholderViewModel {
-    var kind: PlaceholderKind? { get }
+    var kind: PlaceholderKind { get }
     var title: String { get }
     var description: String? { get }
     var button: String? { get }

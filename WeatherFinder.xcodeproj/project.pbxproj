@@ -10,13 +10,7 @@
 		5724110D2547F68A003CEBD5 /* PlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5724110C2547F68A003CEBD5 /* PlaceholderView.xib */; };
 		572411102547F69F003CEBD5 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5724110F2547F69F003CEBD5 /* PlaceholderView.swift */; };
 		572411192548B98D003CEBD5 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572411182548B98D003CEBD5 /* Animations.swift */; };
-		572B6FDB254F627E00164844 /* GeolocationOffViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FC3254F627E00164844 /* GeolocationOffViewModel.swift */; };
-		572B6FDC254F627E00164844 /* LoadingDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FC4254F627E00164844 /* LoadingDataViewModel.swift */; };
-		572B6FDD254F627E00164844 /* NoInternetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FC5254F627E00164844 /* NoInternetViewModel.swift */; };
-		572B6FDE254F627E00164844 /* GeolocationDeniedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FC6254F627E00164844 /* GeolocationDeniedViewModel.swift */; };
-		572B6FDF254F627E00164844 /* NoResultsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FC7254F627E00164844 /* NoResultsViewModel.swift */; };
-		572B6FE0254F627E00164844 /* PlaceholderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FC9254F627E00164844 /* PlaceholderButton.swift */; };
-		572B6FE1254F627E00164844 /* PlaceholderTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCA254F627E00164844 /* PlaceholderTitle.swift */; };
+		572B6FDB254F627E00164844 /* PlaceholderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FC3254F627E00164844 /* PlaceholderViewModel.swift */; };
 		572B6FE2254F627E00164844 /* PlaceholderKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCB254F627E00164844 /* PlaceholderKind.swift */; };
 		572B6FE3254F627E00164844 /* SettingsPlaceholderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCC254F627E00164844 /* SettingsPlaceholderViewModel.swift */; };
 		572B6FE4254F627E00164844 /* PlaceholderAbsractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCD254F627E00164844 /* PlaceholderAbsractFactory.swift */; };
@@ -52,13 +46,7 @@
 		5724110C2547F68A003CEBD5 /* PlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderView.xib; sourceTree = "<group>"; };
 		5724110F2547F69F003CEBD5 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		572411182548B98D003CEBD5 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
-		572B6FC3254F627E00164844 /* GeolocationOffViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeolocationOffViewModel.swift; sourceTree = "<group>"; };
-		572B6FC4254F627E00164844 /* LoadingDataViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingDataViewModel.swift; sourceTree = "<group>"; };
-		572B6FC5254F627E00164844 /* NoInternetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoInternetViewModel.swift; sourceTree = "<group>"; };
-		572B6FC6254F627E00164844 /* GeolocationDeniedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeolocationDeniedViewModel.swift; sourceTree = "<group>"; };
-		572B6FC7254F627E00164844 /* NoResultsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoResultsViewModel.swift; sourceTree = "<group>"; };
-		572B6FC9254F627E00164844 /* PlaceholderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderButton.swift; sourceTree = "<group>"; };
-		572B6FCA254F627E00164844 /* PlaceholderTitle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderTitle.swift; sourceTree = "<group>"; };
+		572B6FC3254F627E00164844 /* PlaceholderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderViewModel.swift; sourceTree = "<group>"; };
 		572B6FCB254F627E00164844 /* PlaceholderKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderKind.swift; sourceTree = "<group>"; };
 		572B6FCC254F627E00164844 /* SettingsPlaceholderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPlaceholderViewModel.swift; sourceTree = "<group>"; };
 		572B6FCD254F627E00164844 /* PlaceholderAbsractFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderAbsractFactory.swift; sourceTree = "<group>"; };
@@ -125,34 +113,12 @@
 		572B6FC1254F627E00164844 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
-				572B6FC2254F627E00164844 /* ViewModels */,
-				572B6FC8254F627E00164844 /* Enums */,
-				572B6FCC254F627E00164844 /* SettingsPlaceholderViewModel.swift */,
 				572B6FCD254F627E00164844 /* PlaceholderAbsractFactory.swift */,
+				572B6FCB254F627E00164844 /* PlaceholderKind.swift */,
+				572B6FC3254F627E00164844 /* PlaceholderViewModel.swift */,
+				572B6FCC254F627E00164844 /* SettingsPlaceholderViewModel.swift */,
 			);
 			path = Factory;
-			sourceTree = "<group>";
-		};
-		572B6FC2254F627E00164844 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				572B6FC3254F627E00164844 /* GeolocationOffViewModel.swift */,
-				572B6FC4254F627E00164844 /* LoadingDataViewModel.swift */,
-				572B6FC5254F627E00164844 /* NoInternetViewModel.swift */,
-				572B6FC6254F627E00164844 /* GeolocationDeniedViewModel.swift */,
-				572B6FC7254F627E00164844 /* NoResultsViewModel.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		572B6FC8254F627E00164844 /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				572B6FC9254F627E00164844 /* PlaceholderButton.swift */,
-				572B6FCA254F627E00164844 /* PlaceholderTitle.swift */,
-				572B6FCB254F627E00164844 /* PlaceholderKind.swift */,
-			);
-			path = Enums;
 			sourceTree = "<group>";
 		};
 		5750B6B32524C4CB00D8AD10 = {
@@ -407,25 +373,19 @@
 				57B3294C25263C2400901D90 /* CityWeatherTableViewCell.swift in Sources */,
 				5780B32C2537653F00F87463 /* ParameterEncoder.swift in Sources */,
 				5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */,
-				572B6FDD254F627E00164844 /* NoInternetViewModel.swift in Sources */,
 				57EA7D7F252F5254006D7E82 /* NetworkService.swift in Sources */,
-				572B6FDF254F627E00164844 /* NoResultsViewModel.swift in Sources */,
 				57EFBCF82539E39900B81A2D /* AppDelegate.swift in Sources */,
 				579E79D52533CF04002A67A6 /* HTTPMethod.swift in Sources */,
 				572B6FE5254F627E00164844 /* TableViewExtension.swift in Sources */,
 				57B36BC22537A3DB00C2BCE8 /* NetworkManager.swift in Sources */,
 				572B6FE6254F627E00164844 /* StringExtensions.swift in Sources */,
-				572B6FE0254F627E00164844 /* PlaceholderButton.swift in Sources */,
 				57EFBCEF2539E32E00B81A2D /* WeatherScreenViewController.swift in Sources */,
 				7A50B34C2526101F00304AB9 /* GradientColor.swift in Sources */,
-				572B6FDE254F627E00164844 /* GeolocationDeniedViewModel.swift in Sources */,
-				572B6FE1254F627E00164844 /* PlaceholderTitle.swift in Sources */,
 				572B6FE3254F627E00164844 /* SettingsPlaceholderViewModel.swift in Sources */,
-				572B6FDC254F627E00164844 /* LoadingDataViewModel.swift in Sources */,
 				572411102547F69F003CEBD5 /* PlaceholderView.swift in Sources */,
 				572411192548B98D003CEBD5 /* Animations.swift in Sources */,
 				572B6FE4254F627E00164844 /* PlaceholderAbsractFactory.swift in Sources */,
-				572B6FDB254F627E00164844 /* GeolocationOffViewModel.swift in Sources */,
+				572B6FDB254F627E00164844 /* PlaceholderViewModel.swift in Sources */,
 				5780B3252535CAE300F87463 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

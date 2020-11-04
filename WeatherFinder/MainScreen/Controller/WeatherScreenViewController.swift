@@ -21,12 +21,6 @@ class WeatherScreenViewController: UIViewController {
         setupTableView()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // testing placeholder
-        tableView.setPlaceholder(ofKind: .geolocationDenied)
-    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         gradientLayer.frame = CGRect(origin: gradientLayer.frame.origin, size: size)
     }

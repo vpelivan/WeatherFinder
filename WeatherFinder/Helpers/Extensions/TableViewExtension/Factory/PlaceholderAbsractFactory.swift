@@ -26,19 +26,13 @@ class PlaceholderFactory {
             placeholderView.descriptionLabel.isHidden = true
         case .geolocationDenied:
             placeholderView.goToSettingsButton.isHidden = false
-        case .noResults, .noInternet, .geolocationOff, .none:
+        case .noResults, .noInternet, .geolocationOff:
             break
         }
         return placeholderView
     }
     
     func createModel(ofKind: PlaceholderKind) -> SettingsPlaceholderViewModel {
-        switch ofKind {
-        case .loadingData: return LoadingDataViewModel()
-        case .noResults: return NoResultsViewModel()
-        case .noInternet: return NoInternetViewModel()
-        case .geolocationOff: return GeolocationOffViewModel()
-        case .geolocationDenied: return GeolocationDeniedViewModel()
-        }
+        return PlaceholderViewModel(kind: ofKind)
     }
 }

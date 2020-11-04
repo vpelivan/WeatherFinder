@@ -1,6 +1,5 @@
 import UIKit
 
-
 extension UITableView {
     
     func setPlaceholder(ofKind: PlaceholderKind) {
@@ -12,21 +11,24 @@ extension UITableView {
         self.backgroundView = placeholder
         placeholderView.delegate = self
         self.separatorStyle = .none
-        if let animationFunction = viewModel.animationFunction {
-            animationFunction(placeholder.placeholderImageView)
-        }
+        performAnimation(viewModel: viewModel, placeholder: placeholder)
     }
     
     func restoreTableView(separatorStyle: UITableViewCell.SeparatorStyle) {
         self.backgroundView = nil
         self.separatorStyle = separatorStyle
     }
+    
+    private func performAnimation(viewModel: SettingsPlaceholderViewModel,
+                                  placeholder: PlaceholderView) {
+        if let animationFunction = viewModel.animationFunction {
+            animationFunction(placeholder.placeholderImageView)
+        }
+    }
 }
 
 extension UITableView: PlaceholderViewDelegate {
-    
     func onButtonTapped() {
-        
         if let url = URL(string: UIApplication.openSettingsURLString) {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url)
