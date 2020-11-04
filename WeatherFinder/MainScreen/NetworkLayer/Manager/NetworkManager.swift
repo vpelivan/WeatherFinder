@@ -7,17 +7,13 @@
 //
 
 import Foundation
+import CoreLocation
 import UIKit
 
 protocol NetManagerProtocol {
-    func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ())
-    func getWeatherImage(iconID: String, completionHandler: @escaping (UIImage?) -> Void)
-    func getWeatherByCoordinates(coords: Coordinates, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ())
-}
-
-struct Coordinates {
-    var longitude: Double
-    var latitude: Double
+    func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ())
+    func getWeatherImage(iconID: String) -> UIImage?
+    func getWeatherByCoordinates(coords: CLLocationCoordinate2D, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ())
 }
 
 class NetworkManager: NetManagerProtocol {
@@ -37,7 +33,7 @@ class NetworkManager: NetManagerProtocol {
     //One of Singleton conditions
     private init() {}
     
-    func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ()) {
+    func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ()) {
         let decoder = JSONDecoder()
         DispatchQueue.main.async(execute:  { [weak self] in
             self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name), completion: {  (data, response, error) -> Void in
@@ -53,22 +49,27 @@ class NetworkManager: NetManagerProtocol {
                             let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
                                 //TODO handle posible exception of decoding
                             completionHandler(.success(weather))
-                        case 404: completionHandler(.failure(.notFound))
-                        case .none: completionHandler(.failure(error as! NetworkError))
-                        case .some(_): completionHandler(.failure(error as! NetworkError))
+                        case 404: completionHandler(.failure(NetworkError.notFound))
+                        case .none:
+                            if let errorUnwrapped = error {
+                                throw  errorUnwrapped
+                            }
+                        case .some(_):
+                            if let errorUnwrapped = error {
+                                throw  errorUnwrapped
+                            }
                     }
                 }
                 catch let error
                 {
                     print(error)
-                    completionHandler(.failure(error as! NetworkError))
+                    completionHandler(.failure(error ))
                 }
             })
         })
     }
     
-    func getWeatherImage(iconID: String, completionHandler: @escaping (UIImage?) -> Void) //data.hashValue method
-    {
+    func getWeatherImage(iconID: String) -> UIImage? {
         let imageCodes: [String: ImagesEndpoint] = [
             "01d": ImagesEndpoint.clearSkyDay,
             "01n": ImagesEndpoint.clearSkyNight,
@@ -90,22 +91,25 @@ class NetworkManager: NetManagerProtocol {
             "50n": ImagesEndpoint.mistNight
         ]
         
-        if imageCodes.keys.contains(iconID) {
-            imageRequest(type: imageCodes[iconID]!) { result in
+        var image: UIImage? =  UIImage()
+        if let imageEndpoint = imageCodes[iconID] { //imageCodes.keys.contains(iconID)
+            imageRequest(type: imageEndpoint) { result in
                 switch result {
-                case .success(let image): completionHandler(image)
+                case .success(let receivedImage):
+                     image = receivedImage
                 case .failure(let error):
-                    print( error)
-                    completionHandler(nil)
+                    print(error)
+                    image = nil
                 }
             }
         }
         else {
             print("!!!ERROR!!! -> wrong iconID (icon code)")// TODo maybe other error handling
         }
+        return image
     }
     
-    func getWeatherByCoordinates(coords: Coordinates, completionHandler: @escaping (Result<WeatherDataModel, NetworkError>) -> ()) {
+    func getWeatherByCoordinates(coords: CLLocationCoordinate2D, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ()) {
         let decoder = JSONDecoder()
         DispatchQueue.main.async(execute:  { [weak self] in // maybe reference cycle
             self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByCoordinates(lattitude: coords.latitude, longtitute: coords.longitude), completion: {  (data, response, error) -> Void in
@@ -121,15 +125,21 @@ class NetworkManager: NetManagerProtocol {
                             let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
                                 //TODO handle posible exception of decoding
                             completionHandler(.success(weather))
-                        case 404: completionHandler(.failure(.notFound))
-                        case .none: completionHandler(.failure(error as! NetworkError))
-                        case .some(_): completionHandler(.failure(error as! NetworkError))
+                        case 404: completionHandler(.failure(NetworkError.notFound))
+                        case .none:
+                            if let errorUnwrapped = error {
+                                throw  errorUnwrapped
+                            }
+                        case .some(_):
+                            if let errorUnwrapped = error {
+                                throw  errorUnwrapped
+                            }
                     }
                 }
                 catch let error
                 {
                     print(error)
-                    completionHandler(.failure(error as! NetworkError))
+                    completionHandler(.failure(error))
                 }
             })
         })
@@ -151,14 +161,16 @@ class NetworkManager: NetManagerProtocol {
                     let httpResponse = response as? HTTPURLResponse
                     switch httpResponse?.statusCode {
                         case 200 :
-                            guard let imgData = dataImage else {
+                            guard let imgData = dataImage, let image = UIImage(data: imgData) else {
                                 throw NetworkError.notFound
-                            }
-                            let image = UIImage(data: imgData)  // downloaded Image
-                                imageCache.setObject(image!, forKey: NSString(string: type.rawValue))
-                            completionHandler(.success(image!))
+                            } // downloaded Image
+                            imageCache.setObject(image, forKey: NSString(string: type.rawValue))
+                            completionHandler(.success(image))
                         case 404: throw NetworkError.notFound
-                        case .none: completionHandler(.failure(error as! Error))
+                        case .none:
+                            if let errorUnwrapped = error {
+                                throw  errorUnwrapped
+                            }
                         case .some(_): completionHandler(.failure(NetworkError.notFound)) //TODO make logic for other status codes
                     }
                 }
