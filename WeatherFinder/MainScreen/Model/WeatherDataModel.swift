@@ -31,11 +31,6 @@ struct WeatherDataModel: Decodable {
         }
     }
 
-    struct Weather: Decodable {
-        let description: String
-        let icon: String
-    }
-
     struct WindSpeed: Decodable {
         let speed: Float
     }
@@ -46,4 +41,9 @@ struct WeatherDataModel: Decodable {
         case windSpeed = "wind"
         case weatherCondition = "weather"
     }
+}
+
+struct Weather: Decodable {
+    let description: String
+    let icon: String
 }

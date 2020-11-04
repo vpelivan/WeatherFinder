@@ -25,6 +25,18 @@ class WeatherScreenViewController: UIViewController {
         setupGeolocation()
         NotificationCenter.default.addObserver(self, selector: #selector(setupGeolocation),
                                                name: UIScene.didActivateNotification, object: nil)
+        // DailyWeather model testing (Kyiv weather)
+        let netserv = NetworkService()
+        netserv.makeRequest(with: WeatherApiEndpoint.oneCallByCoordinates(lattitude: "50.43", longtitute: "30.52", exclude: "current,minutely,hourly,alerts")) { (data, _, _) in
+            do {
+                let decoder = JSONDecoder()
+                decoder.dateDecodingStrategy = .secondsSince1970
+                let model = try decoder.decode(DailyWeather.self, from: data!)
+                print(model)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
