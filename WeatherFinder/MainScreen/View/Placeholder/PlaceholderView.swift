@@ -9,15 +9,15 @@
 import UIKit
 
 protocol PlaceholderViewDelegate {
-    func onButtonTapped()
+    func placeholderButtonBeingTapped()
 }
 
 class PlaceholderView: UIView {
     
     @IBOutlet weak var placeholderImageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var goToSettingsButton: UIButton!
+    @IBOutlet private weak var titleLabel: UILabel!
     
     var delegate: PlaceholderViewDelegate?
     
@@ -31,15 +31,12 @@ class PlaceholderView: UIView {
         commonInit()
     }
     
-    func updatePlaceholderViewData(_ titleLabelText: String?,
-                                   _ descriptionLabelText: String? = nil,
-                                   _ goToSettingsButtonLabelText: String? = nil,
-                                   _ placeholderImage: UIImage? = nil) {
-        titleLabel.text = titleLabelText?.localized ?? "No Value".localized
-        descriptionLabel.text = descriptionLabelText?.localized ?? "No Value".localized
-        goToSettingsButton.setTitle(goToSettingsButtonLabelText?.localized ?? "No Value".localized, for: .normal)
+    func updatePlaceholderViewData(viewModel: SettingsPlaceholderViewModel) {
+        titleLabel.text = viewModel.title.localized
+        descriptionLabel.text = viewModel.description?.localized ?? "No Value".localized
+        goToSettingsButton.setTitle(viewModel.button?.localized ?? "No Value".localized, for: .normal)
         placeholderImageView.image =
-            (placeholderImage != nil ? placeholderImage : UIImage(named: "NoImage"))
+            (viewModel.image != nil ? viewModel.image : UIImage(named: "NoImage"))
     }
     
     private func commonInit() {
@@ -67,6 +64,6 @@ class PlaceholderView: UIView {
     }
     
     @objc private func tapGoToSettingsButton(_ sender: UIButton) {
-        delegate?.onButtonTapped()
+        delegate?.placeholderButtonBeingTapped()
     }
 }

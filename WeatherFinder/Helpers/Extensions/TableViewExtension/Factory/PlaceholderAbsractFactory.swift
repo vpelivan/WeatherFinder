@@ -17,10 +17,7 @@ class PlaceholderFactory {
     }
     
     func createPlaceholder(model: SettingsPlaceholderViewModel) -> PlaceholderView {
-        placeholderView.updatePlaceholderViewData(model.title,
-                                                  model.description,
-                                                  model.button,
-                                                  model.image)
+        placeholderView.updatePlaceholderViewData(viewModel: model)
         switch model.kind {
         case .loadingData:
             placeholderView.descriptionLabel.isHidden = true

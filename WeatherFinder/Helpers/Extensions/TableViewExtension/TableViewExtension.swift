@@ -28,7 +28,7 @@ extension UITableView {
 }
 
 extension UITableView: PlaceholderViewDelegate {
-    func onButtonTapped() {
+    func placeholderButtonBeingTapped() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url)
