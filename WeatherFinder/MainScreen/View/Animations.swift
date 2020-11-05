@@ -9,7 +9,6 @@
 import UIKit
 
 class Animations {
-    
     func startRotateAnimation(imageView: UIImageView,
                               circleTime: Double = 0.8,
                               repeatCount: Float = .infinity,
@@ -21,7 +20,7 @@ class Animations {
         rotation.repeatCount = repeatCount
         imageView.layer.add(rotation, forKey: nil)
     }
-    
+
     func startUnfadeAnimation(imageView: UIImageView,
                               alpha: Double = 0.0,
                               duration: Double = 3.0,
@@ -35,7 +34,7 @@ class Animations {
                        },
                        completion: nil)
     }
-    
+
     func startBouncingAnimation(imageView: UIImageView,
                                 duration: Double = 1.0,
                                 delay: Double = 0.5,
@@ -46,7 +45,7 @@ class Animations {
                                    y: bounds.origin.y - 20,
                                    width: bounds.size.width + 40,
                                    height: bounds.size.height + 40)
-        
+
         UIView.animate(withDuration: duration,
                        delay: delay,
                        usingSpringWithDamping: springWithDamping,
@@ -54,8 +53,9 @@ class Animations {
                        options: .curveEaseInOut,
                        animations: {
                             imageView.bounds = changedBounds
-        }) { (sucess: Bool) in
+                       },
+                       completion: { _ in
             imageView.bounds = bounds
-        }
+        })
     }
 }

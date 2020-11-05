@@ -14,7 +14,7 @@ enum PlaceholderKind {
     case noInternet
     case geolocationOff
     case geolocationDenied
-    
+
     var title: String {
         switch self {
         case .loadingData: return "Loading Data"
@@ -24,21 +24,25 @@ enum PlaceholderKind {
         case .geolocationDenied: return "Geolocation Is Denied"
         }
     }
+
     var description: String? {
         switch self {
         case .loadingData: return nil
         case .noResults: return "City Not Found"
         case .noInternet: return "Please check the ability to connect to the internet and try again"
         case .geolocationOff: return "You can enable Location Services in settings of Your device. Otherwise the app won't be able to show Your current location weather automatically"
-        case .geolocationDenied: return "Press Appliction Settings button to allow geolocation for this application manually. Otherwise the app won't be able to show Your current location weather automatically"
+        case .geolocationDenied:
+            return "Press Appliction Settings button to allow geolocation for this application manually. Otherwise the app won't be able to show Your current location weather automatically"
         }
     }
+
     var button: String? {
         switch self {
         case .loadingData, .noResults, .noInternet, .geolocationOff: return nil
         case .geolocationDenied: return "Application Settings"
         }
     }
+
     var image: UIImage? {
         switch self {
         case .loadingData: return UIImage(named: "SunSpinner")
@@ -47,7 +51,8 @@ enum PlaceholderKind {
         case .geolocationDenied, .geolocationOff: return UIImage(named: "LightningNoGeolocation")
         }
     }
-    var animationFunction: ((UIImageView) -> ())? {
+
+    var animationFunction: ((UIImageView) -> Void)? {
         let animations = Animations()
         switch self {
         case .loadingData: return { imageView in

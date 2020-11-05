@@ -1,0 +1,31 @@
+blank_lines:
+    before_file_body: 0! # ! indicating precedence, see comments below
+    after_file_header: 1
+    around_imports: 1 # note plural, referring to "all imports" (not each)
+    around_import: 0
+    before_comment: 1 # exception for swiftlint:disable:previous
+    before_documentation: 1 # no after/around
+    around_declaration_with_members: # shorthand for below:
+    # around_class: 1
+    # around_enum: 1
+    # around_extension: 1
+    # around_protocol: 1
+    # around_struct: 1
+    around_members: 1 # note plural, referring to "all members" in struct/class/protocol/extension/enum (not each)
+    around_enum_case: 1
+    around_protocol_subscript: 0
+    around_subscript: 1
+    around_protocol_method: 0
+    around_function: 1 # also init/deinit
+    before_function_body: 0
+    before_multiline_lambda_body: 0
+    around_protocol_property: 0
+    around_property: 1 # shorthand for below:
+    # around_simple_property: 1
+    # around_property_with_body: 1 # shorthand for below:
+    ## around_computed_property: 1
+    ## around_property_with_accessors: 1
+    before_closing_curly_brace: 0...1
+line_length:
+- 200 # warning
+- 300 # error

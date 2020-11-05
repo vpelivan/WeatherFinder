@@ -14,8 +14,8 @@ class PlaceholderViewModel: SettingsPlaceholderViewModel {
     let description: String?
     let button: String?
     let image: UIImage?
-    let animationFunction: ((UIImageView) -> ())?
-    
+    let animationFunction: ((UIImageView) -> Void)?
+
     init(kind: PlaceholderKind) {
         self.kind = kind
         self.title = kind.title

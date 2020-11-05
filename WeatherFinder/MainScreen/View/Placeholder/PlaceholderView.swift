@@ -8,43 +8,49 @@
 
 import UIKit
 
-protocol PlaceholderViewDelegate {
+protocol PlaceholderViewDelegate: class {
     func placeholderButtonBeingTapped()
 }
 
 class PlaceholderView: UIView {
-    
+
     @IBOutlet weak var placeholderImageView: UIImageView!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var goToSettingsButton: UIButton!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var goToSettingsButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
-    
-    var delegate: PlaceholderViewDelegate?
-    
+
+    weak var delegate: PlaceholderViewDelegate?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
     }
-    
+
     func updatePlaceholderViewData(viewModel: SettingsPlaceholderViewModel) {
         titleLabel.text = viewModel.title.localized
         descriptionLabel.text = viewModel.description?.localized ?? "No Value".localized
         goToSettingsButton.setTitle(viewModel.button?.localized ?? "No Value".localized, for: .normal)
-        placeholderImageView.image =
-            (viewModel.image != nil ? viewModel.image : UIImage(named: "NoImage"))
+        placeholderImageView.image = viewModel.image ?? UIImage(named: "NoImage")
+        switch viewModel.kind {
+        case .loadingData:
+            descriptionLabel.isHidden = true
+        case .geolocationDenied:
+            goToSettingsButton.isHidden = false
+        case .noResults, .noInternet, .geolocationOff:
+            break
+        }
     }
-    
+
     private func commonInit() {
         guard let viewFromXib = Bundle.main.loadNibNamed("PlaceholderView", owner: self, options: nil)?.first as? UIView  else {
             print("Unable to load view from xib in PlaceholderView class")
             return
         }
-        
         viewFromXib.frame = self.bounds
         addSubview(viewFromXib)
         titleLabel.isHidden = false
@@ -52,7 +58,7 @@ class PlaceholderView: UIView {
         goToSettingsButton.isHidden = true
         setupButton()
     }
-    
+
     private func setupButton() {
         goToSettingsButton.layer.borderWidth = 1
         goToSettingsButton.layer.borderColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -62,7 +68,7 @@ class PlaceholderView: UIView {
         goToSettingsButton.layer.shadowOffset = CGSize(width: 1, height: 1)
         goToSettingsButton.addTarget(self, action: #selector(tapGoToSettingsButton(_:)), for: .touchUpInside)
     }
-    
+
     @objc private func tapGoToSettingsButton(_ sender: UIButton) {
         delegate?.placeholderButtonBeingTapped()
     }

@@ -9,10 +9,10 @@
 import Foundation
 
 // HTTPHeaders is a dictionary consisting of headers
-typealias HTTPHeaders = [String : String]
+typealias HTTPHeaders = [String: String]
 
 // Parameters is a dictionary consisting of keys and various data type values
-typealias Parameters = [String : Any]
+typealias Parameters = [String: Any]
 
 // this enum can be extended with download cases, upload cases etc
 enum HTTPTask {

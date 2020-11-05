@@ -14,30 +14,29 @@ protocol NetworkServiceProtocol {
 }
 
 class NetworkService: NetworkServiceProtocol {
-    
+
     func makeRequest(with endPoint: EndPointType,
                      cachePolicy: URLRequest.CachePolicy = .reloadIgnoringLocalCacheData,
                      completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        
+
         let session = URLSession.shared
-        
+
         do {
             let request = try buildURLRequest(with: endPoint, cachePolicy: cachePolicy)
             session.dataTask(with: request) { (data, response, error) in
                 completion(data, response, error)
             }.resume()
-        }
-        catch let error {
+        } catch let error {
             completion(nil, nil, error)
         }
     }
-    
+
     private func buildURLRequest(with endPoint: EndPointType,
                                  cachePolicy: URLRequest.CachePolicy) throws -> URLRequest {
-        
+
         let url = endPoint.baseURL.appendingPathComponent(endPoint.path)
         var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: 10)
-        
+
         request.httpMethod = endPoint.httpMethod.rawValue
         addHeaders(endPoint.headers, &request)
         do {
@@ -54,17 +53,17 @@ class NetworkService: NetworkServiceProtocol {
             throw error
         }
     }
-    
+
     private func addHeaders(_ headers: HTTPHeaders?,
                             _ request: inout URLRequest) {
-        
+
         guard let headers = headers else { return }
-        
+
         for (key, value) in headers {
             request.setValue(value, forHTTPHeaderField: key)
         }
     }
-    
+
     private func setURLParameters(_ urlParameters: Parameters,
                                   _ request: inout URLRequest) throws {
         do {
@@ -73,21 +72,21 @@ class NetworkService: NetworkServiceProtocol {
             throw error
         }
     }
-    
+
     private func setBodyParameters(_ bodyParameters: Parameters,
                                    _ request: inout URLRequest) throws {
-        
+
         do {
             try JSONParameterEncoder.encode(urlRequest: &request, with: bodyParameters)
         } catch {
             throw error
         }
     }
-    
+
     private func configurePOSTParameters(_ urlParameters: Parameters?,
                                          _ bodyParameters: Parameters?,
                                          _ request: inout URLRequest) throws {
-        
+
         guard !(bodyParameters == nil && urlParameters == nil) else {
             throw NetworkError.nilParameters
         }

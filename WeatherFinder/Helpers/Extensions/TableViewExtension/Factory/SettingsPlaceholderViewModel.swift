@@ -14,5 +14,5 @@ protocol SettingsPlaceholderViewModel {
     var description: String? { get }
     var button: String? { get }
     var image: UIImage? { get }
-    var animationFunction: ((UIImageView) -> ())? { get }
+    var animationFunction: ((UIImageView) -> Void)? { get }
 }
