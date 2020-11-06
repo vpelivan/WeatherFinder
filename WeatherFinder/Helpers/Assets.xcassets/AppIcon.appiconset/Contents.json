@@ -9,12 +9,12 @@
      	"scale" : "3x"
     },    
     {
-      	"size" : "40x40",
-      	"expected-size" : "80",
-      	"filename" : "80.png",
-      	"folder" : "Assets.xcassets/AppIcon.appiconset/",
-      	"idiom" : "iphone",
-      	"scale":"2x"
+      "size" : "40x40",
+      "expected-size" : "80",
+      "filename" : "80.png",
+      "folder" : "Assets.xcassets/AppIcon.appiconset/",
+      "idiom" : "iphone",
+      "scale":"2x"
     },
     {
     	"size" : "40x40",
