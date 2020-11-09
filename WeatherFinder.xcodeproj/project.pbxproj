@@ -10,8 +10,7 @@
 		5724110D2547F68A003CEBD5 /* PlaceholderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5724110C2547F68A003CEBD5 /* PlaceholderView.xib */; };
 		572411102547F69F003CEBD5 /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5724110F2547F69F003CEBD5 /* PlaceholderView.swift */; };
 		572411192548B98D003CEBD5 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572411182548B98D003CEBD5 /* Animations.swift */; };
-		572B6FDB254F627E00164844 /* PlaceholderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FC3254F627E00164844 /* PlaceholderViewModel.swift */; };
-		572B6FE2254F627E00164844 /* PlaceholderKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCB254F627E00164844 /* PlaceholderKind.swift */; };
+		572B6FE2254F627E00164844 /* Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCB254F627E00164844 /* Placeholder.swift */; };
 		572B6FE3254F627E00164844 /* SettingsPlaceholderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCC254F627E00164844 /* SettingsPlaceholderViewModel.swift */; };
 		572B6FE4254F627E00164844 /* PlaceholderAbsractFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCD254F627E00164844 /* PlaceholderAbsractFactory.swift */; };
 		572B6FE5254F627E00164844 /* TableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCE254F627E00164844 /* TableViewExtension.swift */; };
@@ -33,12 +32,12 @@
 		57B36BBF25379BC400C2BCE8 /* WeatherApiEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B36BBE25379BC400C2BCE8 /* WeatherApiEndpoint.swift */; };
 		57B36BC22537A3DB00C2BCE8 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B36BC12537A3DB00C2BCE8 /* NetworkManager.swift */; };
 		57C33FAD2541963F0026AF08 /* ActivityIndicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C33FAC2541963F0026AF08 /* ActivityIndicatorProtocol.swift */; };
+		57C3AF5D2559D76C0051AEE2 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C3AF5C2559D76C0051AEE2 /* UIViewExtension.swift */; };
 		57EA7D7F252F5254006D7E82 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EA7D7E252F5254006D7E82 /* NetworkService.swift */; };
 		57EFBCEF2539E32E00B81A2D /* WeatherScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFBCEE2539E32E00B81A2D /* WeatherScreenViewController.swift */; };
 		57EFBCF32539E37400B81A2D /* WeatherDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFBCF22539E37400B81A2D /* WeatherDataModel.swift */; };
 		57EFBCF82539E39900B81A2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EFBCF72539E39900B81A2D /* AppDelegate.swift */; };
 		6033EF89EA3F49F2CDDFD81C /* Pods_WeatherFinder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD29AAC2549E0A1B38FA5E44 /* Pods_WeatherFinder.framework */; };
-		7A36F66C2535C0AD004121C2 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A36F66B2535C0AD004121C2 /* StringExtensions.swift */; };
 		7A50B34C2526101F00304AB9 /* GradientColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A50B34B2526101F00304AB9 /* GradientColor.swift */; };
 		7A7076D225457D5400BF2E9D /* LocationFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7076D125457D5400BF2E9D /* LocationFinder.swift */; };
 		7A795737252F486B00C78974 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A795735252F486B00C78974 /* InfoPlist.strings */; };
@@ -50,8 +49,7 @@
 		5724110C2547F68A003CEBD5 /* PlaceholderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderView.xib; sourceTree = "<group>"; };
 		5724110F2547F69F003CEBD5 /* PlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderView.swift; sourceTree = "<group>"; };
 		572411182548B98D003CEBD5 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
-		572B6FC3254F627E00164844 /* PlaceholderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderViewModel.swift; sourceTree = "<group>"; };
-		572B6FCB254F627E00164844 /* PlaceholderKind.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderKind.swift; sourceTree = "<group>"; };
+		572B6FCB254F627E00164844 /* Placeholder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
 		572B6FCC254F627E00164844 /* SettingsPlaceholderViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPlaceholderViewModel.swift; sourceTree = "<group>"; };
 		572B6FCD254F627E00164844 /* PlaceholderAbsractFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderAbsractFactory.swift; sourceTree = "<group>"; };
 		572B6FCE254F627E00164844 /* TableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewExtension.swift; sourceTree = "<group>"; };
@@ -75,6 +73,7 @@
 		57B36BBE25379BC400C2BCE8 /* WeatherApiEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherApiEndpoint.swift; sourceTree = "<group>"; };
 		57B36BC12537A3DB00C2BCE8 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		57C33FAC2541963F0026AF08 /* ActivityIndicatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorProtocol.swift; sourceTree = "<group>"; };
+		57C3AF5C2559D76C0051AEE2 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		57EA7D7E252F5254006D7E82 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		57EFBCEE2539E32E00B81A2D /* WeatherScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherScreenViewController.swift; sourceTree = "<group>"; };
 		57EFBCF22539E37400B81A2D /* WeatherDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherDataModel.swift; sourceTree = "<group>"; };
@@ -122,8 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				572B6FCD254F627E00164844 /* PlaceholderAbsractFactory.swift */,
-				572B6FCB254F627E00164844 /* PlaceholderKind.swift */,
-				572B6FC3254F627E00164844 /* PlaceholderViewModel.swift */,
+				572B6FCB254F627E00164844 /* Placeholder.swift */,
 				572B6FCC254F627E00164844 /* SettingsPlaceholderViewModel.swift */,
 			);
 			path = Factory;
@@ -300,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				572B6FCF254F627E00164844 /* StringExtensions.swift */,
+				57C3AF5C2559D76C0051AEE2 /* UIViewExtension.swift */,
 				572B6FC0254F627E00164844 /* TableViewExtension */,
 			);
 			path = Extensions;
@@ -444,7 +443,7 @@
 				57C33FAD2541963F0026AF08 /* ActivityIndicatorProtocol.swift in Sources */,
 				579E79C025339263002A67A6 /* RequestConfigurationProtocol.swift in Sources */,
 				5780B3292537651300F87463 /* URLParameterEncoder.swift in Sources */,
-				572B6FE2254F627E00164844 /* PlaceholderKind.swift in Sources */,
+				572B6FE2254F627E00164844 /* Placeholder.swift in Sources */,
 				57B36BBF25379BC400C2BCE8 /* WeatherApiEndpoint.swift in Sources */,
 				7A7076D225457D5400BF2E9D /* LocationFinder.swift in Sources */,
 				57EFBCF32539E37400B81A2D /* WeatherDataModel.swift in Sources */,
@@ -456,6 +455,7 @@
 				5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */,
 				57EA7D7F252F5254006D7E82 /* NetworkService.swift in Sources */,
 				57EFBCF82539E39900B81A2D /* AppDelegate.swift in Sources */,
+				57C3AF5D2559D76C0051AEE2 /* UIViewExtension.swift in Sources */,
 				579E79D52533CF04002A67A6 /* HTTPMethod.swift in Sources */,
 				572B6FE5254F627E00164844 /* TableViewExtension.swift in Sources */,
 				57B36BC22537A3DB00C2BCE8 /* NetworkManager.swift in Sources */,
@@ -466,7 +466,6 @@
 				572411102547F69F003CEBD5 /* PlaceholderView.swift in Sources */,
 				572411192548B98D003CEBD5 /* Animations.swift in Sources */,
 				572B6FE4254F627E00164844 /* PlaceholderAbsractFactory.swift in Sources */,
-				572B6FDB254F627E00164844 /* PlaceholderViewModel.swift in Sources */,
 				5780B3252535CAE300F87463 /* NetworkError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

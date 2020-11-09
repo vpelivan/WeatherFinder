@@ -2,20 +2,18 @@ import UIKit
 
 extension UITableView {
 
-    func setPlaceholder(ofKind: PlaceholderKind) {
+    func setPlaceholder(kind: Placeholder) {
         let placeholderView = PlaceholderView()
         let placeholderFactory = PlaceholderFactory(placeholderView)
-        let viewModel = placeholderFactory.createModel(ofKind: ofKind)
-        let configuredPlaceholder = placeholderFactory.configurePlaceholder(with: viewModel)
-
-        self.backgroundView = configuredPlaceholder
+        let configuredPlaceholder = placeholderFactory.getConfiguredPlaceholder(from: kind)
+        backgroundView = configuredPlaceholder
         placeholderView.delegate = self
-        self.separatorStyle = .none
-        performAnimation(viewModel: viewModel, placeholder: configuredPlaceholder)
+        separatorStyle = .none
+        performAnimation(viewModel: kind, placeholder: configuredPlaceholder)
     }
 
     func restoreTableView(separatorStyle: UITableViewCell.SeparatorStyle) {
-        self.backgroundView = nil
+        backgroundView = nil
         self.separatorStyle = separatorStyle
     }
 

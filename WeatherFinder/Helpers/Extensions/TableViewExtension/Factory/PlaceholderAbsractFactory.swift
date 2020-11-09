@@ -16,12 +16,8 @@ class PlaceholderFactory {
         self.placeholderView = placeholderView
     }
 
-    func configurePlaceholder(with model: SettingsPlaceholderViewModel) -> PlaceholderView {
+    func getConfiguredPlaceholder(from model: SettingsPlaceholderViewModel) -> PlaceholderView {
         placeholderView.updatePlaceholderViewData(viewModel: model)
         return placeholderView
-    }
-
-    func createModel(ofKind: PlaceholderKind) -> SettingsPlaceholderViewModel {
-        return PlaceholderViewModel(kind: ofKind)
     }
 }

@@ -47,10 +47,7 @@ class PlaceholderView: UIView {
     }
 
     private func commonInit() {
-        guard let viewFromXib = Bundle.main.loadNibNamed("PlaceholderView", owner: self, options: nil)?.first as? UIView  else {
-            print("Unable to load view from xib in PlaceholderView class")
-            return
-        }
+        let viewFromXib = self.getViewFromXib(nibName: "PlaceholderView")
         viewFromXib.frame = self.bounds
         addSubview(viewFromXib)
         titleLabel.isHidden = false

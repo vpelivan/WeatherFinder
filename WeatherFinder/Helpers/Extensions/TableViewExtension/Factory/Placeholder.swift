@@ -1,5 +1,5 @@
 //
-//  PlaceholderKind.swift
+//  Placeholder.swift
 //  WeatherFinder
 //
 //  Created by Victor Pelivan on 28.10.2020.
@@ -8,12 +8,17 @@
 
 import UIKit
 
-enum PlaceholderKind {
+enum Placeholder: SettingsPlaceholderViewModel {
+
     case loadingData
     case noResults
     case noInternet
     case geolocationOff
     case geolocationDenied
+
+    var kind: Placeholder {
+        return self
+    }
 
     var title: String {
         switch self {
