@@ -11,8 +11,7 @@ import UIKit
 extension UIView {
     func getViewFromXib(nibName: String) -> UIView {
         guard let viewFromXib = Bundle.main.loadNibNamed(nibName, owner: self, options: nil)?.first as? UIView else {
-            print("Unable to load view from xib")
-            return UIView()
+            fatalError("Unable to load view from xib")
         }
         return viewFromXib
     }
