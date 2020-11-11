@@ -19,9 +19,9 @@ struct OneDayWeather: Decodable {
     let dateAndTime: Date
     let pressure, humidity: Int
     let windSpeed: Double
-    let temperature: OneDayTemperature
-    let feelsLike: OneDayTemperature
-    let weatherCondition: [Weather]
+    let temperature: OneDayTemperature?
+    let feelsLike: OneDayTemperature?
+    let weatherCondition: [Weather?]
     enum CodingKeys: String, CodingKey {
         case pressure, humidity
         case dateAndTime = "dt"

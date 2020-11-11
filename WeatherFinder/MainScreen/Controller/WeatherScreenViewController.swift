@@ -1,4 +1,5 @@
 import UIKit
+import CoreLocation
 
 class WeatherScreenViewController: UIViewController {
 
@@ -9,14 +10,7 @@ class WeatherScreenViewController: UIViewController {
     private var searchController: UISearchController?
     private let gradientLayer = Colors.gradientLayer
     private let geolocation = Geolocation()
-    private var cityWeatherData: WeatherDataModel? = nil {
-        willSet {
-            if newValue == nil {
-                tableView.reloadData()
-            }
-        }
-    }
-
+    private var cityWeatherData: WeatherDataModel?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
@@ -25,18 +19,6 @@ class WeatherScreenViewController: UIViewController {
         setupGeolocation()
         NotificationCenter.default.addObserver(self, selector: #selector(setupGeolocation),
                                                name: UIScene.didActivateNotification, object: nil)
-        // DailyWeather model testing (Kyiv weather)
-        let netserv = NetworkService()
-        netserv.makeRequest(with: WeatherApiEndpoint.oneCallByCoordinates(lattitude: "50.43", longtitute: "30.52", exclude: "current,minutely,hourly,alerts")) { (data, _, _) in
-            do {
-                let decoder = JSONDecoder()
-                decoder.dateDecodingStrategy = .secondsSince1970
-                let model = try decoder.decode(DailyWeather.self, from: data!)
-                print(model)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -58,13 +40,15 @@ class WeatherScreenViewController: UIViewController {
     }
 
     private func setupTableView() {
-        let nib = UINib(nibName: "CityWeatherTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "weatherCell")
+        let cityWeatherNib = UINib(nibName: "CityWeatherTableViewCell", bundle: nil)
+        let dailyPickerNib = UINib(nibName: "DailyWeatherPickerTableViewCell", bundle: nil)
+        tableView.register(cityWeatherNib, forCellReuseIdentifier: "weatherCell")
+        tableView.register(dailyPickerNib, forCellReuseIdentifier: "dailyPickerCell")
     }
 
     @objc private func setupGeolocation() {
         geolocation.delegate = self
-        cityWeatherData = nil
+//        cityWeatherData = nil
         geolocation.checkAuthorizationStatus()
     }
 
@@ -77,7 +61,7 @@ class WeatherScreenViewController: UIViewController {
 extension WeatherScreenViewController: GeolocationDelegate {
 
     func authorizationStatusSetup(state: CurrentAutorizationStatus) {
-        cityWeatherData = nil
+//        cityWeatherData = nil
         switch state {
         case .geolocationAllowed:
 //            tableView.restoreTableView(separatorStyle: .none)
@@ -91,13 +75,15 @@ extension WeatherScreenViewController: GeolocationDelegate {
         }
     }
 
-    func locationRecieved() {
+    func locationRecieved(location: CLLocation?) {
 //        tableView.setPlaceholder(ofKind: .loadingData)
-        /* TODO: - need to call NetworkManager method getWeatherByCoordinates(lat:, long:),
-        pass longitude and latitude from location property, switch of placeholder
-        after we get our cityWeather Data, and reload tableview */
-//        if let location = geolocation.location {
-//        }
+        //This method is called for testing purposes, it must be deleted after NetworkManager is implemented
+        NetworkManager.shared.getCityWeatherByCoordinates(coordinates: location) { [weak self] data in
+            if let data = data, let self = self {
+                self.cityWeatherData = data
+                self.tableView.reloadData()
+            }
+        }
     }
 }
 
@@ -105,17 +91,26 @@ extension WeatherScreenViewController: GeolocationDelegate {
 extension WeatherScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard cityWeatherData != nil else { return 0 }
-        return 1
+        return 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? CityWeatherTableViewCell else {
-            return UITableViewCell.init()
+        switch indexPath.row {
+        case 0:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "dailyPickerCell", for: indexPath) as? DailyWeatherPickerTableViewCell else {
+                return UITableViewCell()
+            }
+            return cell
+        case 1:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? CityWeatherTableViewCell else {
+                return UITableViewCell()
+            }
+            if let weatherData = cityWeatherData {
+                cell.updateWeatherData(model: weatherData)
+            }
+            return cell
+        default:
+            return UITableViewCell()
         }
-
-        if let weatherData = cityWeatherData {
-            cell.updateWeatherData(model: weatherData)
-        }
-        return cell
     }
 }

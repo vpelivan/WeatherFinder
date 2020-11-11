@@ -9,15 +9,36 @@
 import UIKit
 
 class DailyWeatherPickerTableViewCell: UITableViewCell {
-    @IBOutlet weak var pickerCollectionView: UICollectionView!
-    
+    @IBOutlet private weak var pickerCollectionView: UICollectionView!
+    private let dailyWeather: DailyWeather? = nil
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        setupCollectionView()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
+    private func setupCollectionView() {
+        let nib = UINib(nibName: "DailyWeatherPickerCollectionViewCell", bundle: nil)
+        pickerCollectionView.register(nib, forCellWithReuseIdentifier: "dailyPickerCollectionCell")
+        pickerCollectionView.dataSource = self
+    }
+}
+
+extension DailyWeatherPickerTableViewCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dailyWeather?.oneWeekWeather.count ?? 7 //change later
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "dailyPickerCollectionCell", for: indexPath) as? DailyWeatherPickerCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        return cell
+    }
+}
+
+extension DailyWeatherPickerCollectionViewCell: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
     }
 }
