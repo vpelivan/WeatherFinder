@@ -68,19 +68,16 @@ extension WeatherScreenViewController: GeolocationDelegate {
         cityWeatherData = nil
         switch state {
         case .geolocationAllowed:
-//            tableView.restoreTableView(separatorStyle: .none)
-            print("Need to switch of placeholder")
+            tableView.restoreTableView(separatorStyle: .none)
         case .geolocationDenied:
-//            tableView.setPlaceholder(ofKind: .geolocationDenied)
-            print("Placeholder Geolocation Denied by User")
+            tableView.setPlaceholder(kind: .geolocationDenied)
         case .geolocationOff:
-//            tableView.setPlaceholder(ofKind: .geolocationOff)
-            print("Placeholder Geolocation OFF")
+            tableView.setPlaceholder(kind: .geolocationOff)
         }
     }
 
     func locationRecieved() {
-//        tableView.setPlaceholder(ofKind: .loadingData)
+        tableView.setPlaceholder(kind: .loadingData)
         /* TODO: - need to call NetworkManager method getWeatherByCoordinates(lat:, long:),
         pass longitude and latitude from location property, switch of placeholder
         after we get our cityWeather Data, and reload tableview */
