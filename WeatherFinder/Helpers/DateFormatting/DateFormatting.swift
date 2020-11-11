@@ -9,8 +9,11 @@
 import Foundation
 
 class DateFormatting {
-    func getDateStringFromTimeStamp(timeStamp: Date) -> String {
-
-        return ""
+    func getStringDateFromTimeStamp(timeStamp: Double, dateFormat: String) -> String {
+        let date = Date(timeIntervalSince1970: timeStamp)
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        let stringFromDate = formatter.string(from: date)
+        return stringFromDate
     }
 }

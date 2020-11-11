@@ -14,6 +14,7 @@ class DailyWeatherPickerCollectionViewCell: UICollectionViewCell, ActivityIndica
     @IBOutlet private weak var weatherImageView: UIImageView!
     @IBOutlet private weak var weatherStatusLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    private let dateFormatting = DateFormatting()
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -30,8 +31,8 @@ class DailyWeatherPickerCollectionViewCell: UICollectionViewCell, ActivityIndica
     }
 
     func updateDailyWeather(model: OneDayWeather) {
-//        dateLabel.text =
-        temperatureLabel.text = "%.f˚C".getLocalizedStringFromFormat(model.temperature)
+        dateLabel.text = dateFormatting.getStringDateFromTimeStamp(timeStamp: model.dateTimestamp, dateFormat: "E, d MMM")
+        temperatureLabel.text = "%.f˚C".getLocalizedStringFromFormat(model.temperature?.dayTemperature)
         if model.weatherCondition.isEmpty == false {
             let weatherCondition = model.weatherCondition[0]?.description
             let iconId = model.weatherCondition[0]?.icon

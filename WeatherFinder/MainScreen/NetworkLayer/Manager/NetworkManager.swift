@@ -65,7 +65,7 @@ class NetworkManager {
             }
         }
     }
-    
+
     func getDailyWeatherByCoordinates(coordinates: CLLocation?, completion: @escaping (DailyWeather?) -> Void) {
         guard let latitude = coordinates?.coordinate.latitude,
               let longtitude = coordinates?.coordinate.longitude else {

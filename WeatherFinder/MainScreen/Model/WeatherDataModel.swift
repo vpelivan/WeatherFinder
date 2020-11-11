@@ -14,23 +14,6 @@ struct WeatherDataModel: Decodable {
     let mainWeatherInfo: Main?
     let windSpeed: WindSpeed?
 
-    struct Main: Decodable {
-        let temperature: Double
-        let feelsLike: Double
-        let pressure: Int
-        let humidity: Int
-        let temperatureMinimum: Double
-        let temperatureMaximum: Double
-
-        enum CodingKeys: String, CodingKey {
-            case pressure, humidity
-            case temperature = "temp"
-            case feelsLike = "feels_like"
-            case temperatureMinimum = "temp_min"
-            case temperatureMaximum = "temp_max"
-        }
-    }
-
     struct WindSpeed: Decodable {
         let speed: Float
     }
@@ -40,6 +23,23 @@ struct WeatherDataModel: Decodable {
         case mainWeatherInfo = "main"
         case windSpeed = "wind"
         case weatherCondition = "weather"
+    }
+}
+
+struct Main: Decodable {
+    let temperature: Double
+    let feelsLike: Double
+    let pressure: Int
+    let humidity: Int
+    let temperatureMinimum: Double
+    let temperatureMaximum: Double
+
+    enum CodingKeys: String, CodingKey {
+        case pressure, humidity
+        case temperature = "temp"
+        case feelsLike = "feels_like"
+        case temperatureMinimum = "temp_min"
+        case temperatureMaximum = "temp_max"
     }
 }
 

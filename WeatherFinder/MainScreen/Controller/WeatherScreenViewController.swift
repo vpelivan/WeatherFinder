@@ -10,8 +10,13 @@ class WeatherScreenViewController: UIViewController {
     private var searchController: UISearchController?
     private let gradientLayer = Colors.gradientLayer
     private let geolocation = Geolocation()
-    private var cityWeatherData: WeatherDataModel?
     private var dailyCityWeaterData: DailyWeather?
+    private var cityWeatherData: WeatherDataModel? = nil {
+        willSet {
+            tableView.reloadData()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
@@ -43,8 +48,8 @@ class WeatherScreenViewController: UIViewController {
     private func setupTableView() {
         let cityWeatherNib = UINib(nibName: "CityWeatherTableViewCell", bundle: nil)
         let dailyPickerNib = UINib(nibName: "DailyWeatherPickerTableViewCell", bundle: nil)
-        tableView.register(cityWeatherNib, forCellReuseIdentifier: "weatherCell")
-        tableView.register(dailyPickerNib, forCellReuseIdentifier: "dailyPickerCell")
+        tableView.register(cityWeatherNib, forCellReuseIdentifier: "CityWeatherTableViewCell")
+        tableView.register(dailyPickerNib, forCellReuseIdentifier: "DailyWeatherPickerTableViewCell")
     }
 
     @objc private func setupGeolocation() {
@@ -64,31 +69,25 @@ extension WeatherScreenViewController: GeolocationDelegate {
         cityWeatherData = nil
         switch state {
         case .geolocationAllowed:
-//            tableView.restoreTableView(separatorStyle: .none)
-            print("Need to switch of placeholder")
+            tableView.restoreTableView(separatorStyle: .none)
         case .geolocationDenied:
-//            tableView.setPlaceholder(ofKind: .geolocationDenied)
-            print("Placeholder Geolocation Denied by User")
+            tableView.setPlaceholder(kind: .geolocationDenied)
         case .geolocationOff:
-//            tableView.setPlaceholder(ofKind: .geolocationOff)
-            print("Placeholder Geolocation OFF")
+            tableView.setPlaceholder(kind: .geolocationOff)
         }
     }
 
     func locationRecieved(location: CLLocation?) {
-//        tableView.setPlaceholder(ofKind: .loadingData)
-        print("Placeholder Loading Data")
-        //This method is called for testing purposes, it must be deleted after NetworkManager is implemented
+        tableView.setPlaceholder(kind: .loadingData)
+        //This method is called for testing purposes, it must be deleted after NetworkManager is implemented, it's better to implement this method on promiseKit
         NetworkManager.shared.getCityWeatherByCoordinates(coordinates: location) { [weak self] cityWeather in
             if let cityWeather = cityWeather, let self = self {
                 self.cityWeatherData = cityWeather
                 NetworkManager.shared.getDailyWeatherByCoordinates(coordinates: location) { (dailyCityWeather) in
                     if let dailyCityWeather = dailyCityWeather {
                         self.dailyCityWeaterData = dailyCityWeather
+                        self.tableView.restoreTableView(separatorStyle: .none)
                         self.tableView.reloadData()
-                        print(dailyCityWeather)
-                        print("Switch Off Placeholder")
-                        //                tableView.restoreTableView(separatorStyle: .none)
                     }
                 }
             }
@@ -99,27 +98,24 @@ extension WeatherScreenViewController: GeolocationDelegate {
 // MARK: - Extension TableView Datasource
 extension WeatherScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard cityWeatherData != nil else { return 0 }
+        guard cityWeatherData != nil && dailyCityWeaterData != nil else { return 0 }
         return 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "dailyPickerCell", for: indexPath) as? DailyWeatherPickerTableViewCell else {
-                return UITableViewCell()
-            }
+            let cell = tableView.dequeue(DailyWeatherPickerTableViewCell.self, for: indexPath)
+            cell.dailyWeather = dailyCityWeaterData
             return cell
         case 1:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? CityWeatherTableViewCell else {
-                return UITableViewCell()
-            }
+            let cell = tableView.dequeue(CityWeatherTableViewCell.self, for: indexPath)
             if let weatherData = cityWeatherData {
                 cell.updateWeatherData(model: weatherData)
             }
             return cell
         default:
-            return UITableViewCell()
+            fatalError("Cells quantity error in WeatherScreenViewController tableView")
         }
     }
 }
