@@ -14,9 +14,8 @@ struct WeatherDataModel: Decodable {
     let mainWeatherInfo: Main?
     let windSpeed: WindSpeed?
 
-    struct Weather: Decodable {
-        let description: String
-        let icon: String
+    struct WindSpeed: Decodable {
+        let speed: Float
     }
 
     enum CodingKeys: String, CodingKey {
@@ -44,6 +43,7 @@ struct Main: Decodable {
     }
 }
 
-struct WindSpeed: Decodable {
-    let speed: Float
+struct Weather: Decodable {
+    let description: String
+    let icon: String
 }

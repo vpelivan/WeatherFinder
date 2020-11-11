@@ -1,4 +1,5 @@
 import UIKit
+import CoreLocation
 
 class WeatherScreenViewController: UIViewController {
 
@@ -9,11 +10,10 @@ class WeatherScreenViewController: UIViewController {
     private var searchController: UISearchController?
     private let gradientLayer = Colors.gradientLayer
     private let geolocation = Geolocation()
+    private var dailyCityWeaterData: DailyWeather?
     private var cityWeatherData: WeatherDataModel? = nil {
         willSet {
-            if newValue == nil {
-                tableView.reloadData()
-            }
+            tableView.reloadData()
         }
     }
 
@@ -46,8 +46,10 @@ class WeatherScreenViewController: UIViewController {
     }
 
     private func setupTableView() {
-        let nib = UINib(nibName: "CityWeatherTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "weatherCell")
+        let cityWeatherNib = UINib(nibName: "CityWeatherTableViewCell", bundle: nil)
+        let dailyPickerNib = UINib(nibName: "DailyWeatherPickerTableViewCell", bundle: nil)
+        tableView.register(cityWeatherNib, forCellReuseIdentifier: "CityWeatherTableViewCell")
+        tableView.register(dailyPickerNib, forCellReuseIdentifier: "DailyWeatherPickerTableViewCell")
     }
 
     @objc private func setupGeolocation() {
@@ -63,7 +65,6 @@ class WeatherScreenViewController: UIViewController {
 
 // MARK: - Extension Geolocation Delegate
 extension WeatherScreenViewController: GeolocationDelegate {
-
     func authorizationStatusSetup(state: CurrentAutorizationStatus) {
         cityWeatherData = nil
         switch state {
@@ -76,31 +77,45 @@ extension WeatherScreenViewController: GeolocationDelegate {
         }
     }
 
-    func locationRecieved() {
+    func locationRecieved(location: CLLocation?) {
         tableView.setPlaceholder(kind: .loadingData)
-        /* TODO: - need to call NetworkManager method getWeatherByCoordinates(lat:, long:),
-        pass longitude and latitude from location property, switch of placeholder
-        after we get our cityWeather Data, and reload tableview */
-//        if let location = geolocation.location {
-//        }
+        //This method is called for testing purposes, it must be deleted after NetworkManager is implemented, it's better to implement this method on promiseKit
+        NetworkManager.shared.getCityWeatherByCoordinates(coordinates: location) { [weak self] cityWeather in
+            if let cityWeather = cityWeather, let self = self {
+                self.cityWeatherData = cityWeather
+                NetworkManager.shared.getDailyWeatherByCoordinates(coordinates: location) { (dailyCityWeather) in
+                    if let dailyCityWeather = dailyCityWeather {
+                        self.dailyCityWeaterData = dailyCityWeather
+                        self.tableView.restoreTableView(separatorStyle: .none)
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }
     }
 }
 
 // MARK: - Extension TableView Datasource
 extension WeatherScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard cityWeatherData != nil else { return 0 }
-        return 1
+        guard cityWeatherData != nil && dailyCityWeaterData != nil else { return 0 }
+        return 2
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "weatherCell", for: indexPath) as? CityWeatherTableViewCell else {
-            return UITableViewCell.init()
+        switch indexPath.row {
+        case 0:
+            let cell = tableView.dequeue(DailyWeatherPickerTableViewCell.self, for: indexPath)
+            cell.dailyWeather = dailyCityWeaterData
+            return cell
+        case 1:
+            let cell = tableView.dequeue(CityWeatherTableViewCell.self, for: indexPath)
+            if let weatherData = cityWeatherData {
+                cell.updateWeatherData(model: weatherData)
+            }
+            return cell
+        default:
+            fatalError("Cells quantity error in WeatherScreenViewController tableView")
         }
-
-        if let weatherData = cityWeatherData {
-            cell.updateWeatherData(model: weatherData)
-        }
-        return cell
     }
 }
