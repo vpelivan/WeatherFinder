@@ -12,6 +12,7 @@
 		5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C52524C4CB00D8AD10 /* Main.storyboard */; };
 		5750B6C92524C4CC00D8AD10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C82524C4CC00D8AD10 /* Assets.xcassets */; };
 		5750B6CC2524C4CC00D8AD10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6CA2524C4CC00D8AD10 /* LaunchScreen.storyboard */; };
+		577C2EA0255C47CC00579507 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577C2E9F255C47CC00579507 /* DateFormatting.swift */; };
 		5780B3252535CAE300F87463 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5780B3242535CAE300F87463 /* NetworkError.swift */; };
 		5780B3292537651300F87463 /* URLParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5780B3282537651300F87463 /* URLParameterEncoder.swift */; };
 		5780B32C2537653F00F87463 /* ParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5780B32B2537653F00F87463 /* ParameterEncoder.swift */; };
@@ -50,6 +51,7 @@
 		5750B6C82524C4CC00D8AD10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5750B6CB2524C4CC00D8AD10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5750B6CD2524C4CC00D8AD10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		577C2E9F255C47CC00579507 /* DateFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
 		5780B3242535CAE300F87463 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		5780B3282537651300F87463 /* URLParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParameterEncoder.swift; sourceTree = "<group>"; };
 		5780B32B2537653F00F87463 /* ParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoder.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		5750B6D82524C56E00D8AD10 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				577C2E9E255C47A900579507 /* DateFormatting */,
 				7A7076D025457D3400BF2E9D /* Geolocation */,
 				7A36F66A2535C069004121C2 /* Extensions */,
 				57EFBCF72539E39900B81A2D /* AppDelegate.swift */,
@@ -173,6 +176,14 @@
 				5750B6C82524C4CC00D8AD10 /* Assets.xcassets */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		577C2E9E255C47A900579507 /* DateFormatting */ = {
+			isa = PBXGroup;
+			children = (
+				577C2E9F255C47CC00579507 /* DateFormatting.swift */,
+			);
+			path = DateFormatting;
 			sourceTree = "<group>";
 		};
 		5780B327253764F000F87463 /* Encoders */ = {
@@ -408,6 +419,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				577C2EA0255C47CC00579507 /* DateFormatting.swift in Sources */,
 				57C33FAD2541963F0026AF08 /* ActivityIndicatorProtocol.swift in Sources */,
 				579E79C025339263002A67A6 /* RequestConfigurationProtocol.swift in Sources */,
 				5780B3292537651300F87463 /* URLParameterEncoder.swift in Sources */,

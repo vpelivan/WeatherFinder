@@ -11,6 +11,7 @@ class WeatherScreenViewController: UIViewController {
     private let gradientLayer = Colors.gradientLayer
     private let geolocation = Geolocation()
     private var cityWeatherData: WeatherDataModel?
+    private var dailyCityWeaterData: DailyWeather?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSearchController()
@@ -48,7 +49,7 @@ class WeatherScreenViewController: UIViewController {
 
     @objc private func setupGeolocation() {
         geolocation.delegate = self
-//        cityWeatherData = nil
+        cityWeatherData = nil
         geolocation.checkAuthorizationStatus()
     }
 
@@ -59,9 +60,8 @@ class WeatherScreenViewController: UIViewController {
 
 // MARK: - Extension Geolocation Delegate
 extension WeatherScreenViewController: GeolocationDelegate {
-
     func authorizationStatusSetup(state: CurrentAutorizationStatus) {
-//        cityWeatherData = nil
+        cityWeatherData = nil
         switch state {
         case .geolocationAllowed:
 //            tableView.restoreTableView(separatorStyle: .none)
@@ -77,11 +77,20 @@ extension WeatherScreenViewController: GeolocationDelegate {
 
     func locationRecieved(location: CLLocation?) {
 //        tableView.setPlaceholder(ofKind: .loadingData)
+        print("Placeholder Loading Data")
         //This method is called for testing purposes, it must be deleted after NetworkManager is implemented
-        NetworkManager.shared.getCityWeatherByCoordinates(coordinates: location) { [weak self] data in
-            if let data = data, let self = self {
-                self.cityWeatherData = data
-                self.tableView.reloadData()
+        NetworkManager.shared.getCityWeatherByCoordinates(coordinates: location) { [weak self] cityWeather in
+            if let cityWeather = cityWeather, let self = self {
+                self.cityWeatherData = cityWeather
+                NetworkManager.shared.getDailyWeatherByCoordinates(coordinates: location) { (dailyCityWeather) in
+                    if let dailyCityWeather = dailyCityWeather {
+                        self.dailyCityWeaterData = dailyCityWeather
+                        self.tableView.reloadData()
+                        print(dailyCityWeather)
+                        print("Switch Off Placeholder")
+                        //                tableView.restoreTableView(separatorStyle: .none)
+                    }
+                }
             }
         }
     }

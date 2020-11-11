@@ -26,6 +26,7 @@ class DailyWeatherPickerCollectionViewCell: UICollectionViewCell, ActivityIndica
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        toggleActivityIndicator(visible: true)
     }
 
     func updateDailyWeather(model: OneDayWeather) {
@@ -35,7 +36,23 @@ class DailyWeatherPickerCollectionViewCell: UICollectionViewCell, ActivityIndica
             let weatherCondition = model.weatherCondition[0]?.description
             let iconId = model.weatherCondition[0]?.icon
             weatherStatusLabel.text = weatherCondition?.capitalized ?? "No Value".localized
-            
+            updateWeatherImage(iconId: iconId)
+        }
+    }
+
+    private func updateWeatherImage(iconId: String?) {
+        guard let iconId = iconId else {
+            toggleActivityIndicator(visible: false)
+            weatherImageView.image = UIImage(named: "NoImage")
+            return
+        }
+
+        NetworkManager.shared.getWeatherImage(iconId: iconId) { [weak self] weatherImage in
+            if let self = self {
+                self.toggleActivityIndicator(visible: false)
+                self.weatherImageView.image =
+                    (weatherImage != nil ? weatherImage : UIImage(named: "NoImage"))
+            }
         }
     }
 }
