@@ -9,28 +9,28 @@
 import Foundation
 
 enum ImagesEndpoint: String {
-    case clearSkyDay
-    case clearSkyNight
-    case fewCloudsDay
-    case fewCloudsNight
-    case scatteredCloudsDay
-    case scatteredCloudsNight
-    case brokenClouds
-    case brokenCloudsNight
-    case showerRainDay
-    case showerRainNight
-    case rainDay
-    case rainNight
-    case thunderstormDay
-    case thunderstormNight
-    case snowDay
-    case snowNight
-    case mist
-    case mistNight
+    case clearSkyDay = "01d"
+    case clearSkyNight = "01n"
+    case fewCloudsDay = "02d"
+    case fewCloudsNight = "02n"
+    case scatteredCloudsDay = "03d"
+    case scatteredCloudsNight = "03n"
+    case brokenClouds = "04d"
+    case brokenCloudsNight = "04n"
+    case showerRainDay = "09d"
+    case showerRainNight = "09n"
+    case rainDay = "10d"
+    case rainNight = "10n"
+    case thunderstormDay = "11d"
+    case thunderstormNight = "11n"
+    case snowDay = "13d"
+    case snowNight = "13n"
+    case mist = "50d"
+    case mistNight = "50n"
 }
 
 extension ImagesEndpoint: EndPointType {
-    
+
     var baseURL: URL {
         let baseURLString: String
         switch self {
@@ -42,7 +42,7 @@ extension ImagesEndpoint: EndPointType {
         guard let url = URL(string: baseURLString) else { fatalError("baseURL could not be configured") }
         return url
     }
-    
+
     var path: String {
         switch self {
         case .clearSkyDay: return "Status-weather-clear-icon.png"
@@ -63,15 +63,15 @@ extension ImagesEndpoint: EndPointType {
         case .mist, .mistNight: return "Fog-icon.png"
         }
     }
-    
+
     var httpMethod: HTTPMethod {
         return .get
     }
-    
+
     var task: HTTPTask {
         return .getRequest
     }
-    
+
     var headers: HTTPHeaders? {
         return nil
     }

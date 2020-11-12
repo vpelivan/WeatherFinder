@@ -74,17 +74,32 @@ class NetworkManager: NetManagerProtocol {
             "50n": ImagesEndpoint.mistNight
         ]
         
-        var image: UIImage? =  UIImage()
-        if let imageEndpoint = imageCodes[iconID] { //imageCodes.keys.contains(iconID)
-            imageRequest(type: imageEndpoint) { result in
-                switch result {
-                case .success(let receivedImage):
-                     image = receivedImage
-                case .failure(let error):
-                    print(error)
-                    image = nil
+        var image: UIImage? =  UIImage() //maybe better initialize nil
+        let imageCache = NSCache<NSString, UIImage>();
+        if let imageEndpoint = imageCodes[iconID] {
+            if let imageFromCache = imageCache.object(forKey: NSString(string: imageEndpoint.rawValue)) {
+                return imageFromCache
+            }//imageCodes.keys.contains(iconID)
+            
+            DispatchQueue.main.async(execute:  {
+                self.networkSevice.makeRequest(with: imageEndpoint, cachePolicy: .useProtocolCachePolicy) { result in
+                    switch result {
+                    case .success(let data):
+                        do {
+                            guard let image = UIImage(data: data) else {}
+                       
+                            try imageCache.setObject(image, forKey: NSString(string: imageEndpoint.rawValue))
+                        }
+                        catch {
+                            print("Exception of Caching")
+                            break
+                        }
+                    case .failure(let error):
+                        print(error)
+                        image = nil
+                    }
                 }
-            }
+            })
         }
         else {
             print("!!!ERROR!!! -> wrong iconID (icon code)")// TODo maybe other error handling
@@ -111,43 +126,6 @@ class NetworkManager: NetManagerProtocol {
                         completionHandler(.failure(error))
                     }
                 }
-            })
-        }
-    
-    private func imageRequest(type: ImagesEndpoint, completionHandler: @escaping (Result<UIImage, Error>) -> Void) {
-        let imageCache = NSCache<NSString, UIImage>();
-        if let image = imageCache.object(forKey: NSString(string: type.rawValue)) {
-            completionHandler(.success(image))
-            return
-        }
-        
-        DispatchQueue.main.async(execute:  {
-            self.networkSevice.makeRequest(with: type, cachePolicy: .useProtocolCachePolicy, completion: {(dataImage, response, error) -> Void in
-                do {
-                    if let errorInner = error {
-                        throw errorInner
-                    }
-                    let httpResponse = response as? HTTPURLResponse
-                    switch httpResponse?.statusCode {
-                        case 200 :
-                            guard let imgData = dataImage, let image = UIImage(data: imgData) else {
-                                throw NetworkError.notFound
-                            } // downloaded Image
-                            imageCache.setObject(image, forKey: NSString(string: type.rawValue))
-                            completionHandler(.success(image))
-                        case 404: throw NetworkError.notFound
-                        case .none:
-                            if let errorUnwrapped = error {
-                                throw  errorUnwrapped
-                            }
-                        case .some(_): completionHandler(.failure(NetworkError.notFound)) //TODO make logic for other status codes
-                    }
-                }
-                catch let error
-                {
-                    completionHandler(.failure(error))
-                }
-            })
         })
     }
 }
