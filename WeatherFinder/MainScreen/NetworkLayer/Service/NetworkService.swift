@@ -9,35 +9,64 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    func makeRequest(with endPoint: EndPointType, cachePolicy: URLRequest.CachePolicy,
-                     completion: @escaping (Data?, URLResponse?, Error?) -> Void)
+    func makeRequest(with endPoint: EndPointType,
+                     cachePolicy: URLRequest.CachePolicy,
+                     completion: @escaping (Result<Data, Error>) -> Void)
 }
 
 class NetworkService: NetworkServiceProtocol {
-    
+
     func makeRequest(with endPoint: EndPointType,
                      cachePolicy: URLRequest.CachePolicy = .reloadIgnoringLocalCacheData,
-                     completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        
+                     completion: @escaping (Result<Data, Error>) -> Void) {
         let session = URLSession.shared
-        
+
         do {
             let request = try buildURLRequest(with: endPoint, cachePolicy: cachePolicy)
             session.dataTask(with: request) { (data, response, error) in
-                completion(data, response, error)
+                
+                switch( response, error) {
+                    case let (error as NSError, _):
+                        switch error.code {
+                        //case is URLError:
+                        //   <#code#>
+                        //case is Error
+                        case NSURLErrorNetworkConnectionLost:
+                            print(error)
+                            throw .failedInternetConnection
+                        case NSURLErrorNotConnectedToInternet:
+                            print(error)
+                            throw NetworkError.failedInternetConnection
+                            //throw NetworkError.init(rawValue: "")
+                        default:
+                            print(error)
+                            throw NetworkError.unknownError
+
+                        }
+                    case let (response as HTTPURLResponse, _):
+                        switch response?.statusCodes {
+                        case 200: completion(.success(data))
+                        //case 201...299:
+                        case 404: throw NetworkError.notFound
+                        default:
+                            throw NetworkError.otherStatusCode
+                        }
+                case (_, _):
+                    throw NetworkError.unknownError
+                }
+              //  completion(data, response, error) - old variant
             }.resume()
-        }
-        catch let error {
-            completion(nil, nil, error)
+        } catch let error {
+            completion(.failure(error))
         }
     }
-    
+
     private func buildURLRequest(with endPoint: EndPointType,
                                  cachePolicy: URLRequest.CachePolicy) throws -> URLRequest {
-        
+
         let url = endPoint.baseURL.appendingPathComponent(endPoint.path)
         var request = URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: 10)
-        
+
         request.httpMethod = endPoint.httpMethod.rawValue
         addHeaders(endPoint.headers, &request)
         do {
@@ -54,17 +83,17 @@ class NetworkService: NetworkServiceProtocol {
             throw error
         }
     }
-    
+
     private func addHeaders(_ headers: HTTPHeaders?,
                             _ request: inout URLRequest) {
-        
+
         guard let headers = headers else { return }
-        
+
         for (key, value) in headers {
             request.setValue(value, forHTTPHeaderField: key)
         }
     }
-    
+
     private func setURLParameters(_ urlParameters: Parameters,
                                   _ request: inout URLRequest) throws {
         do {
@@ -73,21 +102,21 @@ class NetworkService: NetworkServiceProtocol {
             throw error
         }
     }
-    
+
     private func setBodyParameters(_ bodyParameters: Parameters,
                                    _ request: inout URLRequest) throws {
-        
+
         do {
             try JSONParameterEncoder.encode(urlRequest: &request, with: bodyParameters)
         } catch {
             throw error
         }
     }
-    
+
     private func configurePOSTParameters(_ urlParameters: Parameters?,
                                          _ bodyParameters: Parameters?,
                                          _ request: inout URLRequest) throws {
-        
+
         guard !(bodyParameters == nil && urlParameters == nil) else {
             throw NetworkError.nilParameters
         }
@@ -99,3 +128,4 @@ class NetworkService: NetworkServiceProtocol {
         }
     }
 }
+

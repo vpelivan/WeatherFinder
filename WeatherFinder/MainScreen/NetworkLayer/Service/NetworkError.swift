@@ -14,5 +14,9 @@ enum NetworkError: String, Error {
     case encodingFailed = "Parameter encoding failed"
     case nilParameters = "Paremeters in request cannot be nil"
     case notFound = "404 Requested page not found"
+    case failedInternetConnection = "Internet connection lost"
+    case unknownError =  "Unknown exception"
+    case otherStatusCode = "unhandling status code"
+    //case someOtherException = "some other exception"
 }
 

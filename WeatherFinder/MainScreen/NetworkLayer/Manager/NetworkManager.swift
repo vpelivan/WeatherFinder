@@ -5,7 +5,6 @@
 //  Created by Romanovskiy Volodymyr on 15.10.2020.
 //  Copyright © 2020 Romanovskiy Volodymyr. All rights reserved.
 //
-
 import Foundation
 import CoreLocation
 import UIKit
@@ -23,9 +22,6 @@ class NetworkManager: NetManagerProtocol {
     
     private let networkSevice = NetworkService()
     
-    /* weather units should be updated in UserDefaults from somewhere else (for example,
-    application settings menu controller class). Probably, a new Trello task with UserDefaults
-    setup should be created */
     var weatherUnits: String {
         return UserDefaults.standard.string(forKey: "units") ?? "metric"
     }
@@ -36,38 +32,25 @@ class NetworkManager: NetManagerProtocol {
     func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ()) {
         let decoder = JSONDecoder()
         DispatchQueue.main.async(execute:  { [weak self] in
-            self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name), completion: {  (data, response, error) -> Void in
-                do {
-                    let httpResponse = response as? HTTPURLResponse
-                    switch httpResponse?.statusCode {
-                        case 200 :
-                            guard let dataInner = data
-                            else {
-                                return
-                                //maybe some logic that handling exception when data is nil
-                            }
-                            let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
-                                //TODO handle posible exception of decoding
+            self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name)) { result in
+                    switch result {
+                    case .success(let dataModelInner):
+                        do {
+                            let weather = try decoder.decode(WeatherDataModel.self, from: dataModelInner)
+                            //TODO handle posible exception of decoding
                             completionHandler(.success(weather))
-                        case 404: completionHandler(.failure(NetworkError.notFound))
-                        case .none:
-                            if let errorUnwrapped = error {
-                                throw  errorUnwrapped
-                            }
-                        case .some(_):
-                            if let errorUnwrapped = error {
-                                throw  errorUnwrapped
-                            }
+                        }
+                        catch let error {
+                            print( "\(error) in Net manager")
+                        }
+                    case .failure(let error):
+                        print("\(error) in Net manager")
+                        completionHandler(.failure(error))
                     }
                 }
-                catch let error
-                {
-                    print(error)
-                    completionHandler(.failure(error ))
-                }
+                
             })
-        })
-    }
+        }
     
     func getWeatherImage(iconID: String) -> UIImage? {
         let imageCodes: [String: ImagesEndpoint] = [
@@ -111,39 +94,25 @@ class NetworkManager: NetManagerProtocol {
     
     func getWeatherByCoordinates(coords: CLLocationCoordinate2D, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ()) {
         let decoder = JSONDecoder()
-        DispatchQueue.main.async(execute:  { [weak self] in // maybe reference cycle
-            self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByCoordinates(lattitude: coords.latitude, longtitute: coords.longitude), completion: {  (data, response, error) -> Void in
-                do {
-                    let httpResponse = response as? HTTPURLResponse
-                    switch httpResponse?.statusCode {
-                        case 200 :
-                            guard let dataInner = data
-                            else {
-                                return
-                                //maybe some logic that handling exception when data is nil
-                            }
-                            let weather = try decoder.decode(WeatherDataModel.self, from: dataInner)
-                                //TODO handle posible exception of decoding
+        DispatchQueue.main.async(execute:  { [weak self] in // maybe reference cycle
+            self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByCoordinates(lattitude: coords.latitude, longtitute: coords.longitude)) { result in
+                    switch result {
+                    case .success(let dataModelInner):
+                        do {
+                            let weather = try decoder.decode(WeatherDataModel.self, from: dataModelInner)
+                            //TODO handle posible exception of decoding
                             completionHandler(.success(weather))
-                        case 404: completionHandler(.failure(NetworkError.notFound))
-                        case .none:
-                            if let errorUnwrapped = error {
-                                throw  errorUnwrapped
-                            }
-                        case .some(_):
-                            if let errorUnwrapped = error {
-                                throw  errorUnwrapped
-                            }
+                        }
+                        catch let error {
+                            print( "\(error) in Net manager")
+                        }
+                    case .failure(let error):
+                        print("\(error) in Net manager")
+                        completionHandler(.failure(error))
                     }
                 }
-                catch let error
-                {
-                    print(error)
-                    completionHandler(.failure(error))
-                }
             })
-        })
-    }
+        }
     
     private func imageRequest(type: ImagesEndpoint, completionHandler: @escaping (Result<UIImage, Error>) -> Void) {
         let imageCache = NSCache<NSString, UIImage>();
