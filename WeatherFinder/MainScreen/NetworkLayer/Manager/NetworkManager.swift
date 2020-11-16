@@ -11,7 +11,7 @@ import UIKit
 
 protocol NetManagerProtocol {
     func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ())
-    func getWeatherImage(iconID: String) -> UIImage?
+    func getWeatherImage(iconId: String, completionHandler: @escaping (UIImage?) -> Void)
     func getWeatherByCoordinates(coords: CLLocationCoordinate2D, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ())
 }
 
@@ -31,8 +31,7 @@ class NetworkManager: NetManagerProtocol {
     
     func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ()) {
         let decoder = JSONDecoder()
-        DispatchQueue.main.async(execute:  { [weak self] in
-            self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name)) { result in
+            networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name)) { result in
                     switch result {
                     case .success(let dataModelInner):
                         do {
@@ -48,46 +47,39 @@ class NetworkManager: NetManagerProtocol {
                         completionHandler(.failure(error))
                     }
                 }
-                
-            })
         }
     
-    func getWeatherImage(iconID: String) -> UIImage? {        
-        var image: UIImage? =  nil
+    func getWeatherImage(iconId: String, completionHandler: @escaping (UIImage?) -> Void) {
         let imageCache = NSCache<NSString, UIImage>();
-        if let imageEndpoint = ImagesEndpoint(rawValue: iconID) {
+        if let imageEndpoint = ImagesEndpoint(rawValue: iconId) {
             if let imageFromCache = imageCache.object(forKey: NSString(string: imageEndpoint.rawValue)) {
-                return imageFromCache
+                completionHandler(imageFromCache)
             }//imageCodes.keys.contains(iconID)
-            
-            DispatchQueue.main.async(execute:  {
-                self.networkSevice.makeRequest(with: imageEndpoint, cachePolicy: .useProtocolCachePolicy) { result in
+            networkSevice.makeRequest(with: imageEndpoint, cachePolicy: .useProtocolCachePolicy) { result in
                     switch result {
                     case .success(let data):
-                        guard let imageFromData = UIImage(data: data) else {
+                        guard let image = UIImage(data: data) else {
                             print("wrong image data")
+                            completionHandler(nil)
                             return
                         }
-                        image = imageFromData
-                        imageCache.setObject(imageFromData, forKey: NSString(string: imageEndpoint.rawValue))
-                        
+                        imageCache.setObject(image, forKey: NSString(string: imageEndpoint.rawValue))
+                        completionHandler(image)
                     case .failure(let error):
                         print(error)
-                        image = nil
+                        completionHandler(nil)
                     }
                 }
-            })
         }
         else {
             print("!!!ERROR!!! -> wrong iconID (icon code)")
+            completionHandler(nil)
         }
-        return image
     }
     
     func getWeatherByCoordinates(coords: CLLocationCoordinate2D, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> ()) {
         let decoder = JSONDecoder()
-        DispatchQueue.main.async(execute:  { [weak self] in // maybe reference cycle
-            self?.networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByCoordinates(lattitude: coords.latitude, longtitute: coords.longitude)) { result in
+        networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByCoordinates(lattitude: coords.latitude, longtitute: coords.longitude)) { result in
                     switch result {
                     case .success(let dataModelInner):
                         do {
@@ -102,6 +94,5 @@ class NetworkManager: NetManagerProtocol {
                         completionHandler(.failure(error))
                     }
                 }
-        })
     }
 }

@@ -48,7 +48,9 @@ class NetworkService: NetworkServiceProtocol {
                                 guard let dataInner = data else{
                                     return
                                 }
-                                completion(.success(dataInner))
+                                DispatchQueue.main.async(execute:  {
+                                    completion(.success(dataInner))
+                                })
                             //case 201...299:
                             case 404: throw NetworkError.notFound
                             default:
