@@ -52,31 +52,10 @@ class NetworkManager: NetManagerProtocol {
             })
         }
     
-    func getWeatherImage(iconID: String) -> UIImage? {
-        let imageCodes: [String: ImagesEndpoint] = [
-            "01d": ImagesEndpoint.clearSkyDay,
-            "01n": ImagesEndpoint.clearSkyNight,
-            "02d": ImagesEndpoint.fewCloudsDay,
-            "02n": ImagesEndpoint.fewCloudsNight,
-            "03d": ImagesEndpoint.scatteredCloudsDay,
-            "03n": ImagesEndpoint.scatteredCloudsNight,
-            "04d": ImagesEndpoint.brokenClouds,
-            "04n": ImagesEndpoint.brokenCloudsNight,
-            "09d": ImagesEndpoint.showerRainDay,
-            "09n": ImagesEndpoint.showerRainNight,
-            "10d": ImagesEndpoint.rainDay,
-            "10n": ImagesEndpoint.rainNight,
-            "11d": ImagesEndpoint.thunderstormDay,
-            "11n": ImagesEndpoint.thunderstormNight,
-            "13d": ImagesEndpoint.snowDay,
-            "13n": ImagesEndpoint.snowNight,
-            "50d": ImagesEndpoint.mist,
-            "50n": ImagesEndpoint.mistNight
-        ]
-        
-        var image: UIImage? =  UIImage() //maybe better initialize nil
+    func getWeatherImage(iconID: String) -> UIImage? {        
+        var image: UIImage? =  nil
         let imageCache = NSCache<NSString, UIImage>();
-        if let imageEndpoint = imageCodes[iconID] {
+        if let imageEndpoint = ImagesEndpoint(rawValue: iconID) {
             if let imageFromCache = imageCache.object(forKey: NSString(string: imageEndpoint.rawValue)) {
                 return imageFromCache
             }//imageCodes.keys.contains(iconID)
@@ -85,15 +64,13 @@ class NetworkManager: NetManagerProtocol {
                 self.networkSevice.makeRequest(with: imageEndpoint, cachePolicy: .useProtocolCachePolicy) { result in
                     switch result {
                     case .success(let data):
-                        do {
-                            guard let image = UIImage(data: data) else {}
-                       
-                            try imageCache.setObject(image, forKey: NSString(string: imageEndpoint.rawValue))
+                        guard let imageFromData = UIImage(data: data) else {
+                            print("wrong image data")
+                            return
                         }
-                        catch {
-                            print("Exception of Caching")
-                            break
-                        }
+                        image = imageFromData
+                        imageCache.setObject(imageFromData, forKey: NSString(string: imageEndpoint.rawValue))
+                        
                     case .failure(let error):
                         print(error)
                         image = nil
@@ -102,7 +79,7 @@ class NetworkManager: NetManagerProtocol {
             })
         }
         else {
-            print("!!!ERROR!!! -> wrong iconID (icon code)")// TODo maybe other error handling
+            print("!!!ERROR!!! -> wrong iconID (icon code)")
         }
         return image
     }
@@ -115,7 +92,6 @@ class NetworkManager: NetManagerProtocol {
                     case .success(let dataModelInner):
                         do {
                             let weather = try decoder.decode(WeatherDataModel.self, from: dataModelInner)
-                            //TODO handle posible exception of decoding
                             completionHandler(.success(weather))
                         }
                         catch let error {

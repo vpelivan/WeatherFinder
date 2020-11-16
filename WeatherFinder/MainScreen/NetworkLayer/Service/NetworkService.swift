@@ -24,37 +24,43 @@ class NetworkService: NetworkServiceProtocol {
         do {
             let request = try buildURLRequest(with: endPoint, cachePolicy: cachePolicy)
             session.dataTask(with: request) { (data, response, error) in
-                
-                switch( response, error) {
-                    case let (error as NSError, _):
-                        switch error.code {
-                        //case is URLError:
-                        //   <#code#>
-                        //case is Error
-                        case NSURLErrorNetworkConnectionLost:
-                            print(error)
-                            throw .failedInternetConnection
-                        case NSURLErrorNotConnectedToInternet:
-                            print(error)
-                            throw NetworkError.failedInternetConnection
-                            //throw NetworkError.init(rawValue: "")
-                        default:
-                            print(error)
-                            throw NetworkError.unknownError
+                do {
+                    switch( response, error) {
+                        case let (error as NSError, _):
+                            switch error.code {
+                            //case is URLError:
+                            //   <#code#>
+                            //case is Error
+                            case NSURLErrorNetworkConnectionLost:
+                                print(error)
+                                throw NetworkError.failedInternetConnection
+                            case NSURLErrorNotConnectedToInternet:
+                                print(error)
+                                throw NetworkError.failedInternetConnection
+                            default:
+                                print(error)
+                                throw NetworkError.unknownError
 
-                        }
-                    case let (response as HTTPURLResponse, _):
-                        switch response?.statusCodes {
-                        case 200: completion(.success(data))
-                        //case 201...299:
-                        case 404: throw NetworkError.notFound
-                        default:
-                            throw NetworkError.otherStatusCode
-                        }
-                case (_, _):
-                    throw NetworkError.unknownError
+                            }
+                        case let (response as HTTPURLResponse, _):
+                            switch response.statusCode  {
+                            case 200:
+                                guard let dataInner = data else{
+                                    return
+                                }
+                                completion(.success(dataInner))
+                            //case 201...299:
+                            case 404: throw NetworkError.notFound
+                            default:
+                                throw NetworkError.otherStatusCode
+                            }
+                    case (_, _):
+                        throw NetworkError.unknownError
+                    }
                 }
-              //  completion(data, response, error) - old variant
+                catch let error {
+                    completion(.failure(error))
+                }
             }.resume()
         } catch let error {
             completion(.failure(error))
