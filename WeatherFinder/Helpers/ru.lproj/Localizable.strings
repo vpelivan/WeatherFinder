@@ -1,3 +1,31 @@
 /* placeholder for search controller */
 "Search for city" = "Поиск города";
 
+"No Value" = "Нет Данных";
+
+/* CityWeatherTableViewCell labels text */
+"Feels Like: %.f˚C" = "Ощущается Как: %.f˚C";
+"Pressure: %d mm" = "Давление: %d мм";
+"Humidity: %d %%" = "Влажность: %d %%";
+"Wind Speed: %.f m/s" = "Скорость Ветра: %.f м/с";
+"Maximum Current Temperature: %.f˚C" = "Максимальная Температура: %.f˚C";
+"Minimum Current Temperature: %.f˚C" = "Минимальная Температура: %.f˚C";
+
+/* Placeholder description text */
+"City Not Found" = "Город не найден";
+"Please check the ability to connect to the internet and try again" =
+    "Пожалуйста проверьте возможность соединения c интернетом и попробуйте снова";
+"You can enable Location Services in settings of Your device. Otherwise the app won't be able to show Your current location weather automatically" =
+    "Вы можете включить сервис геолокации в настройках Вашего устройства. Иначе приложение не сможет определять погоду по Вашему местоположению автоматически";
+"Press Appliction Settings button to allow geolocation for this application manually. Otherwise the app won't be able to show Your current location weather automatically" =
+"Нажмите на кнопку Настройки Приложения чтобы разрешить геолокацию для этого приложения вручную. Иначе приложение не сможет определять погоду по Вашему местоположению автоматически";
+
+/* Placeholder buttons text */
+"Application Settings" = "Настройки Приложения";
+
+/* Placeholder titles text */
+"Loading Data" = "Загрузка Данных";
+"No Results Found" = "Нет Результатов Поиска";
+"No Internet Connection" = "Нет Соединения C Интернетом";
+"Geolocation Services Are Off" = "Сервис Геолокации Отключен";
+"Geolocation Is Denied" = "Геолокация Запрещена";

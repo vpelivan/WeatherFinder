@@ -21,7 +21,7 @@ class NetworkManager: NetManagerProtocol {
     static let shared = NetworkManager()
     
     private let networkSevice = NetworkService()
-    
+
     var weatherUnits: String {
         return UserDefaults.standard.string(forKey: "units") ?? "metric"
     }

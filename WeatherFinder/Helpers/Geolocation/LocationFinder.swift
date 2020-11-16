@@ -4,6 +4,7 @@ import CoreLocation
 protocol GeolocationDelegate: class {
     func authorizationStatusSetup(state: CurrentAutorizationStatus)
     //TODO: - В этом методе делегата нужно реализовать сетевой запрос по координатам
+
     func locationRecieved(coordinates: CLLocationCoordinate2D)
 }
 

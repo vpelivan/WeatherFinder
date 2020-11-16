@@ -19,6 +19,7 @@ class NetworkService: NetworkServiceProtocol {
     func makeRequest(with endPoint: EndPointType,
                      cachePolicy: URLRequest.CachePolicy = .reloadIgnoringLocalCacheData,
                      completion: @escaping (Result<Data, Error>) -> Void) {
+
         let session = URLSession.shared
 
         do {
