@@ -2,6 +2,7 @@
 "Search for city" = "Поиск города";
 
 "No Value" = "Нет Данных";
+"No Country Code" = "Нет Кода Страны";
 
 /* CityWeatherTableViewCell labels text */
 "Feels Like: %.f˚C" = "Ощущается Как: %.f˚C";

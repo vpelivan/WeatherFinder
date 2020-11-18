@@ -13,10 +13,10 @@ struct WeatherDataModel: Decodable {
     let weatherCondition: [Weather?]
     let mainWeatherInfo: Main?
     let windSpeed: WindSpeed?
+    let countryCode: CountryCode?
 
-    struct Weather: Decodable {
-        let description: String
-        let icon: String
+    struct WindSpeed: Decodable {
+        let speed: Float
     }
 
     enum CodingKeys: String, CodingKey {
@@ -24,6 +24,7 @@ struct WeatherDataModel: Decodable {
         case mainWeatherInfo = "main"
         case windSpeed = "wind"
         case weatherCondition = "weather"
+        case countryCode = "sys"
     }
 }
 
@@ -44,6 +45,15 @@ struct Main: Decodable {
     }
 }
 
-struct WindSpeed: Decodable {
-    let speed: Float
+struct Weather: Decodable {
+    let description: String
+    let icon: String
+}
+
+struct CountryCode: Decodable {
+    let code: String
+
+    enum CodingKeys: String, CodingKey {
+        case code = "country"
+    }
 }
