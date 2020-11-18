@@ -5,17 +5,10 @@ class WeatherScreenViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
 
-    // TODO: resolve variable searchController initialization issue
     private var searchController: UISearchController?
     private let gradientLayer = Colors.gradientLayer
     private let geolocation = Geolocation()
-    private var cityWeatherData: WeatherDataModel? = nil {
-        willSet {
-            if newValue == nil {
-                tableView.reloadData()
-            }
-        }
-    }
+    var cityWeatherData: WeatherDataModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +25,9 @@ class WeatherScreenViewController: UIViewController {
     }
 
     private func setupSearchController() {
-        searchController = UISearchController(searchResultsController: nil)
+        guard let searchCityTableViewController = storyboard?.instantiateViewController(withIdentifier: "SearchCityTableViewController") as? SearchCityTableViewController else { return }
+        searchController = UISearchController(searchResultsController: searchCityTableViewController)
+        searchController?.searchResultsUpdater = searchCityTableViewController
         searchController?.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -58,6 +53,13 @@ class WeatherScreenViewController: UIViewController {
 
     @IBAction private func updateLocation(_ sender: UIBarButtonItem) {
         setupGeolocation()
+    }
+
+    @IBAction func unwindToWeatherScreenFromSearch(_ unwindSegue: UIStoryboardSegue) {
+        guard let searchViewController = unwindSegue.source as? SearchCityTableViewController else { return }
+        self.cityWeatherData = searchViewController.searchResult
+        tableView.reloadData()
+        tableView.restoreTableView(separatorStyle: .none)
     }
 }
 

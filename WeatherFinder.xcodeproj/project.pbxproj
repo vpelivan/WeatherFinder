@@ -16,6 +16,9 @@
 		572B6FE5254F627E00164844 /* TableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCE254F627E00164844 /* TableViewExtension.swift */; };
 		572B6FE6254F627E00164844 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572B6FCF254F627E00164844 /* StringExtensions.swift */; };
 		572D85092537C29B00CC54D2 /* ImagesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572D85082537C29B00CC54D2 /* ImagesEndpoint.swift */; };
+		574A33FD25647C410061D7D5 /* FoundCityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574A33FB25647C410061D7D5 /* FoundCityTableViewCell.swift */; };
+		574A33FE25647C410061D7D5 /* FoundCityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 574A33FC25647C410061D7D5 /* FoundCityTableViewCell.xib */; };
+		574A340125647E760061D7D5 /* SearchCityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574A340025647E760061D7D5 /* SearchCityTableViewController.swift */; };
 		5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */; };
 		5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C52524C4CB00D8AD10 /* Main.storyboard */; };
 		5750B6C92524C4CC00D8AD10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5750B6C82524C4CC00D8AD10 /* Assets.xcassets */; };
@@ -55,6 +58,9 @@
 		572B6FCE254F627E00164844 /* TableViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewExtension.swift; sourceTree = "<group>"; };
 		572B6FCF254F627E00164844 /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		572D85082537C29B00CC54D2 /* ImagesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesEndpoint.swift; sourceTree = "<group>"; };
+		574A33FB25647C410061D7D5 /* FoundCityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundCityTableViewCell.swift; sourceTree = "<group>"; };
+		574A33FC25647C410061D7D5 /* FoundCityTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoundCityTableViewCell.xib; sourceTree = "<group>"; };
+		574A340025647E760061D7D5 /* SearchCityTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCityTableViewController.swift; sourceTree = "<group>"; };
 		5750B6BC2524C4CB00D8AD10 /* WeatherFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5750B6C12524C4CB00D8AD10 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		5750B6C62524C4CB00D8AD10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -169,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				57EFBCEE2539E32E00B81A2D /* WeatherScreenViewController.swift */,
+				574A340025647E760061D7D5 /* SearchCityTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -244,6 +251,8 @@
 			children = (
 				57B3294A25263C2400901D90 /* CityWeatherTableViewCell.swift */,
 				57B3294B25263C2400901D90 /* CityWeatherTableViewCell.xib */,
+				574A33FB25647C410061D7D5 /* FoundCityTableViewCell.swift */,
+				574A33FC25647C410061D7D5 /* FoundCityTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -384,6 +393,7 @@
 				5750B6CC2524C4CC00D8AD10 /* LaunchScreen.storyboard in Resources */,
 				7A79573A252F486B00C78974 /* Localizable.strings in Resources */,
 				5750B6C92524C4CC00D8AD10 /* Assets.xcassets in Resources */,
+				574A33FE25647C410061D7D5 /* FoundCityTableViewCell.xib in Resources */,
 				57B3294D25263C2400901D90 /* CityWeatherTableViewCell.xib in Resources */,
 				5750B6C72524C4CB00D8AD10 /* Main.storyboard in Resources */,
 				7A795737252F486B00C78974 /* InfoPlist.strings in Resources */,
@@ -451,6 +461,7 @@
 				572D85092537C29B00CC54D2 /* ImagesEndpoint.swift in Sources */,
 				579E79C825339388002A67A6 /* HTTPTask.swift in Sources */,
 				57B3294C25263C2400901D90 /* CityWeatherTableViewCell.swift in Sources */,
+				574A340125647E760061D7D5 /* SearchCityTableViewController.swift in Sources */,
 				5780B32C2537653F00F87463 /* ParameterEncoder.swift in Sources */,
 				5750B6C22524C4CB00D8AD10 /* SceneDelegate.swift in Sources */,
 				57EA7D7F252F5254006D7E82 /* NetworkService.swift in Sources */,
@@ -463,6 +474,7 @@
 				57EFBCEF2539E32E00B81A2D /* WeatherScreenViewController.swift in Sources */,
 				7A50B34C2526101F00304AB9 /* GradientColor.swift in Sources */,
 				572B6FE3254F627E00164844 /* SettingsPlaceholderViewModel.swift in Sources */,
+				574A33FD25647C410061D7D5 /* FoundCityTableViewCell.swift in Sources */,
 				572411102547F69F003CEBD5 /* PlaceholderView.swift in Sources */,
 				572411192548B98D003CEBD5 /* Animations.swift in Sources */,
 				572B6FE4254F627E00164844 /* PlaceholderAbsractFactory.swift in Sources */,

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 class NetworkManager {
 
@@ -27,18 +28,46 @@ class NetworkManager {
     //One of Singleton conditions
     private init() {}
 
-    /* TODO: add different kinds of methods performing requests like getWeatherByCityName(name:completion:),
-    getWeatherImage(iconId:completion:) etc, parse all JSON data inside a model, and return this model inside
-    Result enum (which contains success and failure cases) using escaping closure */
+    /*TODO: Further methods and properties are plugs to immitate the work of network manager, because of absence
+     of this methods. I wrote them for testing purposes, they must be deleted after the network manager is
+     written, I do not handle errors and responces here - just getting data */
+    private var imageCache = NSCache<NSString, UIImage>()
 
-    //TODO: handle responses
-
-    //TODO: perform internet connection check
-
-    //TODO: handle various errors
-
-    //TODO: handle caching images (NSCache)
+    func getCityWeatherByName(name: String, completion: @escaping (WeatherDataModel?) -> Void) {
+        networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name)) { (data, _, _) in
+            if let data = data {
+                do {
+                    let model = try JSONDecoder().decode(WeatherDataModel.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(model)
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                }
+            }
+        }
+    }
 
     func getWeatherImage(iconId: String, completion: @escaping (UIImage?) -> Void) {
+        guard let endpoint = ImagesEndpoint(rawValue: iconId) else {
+            completion(nil)
+            return
+        }
+        if let cachedImage = imageCache.object(forKey: endpoint.path as NSString) {
+            completion(cachedImage)
+        }
+        networkSevice.makeRequest(with: endpoint, cachePolicy: .returnCacheDataElseLoad) { [weak self] (data, _, _) in
+            if let data = data, let image = UIImage(data: data), let self = self {
+                self.imageCache.setObject(image, forKey: endpoint.path as NSString)
+                DispatchQueue.main.async {
+                    completion(image)
+                }
+            } else {
+                completion(nil)
+            }
+        }
     }
 }
