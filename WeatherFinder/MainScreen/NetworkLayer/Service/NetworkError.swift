@@ -19,4 +19,3 @@ enum NetworkError: String, Error {
     case otherStatusCode = "unhandling status code"
     //case someOtherException = "some other exception"
 }
-

@@ -81,7 +81,7 @@ extension WeatherScreenViewController: GeolocationDelegate {
         tableView.setPlaceholder(kind: .loadingData)
         NetworkManager.shared.getWeatherByCoordinates(coords: coordinates) {  [weak self] (result) in
             switch result {
-                case .success(let model):
+            case .success(let model):
                     print(model)
                     self?.tableView.restoreTableView(separatorStyle: .none)
                     self?.cityWeatherData = model

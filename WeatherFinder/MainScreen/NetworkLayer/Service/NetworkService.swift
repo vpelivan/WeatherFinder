@@ -19,7 +19,6 @@ class NetworkService: NetworkServiceProtocol {
     func makeRequest(with endPoint: EndPointType,
                      cachePolicy: URLRequest.CachePolicy = .reloadIgnoringLocalCacheData,
                      completion: @escaping (Result<Data, Error>) -> Void) {
-
         let session = URLSession.shared
 
         do {
@@ -27,41 +26,40 @@ class NetworkService: NetworkServiceProtocol {
             session.dataTask(with: request) { (data, response, error) in
                 do {
                     switch( response, error) {
-                        case let (error as NSError, _):
-                            switch error.code {
-                            //case is URLError:
-                            //   <#code#>
-                            //case is Error
-                            case NSURLErrorNetworkConnectionLost:
-                                print(error)
-                                throw NetworkError.failedInternetConnection
-                            case NSURLErrorNotConnectedToInternet:
-                                print(error)
-                                throw NetworkError.failedInternetConnection
-                            default:
-                                print(error)
-                                throw NetworkError.unknownError
+                    case let (error as NSError, _):
+                        switch error.code {
+                        //case is URLError:
+                        //   <#code#>
+                        //case is Error
+                        case NSURLErrorNetworkConnectionLost:
+                            print(error)
+                            throw NetworkError.failedInternetConnection
+                        case NSURLErrorNotConnectedToInternet:
+                            print(error)
+                            throw NetworkError.failedInternetConnection
+                        default:
+                            print(error)
+                            throw NetworkError.unknownError
 
+                        }
+                    case let (response as HTTPURLResponse, _):
+                        switch response.statusCode {
+                        case 200:
+                            guard let dataInner = data else {
+                                return
                             }
-                        case let (response as HTTPURLResponse, _):
-                            switch response.statusCode  {
-                            case 200:
-                                guard let dataInner = data else{
-                                    return
-                                }
-                                DispatchQueue.main.async(execute:  {
-                                    completion(.success(dataInner))
-                                })
-                            //case 201...299:
-                            case 404: throw NetworkError.notFound
-                            default:
-                                throw NetworkError.otherStatusCode
-                            }
+                            DispatchQueue.main.async(execute: {
+                                completion(.success(dataInner))
+                            })
+                        //case 201...299:
+                        case 404: throw NetworkError.notFound
+                        default:
+                            throw NetworkError.otherStatusCode
+                        }
                     case (_, _):
                         throw NetworkError.unknownError
                     }
-                }
-                catch let error {
+                } catch let error {
                     completion(.failure(error))
                 }
             }.resume()
@@ -137,4 +135,3 @@ class NetworkService: NetworkServiceProtocol {
         }
     }
 }
-
