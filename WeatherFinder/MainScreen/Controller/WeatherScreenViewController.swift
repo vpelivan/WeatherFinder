@@ -1,4 +1,5 @@
 import UIKit
+import CoreLocation
 
 class WeatherScreenViewController: UIViewController {
 
@@ -76,13 +77,19 @@ extension WeatherScreenViewController: GeolocationDelegate {
         }
     }
 
-    func locationRecieved() {
+    func locationRecieved(coordinates: CLLocationCoordinate2D) {
         tableView.setPlaceholder(kind: .loadingData)
-        /* TODO: - need to call NetworkManager method getWeatherByCoordinates(lat:, long:),
-        pass longitude and latitude from location property, switch of placeholder
-        after we get our cityWeather Data, and reload tableview */
-//        if let location = geolocation.location {
-//        }
+        NetworkManager.shared.getWeatherByCoordinates(coords: coordinates) {  [weak self] (result) in
+            switch result {
+            case .success(let model):
+                    print(model)
+                    self?.tableView.restoreTableView(separatorStyle: .none)
+                    self?.cityWeatherData = model
+                    self?.tableView.reloadData()
+            case .failure(let error):
+                print( error)
+            }
+        }
     }
 }
 

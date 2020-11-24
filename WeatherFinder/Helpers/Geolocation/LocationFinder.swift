@@ -4,7 +4,7 @@ import CoreLocation
 protocol GeolocationDelegate: class {
     func authorizationStatusSetup(state: CurrentAutorizationStatus)
     //TODO: - В этом методе делегата нужно реализовать сетевой запрос по координатам
-    func locationRecieved()
+    func locationRecieved(coordinates: CLLocationCoordinate2D)
 }
 
 enum CurrentAutorizationStatus {
@@ -18,7 +18,10 @@ class Geolocation: NSObject {
     let locationManager = CLLocationManager()
     var location: CLLocation? = nil {
         didSet {
-            delegate?.locationRecieved()
+            guard let location = location else {
+                fatalError("Unable to get coordinates in Geolocation class")
+            }
+            delegate?.locationRecieved(coordinates: location.coordinate)
         }
     }
 
