@@ -1,0 +1,18 @@
+name: WeatherFinder # Имя генерируемого проекта.
+include:
+  - WeatherFinder.yml # Имя включаемого файла.
+  - path: Sources/WeatherFinder.yml # Путь к включенному файлу.
+    relativePaths: false # Дает знать, указывает ли включенная спецификация пути относительно себя (по умолчанию) или корневого файла спецификации.
+settings:
+  base: # Настройки сборки.
+    SWIFT_VERSION: 5.0 # Версия языка Swift, используемая в проекте.
+    TARGETED_DEVICE_FAMILY: 1 # Использование приложения только на iPhone/iPod touch.
+    CURRENT_PROJECT_VERSION: 1 # Текущая версия проекта, указываемая в настройках.
+    DEVELOPMENT_TEAM: Viktor Pelivan # Команда разработки.
+options:
+    minimumXcodeGenVersion: 2.18.0 # указываем, что для генерации проекта требуется XcodeGen версии не ниже 2.18.0.
+    deploymentTarget:
+        iOS: 13.5 # ограничиваем проект только платформой iOS версии 13.5 и выше.
+    groupSortPosition: top # указываем, что в навигаторе проекта папки должны быть вверху списка.
+    developmentLanguage: ru # устанавливаем русский в качестве языка текстов, используемых в UI.
+    postGenCommand: LANG=en_US.UTF-8 pod install
