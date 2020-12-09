@@ -28,9 +28,6 @@ class NetworkService: NetworkServiceProtocol {
                     switch( response, error) {
                     case let (error as NSError, _):
                         switch error.code {
-                        //case is URLError:
-                        //   <#code#>
-                        //case is Error
                         case NSURLErrorNetworkConnectionLost:
                             print(error)
                             throw NetworkError.failedInternetConnection

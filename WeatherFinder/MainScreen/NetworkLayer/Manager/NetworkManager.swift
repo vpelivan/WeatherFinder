@@ -25,7 +25,7 @@ class NetworkManager: NetManagerProtocol {
 
     //One of Singleton conditions
     private init() {}
-    
+
     func getWeatherDataByCityName(name: String, completionHandler: @escaping (Result<WeatherDataModel, Error>) -> Void) {
         let decoder = JSONDecoder()
             networkSevice.makeRequest(with: WeatherApiEndpoint.findCityByName(name: name)) { result in

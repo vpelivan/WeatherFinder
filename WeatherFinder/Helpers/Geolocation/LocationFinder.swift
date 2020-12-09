@@ -31,12 +31,17 @@ class Geolocation: NSObject {
     }
 
     func checkAuthorizationStatus() {
+        var authorizationStatus: CLAuthorizationStatus
         guard CLLocationManager.locationServicesEnabled() else {
             delegate?.authorizationStatusSetup(state: .geolocationOff)
             return
         }
-
-        switch locationManager.authorizationStatus {
+        if #available(iOS 14.0, *) {
+            authorizationStatus = locationManager.authorizationStatus
+        } else {
+            authorizationStatus = CLLocationManager.authorizationStatus()
+        }
+        switch authorizationStatus {
         case .restricted, .denied:
             delegate?.authorizationStatusSetup(state: .geolocationDenied)
         case .authorizedAlways, .authorizedWhenInUse, .notDetermined:
@@ -61,7 +66,6 @@ extension Geolocation: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             self.location = location
-            // после реализации сетевого слоя эти строчки с выводом координат в консоль будут удалены
             print("Longitude: \(location.coordinate.longitude), Latitude: \(location.coordinate.latitude)")
             locationManager.stopUpdatingLocation()
         }

@@ -1,21 +1,18 @@
 targets:
-  App:
+  WeatherFinder:
     type: application # указываем тип продукта – приложение. Это поле определяет настройки сборки по умолчанию.
     platform: iOS # ограничиваем таргет целевой платформой iOS.
     deploymentTarget: 13.5 # ограничиваем таргет версией 13.5 и выше.
     sources:
-      - path: WeatherFinder # Перечисляем пути к исходным файлам таргета. У нас только одна папка WeatherFinde, которую мы указываем в поле path.
+      - path: WeatherFinder # Перечисляем пути к исходным файлам таргета. У нас только одна папка WeatherFinder, которую мы указываем в поле path.
     settings:
       base:
         INFOPLIST_FILE: WeatherFinder/Helpers/Info.plist # Путь к Info.plist.
+        DEVELOPMENT_TEAM: 378HZ25P52 # Development Team в настройках проекта.
         PRODUCT_BUNDLE_IDENTIFIER: com.vpelivan.WeatherFinder # Наш bundle ID.
-        CODE_SIGN_STYLE: Automatic
-        PRODUCT_NAME: WeatherFinder
-        DEVELOPMENT_TEAM: Viktor Pelivan # Development Team в настройках проекта.
-        TARGETED_DEVICE_FAMILY: 1 # 1 означает запуск только на iPhone и iPod.
-    #postCompileScripts:
-    #  - script: |
-    #            if which swiftlint >/dev/null; then
-    #              swiftlint --no-cache
-    #            fi
-    #    name: SwiftLint
+        PRODUCT_NAME: WeatherFinder # Имя продукта.
+        TARGETED_DEVICE_FAMILY: 1 # Использование приложения только на iPhone/iPod touch.
+    postCompileScripts:
+      - script: | # Скрипт, который прописываем в Build Phases для корректной установки SwiftLint
+                "${PODS_ROOT}/SwiftLint/swiftlint" 
+        name: SwiftLint
